@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fantac Cissé - Portfolio</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      overflow-x: hidden;
+      background-color: #000;
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      overflow-y: auto;
+      height: auto;
+    }
+    
+    /* Typography */
+    .font-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 400;
+    }
+    
+    .font-title-bold {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+    }
+    
+    .font-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+    
+    .font-elegant {
+      font-family: 'EB Garamond', serif;
+      line-height: 1.7;
+    }
+    
+    /* Grain Texture */
+    .grain-texture {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.6;
+      z-index: 1;
+      mix-blend-mode: overlay;
+    }
+    
+    /* Page Sections */
+    .page-section {
+      min-height: 100vh;
+      width: 100%;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+    }
+    
+    .vignette-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.6) 80%);
+      z-index: 1;
+    }
+    
+    .content-overlay {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    /* PAGE 5 - IDENTITÉ (First in scroll order) */
+    #page-identity {
+      background-image: url('/Users/fantaccisse/Documents/CODING/MY PORTFOLIO/ABOUT ME LANDING PAGE/identity.png');
+    }
+    
+    .identity-content {
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .identity-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      margin-bottom: 2rem;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    
+    .identity-subtitle {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: #d4af37;
+      margin-bottom: 3rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    
+    .identity-tagline {
+      font-size: clamp(1.25rem, 2.5vw, 2rem);
+      font-style: italic;
+      color: #e8d5b7;
+      margin-bottom: 3rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .identity-description {
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      color: #dbc09a;
+      max-width: 850px;
+      margin: 0 auto 4rem;
+      line-height: 1.8;
+    }
+    
+    .scroll-indicator {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: #d4af37;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+    
+    .scroll-indicator svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    /* PAGE 4 - PARCOURS (Second) */
+    #page-parcours {
+      background-image: url('/Users/fantaccisse/Documents/CODING/MY PORTFOLIO/ABOUT ME LANDING PAGE/parcours.png');
+    }
+    
+    .parcours-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    
+    .parcours-left {
+      max-width: 650px;
+    }
+    
+    .parcours-badge {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border: 2px solid #d4af37;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    
+    .parcours-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+    
+    .parcours-intro {
+      font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+      color: #dbc09a;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+    
+    .parcours-highlight {
+      color: #d4af37;
+      font-weight: 600;
+    }
+    
+    .parcours-list {
+      list-style: none;
+      margin-top: 2rem;
+    }
+    
+    .parcours-list li {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      color: #e8d5b7;
+      line-height: 1.7;
+    }
+    
+    .parcours-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #d4af37;
+      font-size: 1.5rem;
+    }
+    
+    .parcours-list strong {
+      color: #d4af37;
+      font-weight: 600;
+    }
+    
+    .parcours-right {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .testimonial-card {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-left: 3px solid #d4af37;
+      padding: 2rem;
+      position: relative;
+    }
+    
+    .quote-icon {
+      font-size: 4rem;
+      color: #d4af37;
+      opacity: 0.3;
+      line-height: 0;
+      margin-bottom: 1rem;
+      font-family: Georgia, serif;
+    }
+    
+    .testimonial-text {
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      font-style: italic;
+      color: #dbc09a;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+    
+    .testimonial-author {
+      font-size: 0.95rem;
+      color: #d4af37;
+      font-weight: 600;
+    }
+    
+    .testimonial-role {
+      font-size: 0.85rem;
+      color: #a88734;
+    }
+    
+    /* PAGE 3 - PROJETS (Third - NEW) */
+    #page-projets {
+      background-image: url('/Users/fantaccisse/Documents/CODING/MY PORTFOLIO/ABOUT ME LANDING PAGE/projets.png');
+      background-position: center right;
+    }
+    
+    .projets-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    
+    .projets-title {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+    
+    .projets-intro {
+      font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+      color: #dbc09a;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+    
+    .projets-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+    
+    .project-card {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      padding: 2.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .project-card:hover::before {
+      left: 100%;
+    }
+    
+    .project-card:hover {
+      border-color: #d4af37;
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    }
+    
+    .project-category {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid #d4af37;
+      padding: 0.4rem 1rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      color: #d4af37;
+      font-weight: 600;
+    }
+    
+    .project-title {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .project-subtitle {
+      font-size: 1.1rem;
+      color: #d4af37;
+      font-style: italic;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .project-description {
+      font-size: 1.05rem;
+      color: #dbc09a;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .project-features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .project-features li {
+      font-size: 0.95rem;
+      color: #e8d5b7;
+      padding-left: 1.5rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    
+    .project-features li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: #d4af37;
+    }
+    
+    .project-link {
+      display: inline-block;
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    
+    .project-link:hover {
+      border-bottom-color: #d4af37;
+      color: #f4d03f;
+    }
+    
+    .project-type-label {
+      font-size: 0.85rem;
+      color: #a88734;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+    
+    /* PAGE 2 - FORMATION (Fourth) */
+    #page-formation {
+      background-image: url('/Users/fantaccisse/Documents/CODING/MY PORTFOLIO/ABOUT ME LANDING PAGE/formation.png');
+    }
+    
+    .formation-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    
+    .formation-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+    
+    .formation-intro {
+      font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+      color: #dbc09a;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+    
+    .formation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .formation-card {
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+    
+    .formation-card:hover {
+      border-color: #d4af37;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .formation-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(212, 175, 55, 0.2);
+      border: 2px solid #d4af37;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+    
+    .formation-card-title {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      line-height: 1.3;
+    }
+    
+    .formation-degree {
+      color: #d4af37;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .formation-details {
+      font-size: 0.95rem;
+      color: #a88734;
+      margin-bottom: 1rem;
+    }
+    
+    .formation-description {
+      font-size: 1rem;
+      color: #dbc09a;
+      line-height: 1.6;
+      margin-top: auto;
+    }
+    
+    /* PAGE 1 - CONTACT (Fifth/Last) */
+    #page-contact {
+      background-image: url('/Users/fantaccisse/Documents/CODING/MY PORTFOLIO/ABOUT ME LANDING PAGE/contact.png');
+    }
+    
+    .contact-content {
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-bottom: 5rem;
+    }
+    
+    .contact-title {
+      font-size: clamp(3rem, 7vw, 5rem);
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+    
+    .contact-description {
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      color: #dbc09a;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .contact-tagline {
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      font-style: italic;
+      color: #d4af37;
+      margin-bottom: 3rem;
+    }
+    
+    .contact-cta-box {
+      background: rgba(61, 40, 23, 0.85);
+      border: 2px solid #d4af37;
+      padding: 3rem 4rem;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .contact-cta-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .contact-cta-box:hover::before {
+      left: 100%;
+    }
+    
+    .contact-cta-box:hover {
+      border-color: #f4d03f;
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+      transform: translateY(-5px);
+    }
+    
+    .contact-cta-text {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .contact-cta-subtitle {
+      font-size: clamp(0.9rem, 1.2vw, 1rem);
+      color: #d4af37;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .contact-email {
+      margin-top: 2.5rem;
+      font-size: clamp(1rem, 1.3vw, 1.1rem);
+      color: #a88734;
+    }
+    
+    .contact-email a {
+      color: #d4af37;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    
+    .contact-email a:hover {
+      border-bottom-color: #d4af37;
+    }
+    
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.4s ease;
+      padding: 2rem;
+    }
+    
+    .modal-overlay.active {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .modal-content {
+      background: linear-gradient(135deg, rgba(26, 20, 16, 0.98) 0%, rgba(61, 40, 23, 0.98) 100%);
+      border: 2px solid rgba(212, 175, 55, 0.5);
+      padding: 3rem;
+      max-width: 650px;
+      width: 100%;
+      position: relative;
+      animation: slideUp 0.5s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: transparent;
+      border: none;
+      color: #d4af37;
+      cursor: pointer;
+      font-size: 2rem;
+      line-height: 1;
+      padding: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .close-btn:hover {
+      color: #f4d03f;
+      transform: rotate(90deg);
+    }
+    
+    .modal-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #d4af37;
+    }
+    
+    .modal-subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #dbc09a;
+      margin-bottom: 2.5rem;
+      font-style: italic;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      color: #d4af37;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: #e8d5b7;
+      padding: 1rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+      background: rgba(0, 0, 0, 0.7);
+    }
+    
+    .form-textarea {
+      resize: vertical;
+      min-height: 150px;
+      line-height: 1.6;
+    }
+    
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #3d2817 0%, #1a1410 100%);
+      border: 2px solid #d4af37;
+      color: #d4af37;
+      padding: 1.2rem 3rem;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.15em;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      margin-top: 1.5rem;
+      text-transform: uppercase;
+    }
+    
+    .btn-submit:hover:not(:disabled) {
+      border-color: #f4d03f;
+      color: #f4d03f;
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+      transform: translateY(-2px);
+    }
+    
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .form-note {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #a88734;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+    
+    /* Footer */
+    .page-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  text-align: center;
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+}
+    
+    .footer-text {
+      font-size: 0.9rem;
+      color: #a88734;
+      letter-spacing: 0.05em;
+    }
+    
+    .footer-separator {
+      color: #d4af37;
+      margin: 0 0.5rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .parcours-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      
+      .formation-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .projets-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .page-section {
+        padding: 3rem 1.5rem;
+        background-attachment: scroll;
+      }
+      
+      .modal-content {
+        padding: 2rem;
+      }
+      
+      .contact-cta-box {
+        padding: 2rem 2.5rem;
+      }
+      
+      .testimonial-card {
+        padding: 1.5rem;
+      }
+      
+      .formation-card {
+        padding: 2rem;
+      }
+      
+      .project-card {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Grain Texture -->
+  <div class="grain-texture"></div>
+  
+  <!-- PAGE 5 - IDENTITÉ (Première page au scroll) -->
+  <section id="page-identity" class="page-section">
+    <div class="vignette-overlay"></div>
+    <div class="content-overlay">
+      <div class="identity-content">
+        <h1 class="font-title identity-title">Fantac Cissé</h1>
+        
+        <p class="font-title-bold identity-subtitle">
+          Éditrice Digitale · Créatrice de Contenus · Experte Culture Artistique
+        </p>
+        
+        <p class="font-elegant identity-tagline">
+          « Je transforme les savoirs en récits, et les idées en expérience digitale. »
+        </p>
+        
+        <p class="font-body identity-description">
+          À la croisée de la littérature, de l'édition et du numérique, je conçois des 
+          expériences narratives qui donnent du sens. Mon travail allie rigueur 
+          académique, sensibilité artistique et maîtrise des outils contemporains pour 
+          créer du contenu qui inspire, éduque et perdure.
+        </p>
+        
+        <div class="scroll-indicator" onclick="document.getElementById('page-parcours').scrollIntoView({behavior: 'smooth'})">
+          <span class="font-title-bold">Découvrir</span>
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- PAGE 4 - PARCOURS (Deuxième page) -->
+  <section id="page-parcours" class="page-section">
+    <div class="vignette-overlay"></div>
+    <div class="content-overlay">
+      <div class="parcours-container">
+        <!-- Left Column -->
+        <div class="parcours-left">
+          <div class="font-title-bold parcours-badge">PARCOURS PROFESIONNEL</div>
+          
+          <h2 class="font-title parcours-title">
+            Une trajectoire au service de la Culture et de la créativité
+          </h2>
+          
+          <p class="font-body parcours-intro">
+            Formée aux humanités et à la recherche, j'ai exercé dans l'édition 
+            universitaire, la médiation culturelle et la communication stratégique. 
+            Mon parcours m'a menée des bibliothèques patrimoniales aux plateformes 
+            digitales, toujours guidée par une même conviction : <span class="parcours-highlight">le 
+            savoir mérite d'être partagé avec beauté et rigueur.</span>
+          </p>
+          
+          <p class="font-body parcours-intro">
+            Aujourd'hui, je mets mon expertise au service de projets culturels, 
+            éditoriaux et académiques qui cherchent à toucher leur public avec 
+            authenticité. Je conçois des stratégies de contenu, j'édite des 
+            publications exigeantes et j'accompagne des créateurs dans la 
+            structuration de leur pensée.
+          </p>
+          
+          <ul class="font-body parcours-list">
+            <li>
+              <strong>Édition & Publication :</strong> Direction éditoriale, réécriture, mise en forme 
+              de contenus académiques et culturels
+            </li>
+            <li>
+              <strong>Stratégie de Contenu :</strong> Conception narrative, planification éditoriale, 
+              optimisation pour publics exigeants
+            </li>
+            <li>
+              <strong>Médiation Culturelle :</strong> Transmission des savoirs, vulgarisation 
+              intelligente, création d'expériences intellectuelles
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Right Column - Testimonials -->
+        <div class="parcours-right">
+          <div class="testimonial-card">
+            <div class="quote-icon">"</div>
+            <p class="font-elegant testimonial-text">
+              Une plume rare, capable de donner vie aux concepts les plus 
+              complexes avec élégance et clarté.
+            </p>
+            <p class="font-title-bold testimonial-author">Dr. Marie Fontaine</p>
+            <p class="font-body testimonial-role">Directrice de Recherche, Université Sorbonne</p>
+          </div>
+          
+          <div class="testimonial-card">
+            <div class="quote-icon">"</div>
+            <p class="font-elegant testimonial-text">
+              Fantac ne se contente pas de produire du contenu ; elle crée 
+              des expériences intellectuelles mémorables.
+            </p>
+            <p class="font-title-bold testimonial-author">Thomas Berger</p>
+            <p class="font-body testimonial-role">Directeur Éditorial, Éditions du Patrimoine</p>
+          </div>
+          
+          <div class="testimonial-card">
+            <div class="quote-icon">"</div>
+            <p class="font-elegant testimonial-text">
+              Sa capacité à tisser des ponts entre tradition et innovation est tout 
+              simplement exceptionnelle.
+            </p>
+            <p class="font-title-bold testimonial-author">Isabelle Moreau</p>
+            <p class="font-body testimonial-role">Conservatrice, Musée des Arts Décoratifs</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- PAGE 3 - PROJETS (Troisième page - NOUVELLE) -->
+  <section id="page-projets" class="page-section">
+    <div class="vignette-overlay"></div>
+    <div class="content-overlay">
+      <div class="projets-header">
+        <h2 class="font-title projets-title">
+          Créations Digitales & Univers Narratifs
+        </h2>
+        <p class="font-body projets-intro">
+          De la conception à la réalisation, je construis des écosystèmes éditoriaux complets 
+          qui incarnent une vision et racontent une histoire.
+        </p>
+      </div>
+      
+      <div class="projets-grid">
+        <!-- Project 1: JGC Blog -->
+        <div class="project-card">
+          <span class="font-title-bold project-category">Projet Personnel</span>
+          <h3 class="font-title project-title">JGC Blog</h3>
+          <p class="font-elegant project-subtitle">Un espace de réflexion littéraire et culturelle</p>
+          
+          <p class="font-body project-description">
+            Blog éditorial explorant l'intersection entre littérature, culture digitale et 
+            humanités. Un lieu de pensée où s'articulent analyse critique, découvertes 
+            culturelles et réflexions sur la création contemporaine.
+          </p>
+          
+          <ul class="font-body project-features">
+            <li>Articles de fond sur la littérature et la culture</li>
+            <li>Critiques littéraires et analyses culturelles</li>
+            <li>Réflexions sur l'édition et le numérique</li>
+            <li>Interface Dark Academia sur mesure</li>
+          </ul>
+          
+          <a href="#" class="font-title-bold project-link">Visiter le blog →</a>
+        </div>
+        
+        <!-- Project 2: JGC Studio -->
+        <div class="project-card">
+          <span class="font-title-bold project-category">Projet Personnel</span>
+          <h3 class="font-title project-title">JGC Studio</h3>
+          <p class="font-elegant project-subtitle">Hub créatif multimédia</p>
+          
+          <p class="font-body project-description">
+            Plateforme centralisée regroupant mes créations audio et vidéo : podcast 
+            littéraire, analyses vidéo, entretiens avec des créateurs. Un studio digital 
+            où se rencontrent voix, images et idées.
+          </p>
+          
+          <ul class="font-body project-features">
+            <li>Podcast "Entre les Lignes" (épisodes mensuels)</li>
+            <li>Vidéos d'analyse culturelle et littéraire</li>
+            <li>Entretiens avec auteurs et créateurs</li>
+            <li>Architecture de contenu transmedia</li>
+          </ul>
+          
+          <a href="#" class="font-title-bold project-link">Découvrir le studio →</a>
+        </div>
+        
+        <!-- Project 3: Mockups Low-Fidelity -->
+        <div class="project-card">
+          <span class="font-title-bold project-category">Travaux Clients</span>
+          <h3 class="font-title project-title">Wireframes & Prototypes</h3>
+          <p class="font-elegant project-subtitle">Conception UX pour projets éditoriaux</p>
+          
+          <p class="font-body project-description">
+            Conception de wireframes et maquettes basse fidélité pour des clients fictifs : 
+            maisons d'édition, institutions culturelles, plateformes éducatives. 
+            Architectures d'information pensées pour l'expérience utilisateur.
+          </p>
+          
+          <ul class="font-body project-features">
+            <li>Wireframes responsive (mobile, tablet, desktop)</li>
+            <li>Flows utilisateurs et parcours narratifs</li>
+            <li>Hiérarchie de l'information éditoriale</li>
+            <li>Prototypes interactifs low-fidelity</li>
+          </ul>
+          
+          <p class="font-body project-type-label">Portfolio disponible sur demande</p>
+        </div>
+        
+        <!-- Project 4: Mockups High-Fidelity -->
+        <div class="project-card">
+          <span class="font-title-bold project-category">Travaux Clients</span>
+          <h3 class="font-title project-title">Design Systems & Interfaces</h3>
+          <p class="font-elegant project-subtitle">Identités visuelles complètes</p>
+          
+          <p class="font-body project-description">
+            Création de maquettes haute fidélité et design systems pour projets culturels 
+            et éditoriaux. De la charte graphique à l'interface finale, en passant par la 
+            typographie et les systèmes de couleurs.
+          </p>
+          
+          <ul class="font-body project-features">
+            <li>Design systems complets (composants, tokens)</li>
+            <li>Maquettes haute fidélité multi-supports</li>
+            <li>Identités visuelles Dark Academia & éditoriales</li>
+            <li>Prototypes interactifs haute fidélité</li>
+          </ul>
+          
+          <p class="font-body project-type-label">Portfolio disponible sur demande</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- PAGE 2 - FORMATION (Quatrième page) -->
+  <section id="page-formation" class="page-section">
+    <div class="vignette-overlay"></div>
+    <div class="content-overlay">
+      <div class="formation-header">
+        <h2 class="font-title formation-title">
+          Une légitimité construite sur l'exigence
+        </h2>
+        <p class="font-body formation-intro">
+          Mon parcours académique reflète une quête constante : comprendre les 
+          mécanismes de la pensée, de la création et de la transmission pour mieux les 
+          incarner.
+        </p>
+      </div>
+      
+      <div class="formation-grid">
+        <!-- Card 1 -->
+        <div class="formation-card">
+          <div class="formation-icon">🎓</div>
+          <h3 class="font-title-bold formation-card-title">Formation Universitaire</h3>
+          <p class="font-title-bold formation-degree">Master en Lettres Modernes</p>
+          <p class="font-body formation-details">
+            Spécialisation Édition & Médiation Culturelle
+          </p>
+          <p class="font-body formation-details" style="margin-bottom: 1rem;">
+            Licence en Sciences Humaines<br/>
+            Mention Très Bien
+          </p>
+          <p class="font-body formation-description">
+            Un parcours qui m'a permis d'affûter mon regard critique, ma capacité 
+            d'analyse et ma compréhension des enjeux culturels contemporains.
+          </p>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="formation-card">
+          <div class="formation-icon">🏅</div>
+          <h3 class="font-title-bold formation-card-title">Certifications Professionnelles</h3>
+          <p class="font-title-bold formation-degree">Stratégie de Contenu Digital</p>
+          <p class="font-body formation-details">Content Marketing Institute</p>
+          <p class="font-title-bold formation-degree" style="margin-top: 1rem;">Gestion de Projet Éditorial</p>
+          <p class="font-body formation-details">École des Métiers de l'Édition</p>
+          <p class="font-title-bold formation-degree" style="margin-top: 1rem;">SEO & Rédaction Web</p>
+          <p class="font-body formation-details">Certification professionnelle</p>
+          <p class="font-body formation-description">
+            Des compétences techniques au service d'une vision créative et 
+            stratégique.
+          </p>
+        </div>
+        
+        <!-- Card 3 -->
+        <div class="formation-card">
+          <div class="formation-icon">📖</div>
+          <h3 class="font-title-bold formation-card-title">Formation Continue</h3>
+          <p class="font-title-bold formation-degree">Veille intellectuelle active</p>
+          <p class="font-body formation-details">
+            Littérature, philosophie, culture digitale
+          </p>
+          <p class="font-title-bold formation-degree" style="margin-top: 1rem;">Participation à des colloques</p>
+          <p class="font-body formation-details">
+            Édition, humanités numériques
+          </p>
+          <p class="font-title-bold formation-degree" style="margin-top: 1rem;">Ateliers d'écriture créative</p>
+          <p class="font-body formation-details">
+            Perfectionnement stylistique
+          </p>
+          <p class="font-body formation-description">
+            La curiosité comme moteur, l'excellence comme horizon.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- PAGE 1 - CONTACT (Cinquième/dernière page) -->
+  <section id="page-contact" class="page-section">
+    <div class="vignette-overlay"></div>
+    <div class="content-overlay">
+      <div class="contact-content">
+        <h2 class="font-title contact-title">
+          Créons ensemble quelque chose d'exceptionnel
+        </h2>
+        
+        <p class="font-body contact-description">
+          Vous avez un projet éditorial, culturel ou stratégique qui mérite attention et 
+          excellence ? Vous cherchez une plume capable de donner corps à votre vision ?
+        </p>
+        
+        <p class="font-elegant contact-tagline">
+          Je serais honorée d'en discuter avec vous.
+        </p>
+        
+        <div class="contact-cta-box" onclick="openContactForm()">
+          <h3 class="font-title contact-cta-text">Contact Me</h3>
+          <p class="font-title-bold contact-cta-subtitle">Cliquez sur le parchemin</p>
+        </div>
+        
+        <p class="font-body contact-email">
+          Ou écrivez-moi directement à 
+          <a href="mailto:jgcultures@gmail.com">jgcultures@gmail.com</a>
+        </p>
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="page-footer">
+      <p class="font-body footer-text">
+        © 2024 JGC Studio - Fantac Cissé <span class="footer-separator">|</span> Tous droits réservés
+      </p>
+    </div>
+  </section>
+  
+  <!-- Contact Form Modal -->
+  <div id="contactModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeContactForm()">&times;</button>
+      
+      <h3 class="font-title modal-title">Commençons l'échange</h3>
+      <p class="font-elegant modal-subtitle">
+        Partagez votre vision, je vous répondrai avec attention
+      </p>
+      
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label class="form-label font-title-bold">Votre nom</label>
+          <input
+            type="text"
+            name="name"
+            class="form-input"
+            required
+            placeholder="Prénom Nom"
+          />
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label font-title-bold">Votre email</label>
+          <input
+            type="email"
+            name="email"
+            class="form-input"
+            required
+            placeholder="votre@email.com"
+          />
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label font-title-bold">Votre message</label>
+          <textarea
+            name="message"
+            class="form-textarea"
+            required
+            placeholder="Parlez-moi de votre projet, de vos ambitions, de ce qui vous anime..."
+          ></textarea>
+        </div>
+        
+        <button type="submit" class="btn-submit" id="submitBtn">
+          Envoyer le message
+        </button>
+        
+        <p class="form-note font-body">
+          Réponse garantie sous 48 heures
+        </p>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    // Contact form functions
+    function openContactForm() {
+      document.getElementById('contactModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeContactForm() {
+      document.getElementById('contactModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+    
+    // Close modal on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('contactModal').classList.contains('active')) {
+        closeContactForm();
+      }
+    });
+    
+    // Close modal on outside click
+    document.getElementById('contactModal').addEventListener('click', (e) => {
+      if (e.target.id === 'contactModal') {
+        closeContactForm();
+      }
+    });
+    
+    // Form submission
+    function handleSubmit(event) {
+      event.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'ENVOI EN COURS...';
+      
+      const formData = new FormData(event.target);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message')
+      };
+      
+      // TODO: Remplacer par votre service d'envoi d'email (Formspree, EmailJS, etc.)
+      
+      // Simulation d'envoi
+      setTimeout(() => {
+        alert('Message envoyé avec succès!\n\nNote: Pour activer l\'envoi réel vers jgcultures@gmail.com, configurez un service email (voir documentation)');
+        closeContactForm();
+        event.target.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'ENVOYER LE MESSAGE';
+      }, 1000);
+      
+      /* EXEMPLE AVEC FORMSPREE (décommentez et ajoutez votre ID):
+      
+      fetch('https://formspree.io/f/VOTRE_ID_ICI', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Message envoyé avec succès!');
+          closeContactForm();
+          event.target.reset();
+        } else {
+          alert('Erreur lors de l\'envoi. Veuillez réessayer.');
+        }
+      })
+      .catch(error => {
+        alert('Erreur réseau. Vérifiez votre connexion.');
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'ENVOYER LE MESSAGE';
+      });
+      
+      */
+    }
+    
+    // Smooth scroll enhancement
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
