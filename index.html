@@ -448,7 +448,7 @@
       <button class="close-btn" onclick="closeContactForm()">&times;</button>
       <h3 class="font-title modal-title" data-i18n="modal_title"></h3>
       <p class="font-elegant modal-subtitle" data-i18n="modal_sub"></p>
-      <form id="contactForm" onsubmit="handleSubmit(event)">
+      <form id="contactForm" action="https://formspree.io/f/xvzdoklv" method="POST" onsubmit="handleSubmit(event)">
         <div class="form-group">
           <label class="form-label font-title-bold" data-i18n="form_name"></label>
           <input type="text" name="name" class="form-input" required data-i18n-placeholder="form_name_ph" />
@@ -721,20 +721,37 @@
   document.getElementById('contactModal').addEventListener('click', e => {
     if (e.target.id === 'contactModal') closeContactForm();
   });
-  function handleSubmit(event) {
+ function handleSubmit(event) {
     event.preventDefault();
     const btn = document.getElementById('submitBtn');
+    const form = event.target;
     btn.disabled = true;
     btn.textContent = currentLang === 'fr' ? 'ENVOI EN COURS...' : 'SENDING...';
-    setTimeout(() => {
-      alert(currentLang === 'fr'
-        ? 'Message envoyé avec succès !'
-        : 'Message sent successfully!');
-      closeContactForm();
-      event.target.reset();
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        btn.textContent = currentLang === 'fr' ? '✓ MESSAGE ENVOYÉ' : '✓ MESSAGE SENT';
+        form.reset();
+        setTimeout(() => {
+          closeContactForm();
+          btn.disabled = false;
+          btn.textContent = i18n[currentLang].form_send;
+        }, 2000);
+      } else {
+        throw new Error('Erreur réseau');
+      }
+    })
+    .catch(() => {
       btn.disabled = false;
-      btn.textContent = i18n[currentLang].form_send;
-    }, 1000);
+      btn.textContent = currentLang === 'fr' ? '✗ ERREUR — RÉESSAYER' : '✗ ERROR — RETRY';
+      setTimeout(() => {
+        btn.textContent = i18n[currentLang].form_send;
+      }, 3000);
+    });
   }
 
   // Smooth scroll
