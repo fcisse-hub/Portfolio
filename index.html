@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Redirection mobile -->
+<script>
+  (function() {
+    var isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
+      || (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
+    if (isMobile) {
+      window.location.replace("https://fcisse-hub.github.io/Portfolio/portfolio-mobile.html");
+    }
+  })();
+</script>
   <title>Sabine F. Cissé - Portfolio</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
