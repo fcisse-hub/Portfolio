@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Sabine F. Cissé - Portfolio</title>
+
+  <!-- Redirect to desktop if not mobile -->
+  <script>
+    (function() {
+      var isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
+        || (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
+      if (!isMobile && window.innerWidth > 900) {
+        window.location.replace("https://fcisse-hub.github.io/Portfolio/");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,500&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: #0a0805;
+      color: #e8d5b7;
+      overflow-x: hidden;
+    }
+
+    /* ── TYPOGRAPHY CLASSES ── */
+    .font-title     { font-family: 'Cinzel', serif; font-weight: 400; }
+    .font-title-bold{ font-family: 'Cinzel', serif; font-weight: 700; }
+    .font-body      { font-family: 'Cormorant Garamond', serif; line-height: 1.7; }
+    .font-elegant   { font-family: 'EB Garamond', serif; line-height: 1.7; }
+
+    /* ── LANGUAGE TOGGLE ── */
+    #lang-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      background: rgba(10, 8, 5, 0.88);
+      border: 1.5px solid #d4af37;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    #lang-toggle button {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      padding: 0.5rem 0.85rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+      color: #a88734;
+    }
+    #lang-toggle button.active { background: #d4af37; color: #0a0805; }
+    #lang-toggle .lang-sep {
+      width: 1px; height: 1.4rem;
+      background: rgba(212,175,55,0.35);
+    }
+
+    /* ── GRAIN ── */
+    .grain-texture {
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.5;
+      z-index: 1;
+      mix-blend-mode: overlay;
+    }
+
+    /* ── SECTIONS ── */
+    .page-section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100svh;
+      background-size: cover;
+      background-position: center center;
+      background-attachment: scroll;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 1.5rem 3rem;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.78) 100%);
+      z-index: 1;
+    }
+    .vignette-strong {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.65) 0%,
+        rgba(0,0,0,0.45) 40%,
+        rgba(0,0,0,0.55) 70%,
+        rgba(0,0,0,0.80) 100%
+      );
+      z-index: 1;
+    }
+
+    .content { position: relative; z-index: 2; width: 100%; max-width: 480px; margin: 0 auto; }
+
+    /* ── SECTION BACKGROUNDS ── */
+    #page-identity  { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/identity-mobile.png?raw=true'); }
+    #page-parcours  { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/parcours-mobile.png?raw=true'); }
+    #page-projets   { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/projects-mobile.png?raw=true'); }
+    #page-formation { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/formation-mobile.png?raw=true'); }
+    #page-contact   { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/contact-mobile.png?raw=true'); }
+
+    /* ─────────────────────────────────────────
+       IDENTITY
+    ───────────────────────────────────────── */
+    #page-identity { align-items: flex-end; padding-bottom: 4rem; }
+
+    .identity-inner {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: rgba(0,0,0,0.45);
+      border-top: 1px solid rgba(212,175,55,0.35);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .identity-name {
+      font-size: clamp(2rem, 9vw, 2.8rem);
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+    }
+
+    .identity-subtitle {
+      font-size: clamp(0.65rem, 2.8vw, 0.85rem);
+      color: #d4af37;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+      line-height: 1.5;
+    }
+
+    .identity-tagline {
+      font-size: clamp(1.05rem, 4vw, 1.3rem);
+      font-style: italic;
+      color: #dbc09a;
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+    }
+
+    .identity-desc {
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      color: #c9b48a;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+    }
+
+    .scroll-cta {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: #d4af37;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      animation: bounce 2.2s ease-in-out infinite;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+    }
+    .scroll-cta svg { width: 20px; height: 20px; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
+
+    /* ─────────────────────────────────────────
+       PARCOURS
+    ───────────────────────────────────────── */
+    #page-parcours { align-items: flex-start; padding-top: 5.5rem; }
+
+    .section-badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border: 1.5px solid #d4af37;
+      border-radius: 30px;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 1.25rem;
+      font-family: 'Cinzel', serif;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 7vw, 2.2rem);
+      line-height: 1.25;
+      margin-bottom: 1.25rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+    }
+
+    .section-text {
+      font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+      color: #d4c5a9;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+    }
+
+    .parcours-highlight { color: #d4af37; font-weight: 600; }
+
+    .parcours-list {
+      list-style: none;
+      margin: 1rem 0 1.5rem;
+    }
+    .parcours-list li {
+      padding-left: 1.25rem;
+      position: relative;
+      font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+      color: #dbc09a;
+      line-height: 1.7;
+      margin-bottom: 0.85rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+    }
+    .parcours-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #d4af37;
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+    .parcours-list strong { color: #d4af37; }
+
+    .testimonial-card {
+      background: rgba(0,0,0,0.72);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-left: 3px solid #d4af37;
+      padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .quote-icon {
+      font-size: 2.8rem;
+      color: #d4af37;
+      opacity: 0.3;
+      line-height: 0.7;
+      margin-bottom: 0.75rem;
+      font-family: Georgia, serif;
+    }
+    .testimonial-text {
+      font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+      font-style: italic;
+      color: #dbc09a;
+      line-height: 1.65;
+      margin-bottom: 0.6rem;
+    }
+    .testimonial-author {
+      font-size: 0.8rem;
+      color: #d4af37;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+    }
+    .testimonial-role { font-size: 0.75rem; color: #a88734; }
+
+    /* ─────────────────────────────────────────
+       PROJETS
+    ───────────────────────────────────────── */
+    .projets-header { text-align: center; margin-bottom: 2rem; }
+
+    .project-card {
+      background: rgba(0,0,0,0.80);
+      border: 1.5px solid rgba(212,175,55,0.3);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .project-card:last-child { margin-bottom: 0; }
+    .project-card:active { border-color: #d4af37; }
+
+    .project-category {
+      display: inline-block;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid #d4af37;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #d4af37;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      margin-bottom: 0.85rem;
+    }
+    .project-title {
+      font-size: clamp(1.3rem, 5.5vw, 1.6rem);
+      color: #fff;
+      margin-bottom: 0.5rem;
+      font-family: 'Cinzel', serif;
+    }
+    .project-subtitle {
+      font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+      color: #d4af37;
+      font-style: italic;
+      margin-bottom: 0.75rem;
+    }
+    .project-desc {
+      font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+      color: #dbc09a;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .project-features {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+    .project-features li {
+      font-size: clamp(0.85rem, 3.2vw, 1rem);
+      color: #e8d5b7;
+      padding-left: 1.25rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+      line-height: 1.5;
+    }
+    .project-features li::before { content: "→"; position: absolute; left: 0; color: #d4af37; }
+    .project-link {
+      display: inline-block;
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(212,175,55,0.4);
+      padding-bottom: 2px;
+      letter-spacing: 0.05em;
+    }
+    .project-type-label {
+      font-size: 0.8rem;
+      color: #a88734;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-top: 0.75rem;
+    }
+
+    /* ─────────────────────────────────────────
+       FORMATION
+    ───────────────────────────────────────── */
+    .formation-card {
+      background: rgba(0,0,0,0.78);
+      border: 1px solid rgba(212,175,55,0.3);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.3s;
+    }
+    .formation-card:active { border-color: #d4af37; }
+    .formation-icon {
+      width: 48px; height: 48px;
+      background: rgba(212,175,55,0.15);
+      border: 1.5px solid #d4af37;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .formation-card-title {
+      font-size: clamp(1.1rem, 4.5vw, 1.3rem);
+      color: #fff;
+      margin-bottom: 0.85rem;
+      font-family: 'Cinzel', serif;
+    }
+    .formation-degree {
+      color: #d4af37;
+      font-size: clamp(0.85rem, 3.3vw, 1rem);
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .formation-details {
+      font-size: clamp(0.8rem, 3vw, 0.92rem);
+      color: #a88734;
+      margin-bottom: 0.65rem;
+      line-height: 1.5;
+    }
+    .formation-desc {
+      font-size: clamp(0.88rem, 3.3vw, 1rem);
+      color: #dbc09a;
+      line-height: 1.65;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(212,175,55,0.2);
+      margin-top: 0.5rem;
+    }
+
+    /* ─────────────────────────────────────────
+       CONTACT
+    ───────────────────────────────────────── */
+    #page-contact { align-items: center; padding-bottom: 5rem; }
+
+    .contact-inner { text-align: center; }
+
+    .contact-title {
+      font-size: clamp(1.6rem, 7vw, 2.4rem);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.9);
+    }
+
+    .contact-desc {
+      font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+      color: #dbc09a;
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+    }
+
+    .contact-tagline {
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      font-style: italic;
+      color: #d4af37;
+      margin-bottom: 2rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+    }
+
+    .contact-cta-box {
+      background: rgba(61,40,23,0.88);
+      border: 2px solid #d4af37;
+      padding: 1.75rem 1.5rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s ease;
+      display: block;
+      width: 100%;
+    }
+    .contact-cta-box:active {
+      border-color: #f4d03f;
+      box-shadow: 0 0 30px rgba(212,175,55,0.4);
+    }
+    .contact-cta-text {
+      font-size: clamp(1.5rem, 6.5vw, 2rem);
+      margin-bottom: 0.35rem;
+      font-family: 'Cinzel', serif;
+    }
+    .contact-cta-sub {
+      font-size: 0.7rem;
+      color: #d4af37;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: 'Cinzel', serif;
+    }
+    .contact-email {
+      margin-top: 1.5rem;
+      font-size: clamp(0.85rem, 3.3vw, 1rem);
+      color: #a88734;
+    }
+    .contact-email a {
+      color: #d4af37;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(212,175,55,0.4);
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER STRIP
+    ───────────────────────────────────────── */
+    .page-footer {
+      text-align: center;
+      padding: 0.75rem 1rem;
+      background: rgba(0,0,0,0.85);
+      border-top: 1px solid rgba(212,175,55,0.25);
+    }
+    .footer-text { font-size: 0.78rem; color: #a88734; letter-spacing: 0.04em; }
+
+    /* ─────────────────────────────────────────
+       MODAL CONTACT
+    ───────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 2000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal-content {
+      background: linear-gradient(160deg, #1a1410 0%, #3d2817 100%);
+      border: 1.5px solid rgba(212,175,55,0.5);
+      border-bottom: none;
+      border-radius: 20px 20px 0 0;
+      padding: 2rem 1.5rem 3rem;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUpModal 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes slideUpModal {
+      from { transform: translateY(100%); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: transparent; border: none;
+      color: #d4af37; cursor: pointer;
+      font-size: 1.75rem; line-height: 1;
+    }
+    .modal-title {
+      font-size: clamp(1.4rem, 6vw, 1.8rem);
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: #d4af37;
+      font-family: 'Cinzel', serif;
+    }
+    .modal-subtitle {
+      text-align: center;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
+      color: #dbc09a;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      color: #d4af37;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+    }
+    .form-input, .form-textarea {
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(212,175,55,0.4);
+      color: #e8d5b7;
+      padding: 0.85rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 15px rgba(212,175,55,0.25);
+    }
+    .form-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #3d2817 0%, #1a1410 100%);
+      border: 1.5px solid #d4af37;
+      color: #d4af37;
+      padding: 1rem;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.12em;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 1rem;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+    .btn-submit:active:not(:disabled) {
+      border-color: #f4d03f;
+      color: #f4d03f;
+    }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .form-note { text-align: center; font-size: 0.82rem; color: #a88734; margin-top: 0.75rem; font-style: italic; }
+
+    /* ─────────────────────────────────────────
+       NAV DOTS (section indicator)
+    ───────────────────────────────────────── */
+    .nav-dots {
+      position: fixed;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .nav-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.35);
+      border: 1px solid rgba(212,175,55,0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-dot.active {
+      background: #d4af37;
+      box-shadow: 0 0 6px rgba(212,175,55,0.7);
+    }
+
+    /* ─────────────────────────────────────────
+       SECTION DIVIDER
+    ───────────────────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(212,175,55,0.4), transparent);
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GRAIN -->
+  <div class="grain-texture"></div>
+
+  <!-- LANGUAGE TOGGLE -->
+  <div id="lang-toggle" role="group" aria-label="Language selector">
+    <button id="btn-fr" class="font-title-bold active" onclick="setLang('fr')" aria-pressed="true">FR</button>
+    <span class="lang-sep"></span>
+    <button id="btn-en" class="font-title-bold" onclick="setLang('en')" aria-pressed="false">EN</button>
+  </div>
+
+  <!-- NAV DOTS -->
+  <nav class="nav-dots" aria-hidden="true">
+    <div class="nav-dot active" onclick="scrollToSection('page-identity')"></div>
+    <div class="nav-dot" onclick="scrollToSection('page-parcours')"></div>
+    <div class="nav-dot" onclick="scrollToSection('page-projets')"></div>
+    <div class="nav-dot" onclick="scrollToSection('page-formation')"></div>
+    <div class="nav-dot" onclick="scrollToSection('page-contact')"></div>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 · IDENTITÉ
+  ══════════════════════════════════════ -->
+  <section id="page-identity" class="page-section">
+    <div class="vignette-strong"></div>
+    <div class="content">
+      <div class="identity-inner">
+        <h1 class="font-title identity-name">Sabine F. Cissé</h1>
+        <p class="font-title-bold identity-subtitle" data-i18n="subtitle"></p>
+        <p class="font-elegant identity-tagline" data-i18n="tagline"></p>
+        <p class="font-body identity-desc" data-i18n="identity_desc"></p>
+        <div class="scroll-cta" onclick="scrollToSection('page-parcours')">
+          <span data-i18n="discover"></span>
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 · PARCOURS
+  ══════════════════════════════════════ -->
+  <section id="page-parcours" class="page-section">
+    <div class="vignette"></div>
+    <div class="content">
+
+      <div class="section-badge font-title-bold" data-i18n="parcours_badge"></div>
+      <h2 class="font-title section-title" data-i18n="parcours_title"></h2>
+      <p class="font-body section-text" data-i18n="parcours_intro1"></p>
+      <p class="font-body section-text" data-i18n="parcours_intro2"></p>
+
+      <ul class="font-body parcours-list">
+        <li data-i18n="parcours_li1"></li>
+        <li data-i18n="parcours_li2"></li>
+        <li data-i18n="parcours_li3"></li>
+      </ul>
+
+      <!-- Testimonials (2 on mobile) -->
+      <div class="testimonial-card">
+        <div class="quote-icon">"</div>
+        <p class="font-elegant testimonial-text" data-i18n="t1_text"></p>
+        <p class="font-title-bold testimonial-author">Dr. Marie-Louise Fontaineau</p>
+        <p class="font-body testimonial-role" data-i18n="t1_role"></p>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-icon">"</div>
+        <p class="font-elegant testimonial-text" data-i18n="t3_text"></p>
+        <p class="font-title-bold testimonial-author">Hélène Charma</p>
+        <p class="font-body testimonial-role" data-i18n="t3_role"></p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 · PROJETS
+  ══════════════════════════════════════ -->
+  <section id="page-projets" class="page-section">
+    <div class="vignette"></div>
+    <div class="content">
+
+      <div class="projets-header">
+        <h2 class="font-title section-title" data-i18n="projets_title"></h2>
+        <p class="font-body section-text" data-i18n="projets_intro"></p>
+      </div>
+
+      <!-- Project 1 -->
+      <div class="project-card">
+        <span class="font-title-bold project-category" data-i18n="proj_personal"></span>
+        <h3 class="font-title project-title">JGC Blog</h3>
+        <p class="font-elegant project-subtitle" data-i18n="p1_sub"></p>
+        <p class="font-body project-desc" data-i18n="p1_desc"></p>
+        <ul class="font-body project-features">
+          <li data-i18n="p1_f1"></li>
+          <li data-i18n="p1_f2"></li>
+          <li data-i18n="p1_f4"></li>
+        </ul>
+        <a href="https://journalistgeocultures.com/" target="_blank" rel="noopener" class="font-title-bold project-link" data-i18n="p1_link"></a>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card">
+        <span class="font-title-bold project-category" data-i18n="proj_personal"></span>
+        <h3 class="font-title project-title">JGC Studio</h3>
+        <p class="font-elegant project-subtitle" data-i18n="p2_sub"></p>
+        <p class="font-body project-desc" data-i18n="p2_desc"></p>
+        <ul class="font-body project-features">
+          <li data-i18n="p2_f1"></li>
+          <li data-i18n="p2_f2"></li>
+          <li data-i18n="p2_f3"></li>
+        </ul>
+        <a href="https://fcisse-hub.github.io/JGC-STUDIO-Mobile-Version/" target="_blank" rel="noopener" class="font-title-bold project-link" data-i18n="p2_link"></a>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card">
+        <span class="font-title-bold project-category" data-i18n="proj_client"></span>
+        <h3 class="font-title project-title" data-i18n="p3_title"></h3>
+        <p class="font-elegant project-subtitle" data-i18n="p3_sub"></p>
+        <p class="font-body project-desc" data-i18n="p3_desc"></p>
+        <ul class="font-body project-features">
+          <li data-i18n="p3_f1"></li>
+          <li data-i18n="p3_f3"></li>
+        </ul>
+        <p class="font-body project-type-label" data-i18n="on_request"></p>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project-card">
+        <span class="font-title-bold project-category" data-i18n="proj_client"></span>
+        <h3 class="font-title project-title" data-i18n="p4_title"></h3>
+        <p class="font-elegant project-subtitle" data-i18n="p4_sub"></p>
+        <p class="font-body project-desc" data-i18n="p4_desc"></p>
+        <ul class="font-body project-features">
+          <li data-i18n="p4_f1"></li>
+          <li data-i18n="p4_f3"></li>
+        </ul>
+        <p class="font-body project-type-label" data-i18n="on_request"></p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 4 · FORMATION
+  ══════════════════════════════════════ -->
+  <section id="page-formation" class="page-section">
+    <div class="vignette"></div>
+    <div class="content">
+
+      <div class="formation-header" style="text-align:center; margin-bottom:1.75rem;">
+        <h2 class="font-title section-title" data-i18n="formation_title"></h2>
+        <p class="font-body section-text" data-i18n="formation_intro"></p>
+      </div>
+
+      <!-- Card 1 · Académique -->
+      <div class="formation-card">
+        <div class="formation-icon">🎓</div>
+        <h3 class="font-title-bold formation-card-title" data-i18n="fc1_title"></h3>
+        <p class="font-title-bold formation-degree" data-i18n="fc1_d2"></p>
+        <p class="font-body formation-details" data-i18n="fc1_d2_detail"></p>
+        <p class="font-title-bold formation-degree" data-i18n="fc1_d1"></p>
+        <p class="font-body formation-details" data-i18n="fc1_d1_detail"></p>
+        <p class="font-title-bold formation-degree" data-i18n="fc1_d3"></p>
+        <p class="font-body formation-details" data-i18n="fc1_d3_detail"></p>
+        <p class="font-title-bold formation-degree" data-i18n="fc1_d4"></p>
+        <p class="font-body formation-details" data-i18n="fc1_d4_detail"></p>
+        <p class="font-body formation-desc" data-i18n="fc1_desc"></p>
+      </div>
+
+      <!-- Card 2 · Certifications -->
+      <div class="formation-card">
+        <div class="formation-icon">🏅</div>
+        <h3 class="font-title-bold formation-card-title" data-i18n="fc2_title"></h3>
+        <p class="font-title-bold formation-degree">Adobe</p>
+        <p class="font-body formation-details" data-i18n="fc2_adobe"></p>
+        <p class="font-title-bold formation-degree">Google</p>
+        <p class="font-body formation-details" data-i18n="fc2_google"></p>
+        <p class="font-title-bold formation-degree">HubSpot</p>
+        <p class="font-body formation-details" data-i18n="fc2_hubspot"></p>
+        <p class="font-body formation-desc" data-i18n="fc2_desc"></p>
+      </div>
+
+      <!-- Card 3 · Continue -->
+      <div class="formation-card">
+        <div class="formation-icon">📖</div>
+        <h3 class="font-title-bold formation-card-title" data-i18n="fc3_title"></h3>
+        <p class="font-title-bold formation-degree" data-i18n="fc3_d3"></p>
+        <p class="font-body formation-details" data-i18n="fc3_d3_detail"></p>
+        <p class="font-title-bold formation-degree" data-i18n="fc3_d4"></p>
+        <p class="font-body formation-details" data-i18n="fc3_d4_detail"></p>
+        <p class="font-title-bold formation-degree" data-i18n="fc3_d1"></p>
+        <p class="font-body formation-details" data-i18n="fc3_d1_detail"></p>
+        <p class="font-body formation-desc" data-i18n="fc3_desc"></p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 5 · CONTACT
+  ══════════════════════════════════════ -->
+  <section id="page-contact" class="page-section">
+    <div class="vignette-strong"></div>
+    <div class="content">
+      <div class="contact-inner">
+        <h2 class="font-title contact-title" data-i18n="contact_title"></h2>
+        <p class="font-body contact-desc" data-i18n="contact_desc"></p>
+        <p class="font-elegant contact-tagline" data-i18n="contact_tagline"></p>
+        <div class="contact-cta-box" onclick="openContactForm()">
+          <h3 class="font-title contact-cta-text" data-i18n="cta_text"></h3>
+          <p class="font-title-bold contact-cta-sub" data-i18n="cta_sub"></p>
+        </div>
+        <p class="font-body contact-email">
+          <span data-i18n="contact_email_pre"></span>
+          <a href="mailto:jgcultures@gmail.com">jgcultures@gmail.com</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <p class="font-body footer-text" data-i18n="footer"></p>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MODAL CONTACT
+  ══════════════════════════════════════ -->
+  <div id="contactModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeContactForm()" aria-label="Fermer">&times;</button>
+      <h3 class="font-title modal-title" data-i18n="modal_title"></h3>
+      <p class="font-elegant modal-subtitle" data-i18n="modal_sub"></p>
+      <form id="contactForm" action="https://formspree.io/f/xvzdoklv" method="POST" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label class="form-label font-title-bold" data-i18n="form_name"></label>
+          <input type="text" name="name" class="form-input" required data-i18n-placeholder="form_name_ph" />
+        </div>
+        <div class="form-group">
+          <label class="form-label font-title-bold" data-i18n="form_email"></label>
+          <input type="email" name="email" class="form-input" required placeholder="votre@email.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label font-title-bold" data-i18n="form_message"></label>
+          <textarea name="message" class="form-textarea" required data-i18n-placeholder="form_message_ph"></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn" data-i18n="form_send"></button>
+        <p class="form-note font-body" data-i18n="form_note"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════ -->
+  <script>
+  /* ── TRANSLATIONS ── */
+  const i18n = {
+    fr: {
+      subtitle: "Motion Designer Senior · Directrice Éditoriale · Stratège de Contenu Digital",
+      tagline: "« J'édite, je crée, je raconte : en texte, en image, en mouvement. »",
+      identity_desc: "Pendant dix ans chez Business Wire, j'ai édité des contenus pour Thales, Idemia, Vivendi, Kering et des dizaines d'entreprises du CAC40. Aujourd'hui, je transpose cette rigueur éditoriale dans la création de contenus culturels et narratifs à travers JGC Studio. Ma marque de qualité ? Le meilleur contenu allie précision du message et beauté de l'exécution.",
+      discover: "Découvrir",
+      parcours_badge: "Parcours Professionnel",
+      parcours_title: "Dix ans à orchestrer contenus et stratégies pour des clients internationaux",
+      parcours_intro1: "Chez Business Wire pendant une décennie, j'ai coordonné la production éditoriale multimédia pour des entreprises du CAC40 et du Forbes 50 — Thales, Idemia, et bien d'autres. <span class='parcours-highlight'>De la rédaction SEO à la distribution internationale (AFP, ANSA, VWD), j'ai appris à jongler entre rigueur technique et impact visuel.</span>",
+      parcours_intro2: "Aujourd'hui, je conçois des stratégies éditoriales, je produis des contenus multimédias et j'accompagne des projets qui cherchent à allier substance intellectuelle et qualité esthétique.",
+      parcours_li1: "<strong>Édition &amp; Publication :</strong> Direction éditoriale, réécriture, mise en forme de contenus académiques et culturels",
+      parcours_li2: "<strong>Stratégie de Contenu :</strong> Conception narrative, planification éditoriale, optimisation pour publics exigeants",
+      parcours_li3: "<strong>Médiation Culturelle :</strong> Transmission des savoirs, vulgarisation intelligente, création d'expériences intellectuelles",
+      t1_text: "Une plume rare, capable de donner vie aux concepts les plus complexes avec élégance et clarté.",
+      t1_role: "Directrice de Recherche, Université Sorbonne",
+      t3_text: "Sa capacité à tisser des ponts entre culture et innovation technologique est tout simplement exceptionnelle.",
+      t3_role: "Conservatrice, Musée des Arts Décoratifs",
+      projets_title: "JGC : Blog, Studio, Design",
+      projets_intro: "Quatre projets qui montrent ce que je sais faire : éditer du contenu exigeant, concevoir des interfaces, produire des formats audio et vidéo.",
+      proj_personal: "Projet Personnel",
+      proj_client: "Travaux Clients",
+      p1_sub: "Un espace de réflexion littéraire et culturelle",
+      p1_desc: "Blog éditorial explorant l'intersection entre littérature, culture digitale et humanités.",
+      p1_f1: "Articles de fond sur la littérature et la culture",
+      p1_f2: "Critiques littéraires et analyses culturelles",
+      p1_f4: "Interface Dark Academia sur mesure",
+      p1_link: "Visiter le blog →",
+      p2_sub: "Hub créatif multimédia",
+      p2_desc: "Plateforme centralisée regroupant mes créations audio et vidéo : podcast littéraire, analyses vidéo, entretiens.",
+      p2_f1: "Podcast \"Sincerely, Sabine\"",
+      p2_f2: "Podcast \"Les Chroniques d'Evana\"",
+      p2_f3: "Vidéos d'analyse culturelle et littéraire",
+      p2_link: "Découvrir le studio →",
+      p3_title: "Wireframes & Prototypes",
+      p3_sub: "Conception UX pour projets éditoriaux",
+      p3_desc: "Wireframes et maquettes basse fidélité pour maisons d'édition, institutions culturelles, plateformes éducatives.",
+      p3_f1: "Wireframes responsive (mobile, tablette, desktop)",
+      p3_f3: "Hiérarchie de l'information éditoriale",
+      p4_title: "Design Systems & Interfaces",
+      p4_sub: "Identités visuelles complètes",
+      p4_desc: "Maquettes haute fidélité et design systems pour projets culturels et éditoriaux.",
+      p4_f1: "Design systems complets (composants, tokens)",
+      p4_f3: "Identités visuelles Dark Academia & éditoriales",
+      on_request: "Portfolio disponible sur demande",
+      formation_title: "Une légitimité construite sur l'exigence",
+      formation_intro: "Mon parcours académique reflète une quête constante : comprendre les mécanismes de la pensée, de la création et de la transmission.",
+      fc1_title: "Formation Universitaire",
+      fc1_d1: "Master en Langues et Cultures Étrangères",
+      fc1_d1_detail: "Civilisations Anglophones · Paris Sorbonne X",
+      fc1_d2: "BUT MMI *",
+      fc1_d2_detail: "Métiers du Multimédia et de l'Internet\nParcours Création Numérique · Université Cergy Paris",
+      fc1_d3: "Double Licence Histoire-Science Politique",
+      fc1_d3_detail: "Université Paris I - Sorbonne",
+      fc1_d4: "Baccalauréat Littéraire",
+      fc1_d4_detail: "Mention Bien · Lycée Harteloire, Brest",
+      fc1_desc: "Un parcours qui m'a permis d'affûter mon regard critique et ma compréhension des enjeux culturels contemporains.",
+      fc2_title: "Certifications Professionnelles",
+      fc2_adobe: "Principes de conception avec l'IA",
+      fc2_google: "Foundations: Data, Data, Everywhere · Principes UX",
+      fc2_hubspot: "Le Marketing de Contenu",
+      fc2_desc: "Des compétences techniques au service d'une vision créative et stratégique.",
+      fc3_title: "Formation Continue",
+      fc3_d1: "Veille intellectuelle active",
+      fc3_d1_detail: "Littérature, philosophie, culture digitale et langues",
+      fc3_d3: "Ateliers d'écriture créative",
+      fc3_d3_detail: "CU Pratiques de l'écriture créative · Université Cergy Paris",
+      fc3_d4: "Perfectionnement stylistique",
+      fc3_d4_detail: "Littérature jeunesse · Université de Liège",
+      fc3_desc: "La curiosité comme moteur, l'excellence comme horizon.",
+      contact_title: "Créons ensemble quelque chose d'exceptionnel",
+      contact_desc: "Vous avez un projet éditorial, culturel ou stratégique qui mérite attention et excellence ?",
+      contact_tagline: "Je serais honorée d'en discuter avec vous.",
+      cta_text: "Contactez moi",
+      cta_sub: "Cliquez sur le parchemin",
+      contact_email_pre: "Ou contactez-moi directement : ",
+      footer: "© 2024 JGC Studio – Sabine F. Cissé | Tous droits réservés",
+      modal_title: "Commençons l'échange",
+      modal_sub: "Partagez votre vision, je vous répondrai avec attention",
+      form_name: "Votre nom",
+      form_name_ph: "Prénom Nom",
+      form_email: "Votre email",
+      form_message: "Votre message",
+      form_message_ph: "Parlez-moi de votre projet...",
+      form_send: "Envoyer le message",
+      form_note: "Réponse garantie sous 48 heures"
+    },
+    en: {
+      subtitle: "Senior Motion Designer · Editorial Director · Digital Content Strategist",
+      tagline: "« I edit, I create, I tell stories: in text, in image, in motion. »",
+      identity_desc: "For ten years at Business Wire, I edited content for Thales, Idemia, Vivendi, Kering and dozens of CAC40 companies. Today, I channel that editorial rigour into cultural and narrative content creation through JGC Studio. My hallmark? The best content unites precision of message with beauty of execution.",
+      discover: "Discover",
+      parcours_badge: "Professional Background",
+      parcours_title: "Ten years orchestrating content and strategies for international clients",
+      parcours_intro1: "At Business Wire for a decade, I coordinated multimedia editorial production for CAC40 and Forbes 50 companies — Thales, Idemia, and many more. <span class='parcours-highlight'>From SEO writing to international distribution (AFP, ANSA, VWD), I learned to balance technical rigour with visual impact.</span>",
+      parcours_intro2: "Today, I design editorial strategies, produce multimedia content and support projects seeking to combine intellectual substance with aesthetic quality.",
+      parcours_li1: "<strong>Editing &amp; Publishing:</strong> Editorial direction, rewriting, formatting of academic and cultural content",
+      parcours_li2: "<strong>Content Strategy:</strong> Narrative design, editorial planning, optimisation for demanding audiences",
+      parcours_li3: "<strong>Cultural Mediation:</strong> Knowledge transmission, intelligent popularisation, creation of intellectual experiences",
+      t1_text: "A rare talent, capable of bringing the most complex concepts to life with elegance and clarity.",
+      t1_role: "Research Director, Sorbonne University",
+      t3_text: "Her ability to bridge culture and technological innovation is simply exceptional.",
+      t3_role: "Curator, Musée des Arts Décoratifs",
+      projets_title: "JGC: Blog, Studio, Design",
+      projets_intro: "Four projects demonstrating what I do: editing demanding content, designing usable interfaces, producing audio and video formats.",
+      proj_personal: "Personal Project",
+      proj_client: "Client Work",
+      p1_sub: "A space for literary and cultural reflection",
+      p1_desc: "Editorial blog exploring the intersection of literature, digital culture and the humanities.",
+      p1_f1: "In-depth articles on literature and culture",
+      p1_f2: "Literary reviews and cultural analyses",
+      p1_f4: "Custom Dark Academia interface",
+      p1_link: "Visit the blog →",
+      p2_sub: "Multimedia creative hub",
+      p2_desc: "Centralised platform bringing together my audio and video creations: literary podcast, video analyses, interviews.",
+      p2_f1: "Podcast \"Sincerely, Sabine\"",
+      p2_f2: "Podcast \"The Chronicle of Evana\"",
+      p2_f3: "Cultural and literary analysis videos",
+      p2_link: "Discover the studio →",
+      p3_title: "Wireframes & Prototypes",
+      p3_sub: "UX design for editorial projects",
+      p3_desc: "Wireframes and low-fidelity mockups for publishing houses, cultural institutions, educational platforms.",
+      p3_f1: "Responsive wireframes (mobile, tablet, desktop)",
+      p3_f3: "Editorial information hierarchy",
+      p4_title: "Design Systems & Interfaces",
+      p4_sub: "Complete visual identities",
+      p4_desc: "High-fidelity mockups and design systems for cultural and editorial projects.",
+      p4_f1: "Complete design systems (components, tokens)",
+      p4_f3: "Dark Academia & editorial visual identities",
+      on_request: "Portfolio available on request",
+      formation_title: "Legitimacy built on rigour",
+      formation_intro: "My academic background reflects a constant quest: to understand the mechanisms of thought, creation and transmission.",
+      fc1_title: "University Education",
+      fc1_d1: "Master's in Foreign Languages and Cultures",
+      fc1_d1_detail: "Anglophone Civilisations · Paris Sorbonne X",
+      fc1_d2: "BUT MMI *",
+      fc1_d2_detail: "Multimedia and Internet Professions\nDigital Creation Track · Cergy Paris University",
+      fc1_d3: "Double Degree: History & Political Science",
+      fc1_d3_detail: "Université Paris I – Sorbonne",
+      fc1_d4: "Literary Baccalaureate",
+      fc1_d4_detail: "Honours · Lycée Harteloire, Brest",
+      fc1_desc: "A path that honed my critical eye and my understanding of contemporary cultural issues.",
+      fc2_title: "Professional Certifications",
+      fc2_adobe: "Design Principles with AI",
+      fc2_google: "Foundations: Data, Data, Everywhere · UX Principles",
+      fc2_hubspot: "Content Marketing",
+      fc2_desc: "Technical skills in service of a creative and strategic vision.",
+      fc3_title: "Continuing Education",
+      fc3_d1: "Active intellectual monitoring",
+      fc3_d1_detail: "Literature, philosophy, digital culture and languages",
+      fc3_d3: "Creative writing workshops",
+      fc3_d3_detail: "CU Creative Writing Practices · Cergy Paris University",
+      fc3_d4: "Stylistic refinement",
+      fc3_d4_detail: "Children's Literature · University of Liège",
+      fc3_desc: "Curiosity as the engine, excellence as the horizon.",
+      contact_title: "Let's create something exceptional together",
+      contact_desc: "Do you have an editorial, cultural or strategic project that deserves attention and excellence?",
+      contact_tagline: "I would be honoured to discuss it with you.",
+      cta_text: "Get in touch",
+      cta_sub: "Click on the parchment",
+      contact_email_pre: "Or write to me directly: ",
+      footer: "© 2024 JGC Studio – Sabine F. Cissé | All rights reserved",
+      modal_title: "Let's start the conversation",
+      modal_sub: "Share your vision, I will respond with care",
+      form_name: "Your name",
+      form_name_ph: "First Last",
+      form_email: "Your email",
+      form_message: "Your message",
+      form_message_ph: "Tell me about your project...",
+      form_send: "Send message",
+      form_note: "Response guaranteed within 48 hours"
+    }
+  };
+
+  let currentLang = 'fr';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-fr').setAttribute('aria-pressed', lang === 'fr');
+    document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
+    const t = i18n[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (t[key] !== undefined) el.placeholder = t[key];
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => setLang('fr'));
+
+  /* ── SCROLL NAVIGATION ── */
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ── NAV DOTS SYNC ── */
+  const sections = ['page-identity','page-parcours','page-projets','page-formation','page-contact'];
+  const dots = document.querySelectorAll('.nav-dot');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = sections.indexOf(entry.target.id);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  });
+
+  /* ── CONTACT MODAL ── */
+  function openContactForm() {
+    document.getElementById('contactModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeContactForm() {
+    document.getElementById('contactModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeContactForm();
+  });
+  document.getElementById('contactModal').addEventListener('click', e => {
+    if (e.target.id === 'contactModal') closeContactForm();
+  });
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const form = event.target;
+    btn.disabled = true;
+    btn.textContent = currentLang === 'fr' ? 'ENVOI...' : 'SENDING...';
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(r => {
+      if (r.ok) {
+        btn.textContent = currentLang === 'fr' ? '✓ ENVOYÉ' : '✓ SENT';
+        form.reset();
+        setTimeout(() => { closeContactForm(); btn.disabled = false; btn.textContent = i18n[currentLang].form_send; }, 2000);
+      } else throw new Error();
+    })
+    .catch(() => {
+      btn.disabled = false;
+      btn.textContent = currentLang === 'fr' ? '✗ ERREUR — RÉESSAYER' : '✗ ERROR — RETRY';
+      setTimeout(() => { btn.textContent = i18n[currentLang].form_send; }, 3000);
+    });
+  }
+  </script>
+
+</body>
+</html>
