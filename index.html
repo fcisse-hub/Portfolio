@@ -247,17 +247,15 @@
     /* Remove grain */
     body.accessible .grain-texture { display: none; }
 
-    /* Vignettes → very light so text on light bg remains readable */
-    body.accessible .vignette-overlay {
-      background: radial-gradient(ellipse at center, rgba(253,249,242,0.10) 20%, rgba(44,31,20,0.18) 90%);
-    }
+    /* Vignettes → cream wash to mute photo and contrast dark text */
+    body.accessible .vignette-overlay,
     body.accessible #page-identity .vignette-overlay,
     body.accessible #page-parcours .vignette-overlay,
     body.accessible #page-contact .vignette-overlay {
-      background: radial-gradient(ellipse at center, rgba(253,249,242,0.08) 20%, rgba(44,31,20,0.22) 90%);
+      background: rgba(253,249,242,0.54);
     }
 
-    /* Global text colours */
+    /* Global text colours — near-black for maximum contrast on cream wash */
     body.accessible .identity-subtitle,
     body.accessible .scroll-indicator,
     body.accessible .parcours-badge,
@@ -271,7 +269,7 @@
     body.accessible .formation-degree,
     body.accessible .contact-tagline,
     body.accessible .contact-cta-subtitle,
-    body.accessible .footer-separator { color: #7a5415; }
+    body.accessible .footer-separator { color: #5c3d0a; }
 
     body.accessible .identity-tagline,
     body.accessible .identity-description,
@@ -287,15 +285,30 @@
     body.accessible .formation-description,
     body.accessible .contact-description,
     body.accessible .contact-email,
-    body.accessible .footer-text { color: #3d2c1e; }
+    body.accessible .footer-text { color: #1a1008; font-weight: 600; }
 
     body.accessible .project-title,
-    body.accessible .formation-card-title { color: #1a120a; }
+    body.accessible .formation-card-title { color: #0a0805; }
 
-    body.accessible .contact-email a { color: #7a5415; }
+    body.accessible .contact-email a { color: #5c3d0a; }
 
-    /* Text shadows on accessible mode: white halo for overlay text on light photos */
-    /* Direct overlay text (on background image) gets a light halo for readability */
+    /* Bold all overlay text for maximum legibility on photo backgrounds */
+    body.accessible .identity-title,
+    body.accessible .identity-subtitle,
+    body.accessible .identity-tagline,
+    body.accessible .identity-description,
+    body.accessible .parcours-title,
+    body.accessible .parcours-intro,
+    body.accessible .parcours-list li,
+    body.accessible .projets-title,
+    body.accessible .projets-intro,
+    body.accessible .formation-title,
+    body.accessible .formation-intro,
+    body.accessible .contact-title,
+    body.accessible .contact-description,
+    body.accessible .contact-tagline { font-weight: 700; }
+
+    /* Text shadows: cream wash vignette handles contrast; subtle shadow for extra legibility */
     body.accessible .identity-title,
     body.accessible .identity-subtitle,
     body.accessible .identity-tagline,
@@ -312,9 +325,8 @@
     body.accessible .contact-title,
     body.accessible .contact-description,
     body.accessible .contact-tagline {
-      text-shadow: 0 1px 8px rgba(255,255,255,0.90), 0 2px 18px rgba(255,255,255,0.70);
+      text-shadow: 0 1px 4px rgba(253,249,242,0.95), 0 2px 10px rgba(253,249,242,0.80);
     }
-    /* Cards have solid bg — no shadow needed, but keep inner text crisp */
     body.accessible .project-title,
     body.accessible .project-description,
     body.accessible .project-features li,
