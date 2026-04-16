@@ -33,7 +33,7 @@
 
     /* ── TYPOGRAPHY CLASSES ── */
     .font-title     { font-family: 'Cinzel', serif; font-weight: 400; }
-    .font-title-bold{ font-family: 'Cinzel', serif; font-weight: 700; }
+    .font-title-bold{ font-family: 'Cinzel', serif; }
     .font-body      { font-family: 'Cormorant Garamond', serif; line-height: 1.7; }
     .font-elegant   { font-family: 'EB Garamond', serif; line-height: 1.7; }
 
@@ -224,7 +224,7 @@
       text-shadow: 0 1px 8px rgba(0,0,0,0.8);
     }
 
-    .parcours-highlight { color: #d4af37; font-weight: 600; }
+    .parcours-highlight { color: #d4af37; }
 
     .parcours-list {
       list-style: none;
@@ -634,8 +634,30 @@
     ═══════════════════════════════════════════ */
     body.accessible {
       background-color: #fdf9f2;
-      color: #2c1f14;
+      color: #1a1008;
       font-size: 108%;
+    }
+    /* Global bold — every text element in accessible mode */
+    body.accessible *,
+    body.accessible p,
+    body.accessible li,
+    body.accessible span,
+    body.accessible a,
+    body.accessible label {
+      font-weight: 600;
+    }
+    body.accessible h1,
+    body.accessible h2,
+    body.accessible h3,
+    body.accessible .font-title,
+    body.accessible .font-title-bold,
+    body.accessible .section-title,
+    body.accessible .identity-name,
+    body.accessible .project-title,
+    body.accessible .formation-card-title,
+    body.accessible .contact-title,
+    body.accessible .modal-title {
+      font-weight: 700;
     }
 
     /* Backgrounds → light mobile versions */
@@ -644,6 +666,13 @@
     body.accessible #page-projets   { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/projects-light-mobile.png?raw=true'); }
     body.accessible #page-formation { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/formation-light-mobile.png?raw=true'); }
     body.accessible #page-contact   { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/contact-light-mobile.png?raw=true'); }
+
+    /* Lock identity section to exact viewport height — prevents image rescaling on lang toggle */
+    body.accessible #page-identity {
+      height: 100svh;
+      min-height: 0;
+      overflow: hidden;
+    }
 
     /* Remove grain */
     body.accessible .grain-texture { display: none; }
@@ -661,18 +690,18 @@
       background: rgba(253,249,242,0.88);
       border-top-color: rgba(122,84,21,0.35);
     }
-    body.accessible .identity-name { color: #0a0805; font-weight: 700; text-shadow: 0 1px 4px rgba(253,249,242,0.95); }
-    body.accessible .identity-subtitle { color: #5c3d0a; font-weight: 700; text-shadow: 0 1px 4px rgba(253,249,242,0.90); }
-    body.accessible .identity-tagline { color: #1a1008; font-weight: 600; text-shadow: 0 1px 4px rgba(253,249,242,0.90); }
-    body.accessible .identity-desc { color: #1a1008; font-weight: 600; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
+    body.accessible .identity-name { color: #0a0805; text-shadow: 0 1px 4px rgba(253,249,242,0.95); }
+    body.accessible .identity-subtitle { color: #5c3d0a; text-shadow: 0 1px 4px rgba(253,249,242,0.90); }
+    body.accessible .identity-tagline { color: #1a1008; text-shadow: 0 1px 4px rgba(253,249,242,0.90); }
+    body.accessible .identity-desc { color: #1a1008; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
     body.accessible .scroll-cta { color: #7a5415; }
 
     /* Section elements */
     body.accessible .section-badge { border-color: #7a5415; color: #7a5415; }
-    body.accessible .section-title { color: #0a0805; font-weight: 700; text-shadow: 0 1px 4px rgba(253,249,242,0.95); }
-    body.accessible .section-text { color: #1a1008; font-weight: 600; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
-    body.accessible .parcours-highlight { color: #5c3d0a; font-weight: 700; }
-    body.accessible .parcours-list li { color: #1a1008; font-weight: 600; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
+    body.accessible .section-title { color: #0a0805; text-shadow: 0 1px 4px rgba(253,249,242,0.95); }
+    body.accessible .section-text { color: #1a1008; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
+    body.accessible .parcours-highlight { color: #5c3d0a; }
+    body.accessible .parcours-list li { color: #1a1008; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
     body.accessible .parcours-list li::before { color: #7a5415; }
     body.accessible .parcours-list strong { color: #7a5415; }
 
@@ -683,7 +712,7 @@
       border-left-color: #7a5415;
     }
     body.accessible .quote-icon { color: #7a5415; }
-    body.accessible .testimonial-text { color: #1a1008; font-weight: 600; }
+    body.accessible .testimonial-text { color: #1a1008; }
     body.accessible .testimonial-author { color: #7a5415; }
     body.accessible .testimonial-role { color: #6b4c11; }
 
@@ -726,9 +755,9 @@
     }
 
     /* Contact */
-    body.accessible .contact-title { color: #0a0805; font-weight: 700; text-shadow: 0 1px 4px rgba(253,249,242,0.95); }
-    body.accessible .contact-desc { color: #1a1008; font-weight: 600; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
-    body.accessible .contact-tagline { color: #5c3d0a; font-weight: 600; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
+    body.accessible .contact-title { color: #0a0805; text-shadow: 0 1px 4px rgba(253,249,242,0.95); }
+    body.accessible .contact-desc { color: #1a1008; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
+    body.accessible .contact-tagline { color: #5c3d0a; text-shadow: 0 1px 4px rgba(253,249,242,0.85); }
     body.accessible .contact-cta-box {
       background: rgba(253,249,242,0.92);
       border-color: #7a5415;
