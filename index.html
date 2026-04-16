@@ -225,15 +225,208 @@
         background-attachment: scroll !important;
       }
     }
+
+    /* ═══════════════════════════════════════════
+       ACCESSIBLE MODE  (body.accessible)
+       Palette: warm off-white · dark brown text
+       WCAG AA contrast ratios throughout
+    ═══════════════════════════════════════════ */
+    body.accessible {
+      background-color: #fdf9f2;
+      color: #2c1f14;
+      font-size: 110%;
+    }
+
+    /* Backgrounds → light versions */
+    body.accessible #page-identity  { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/identity-light.png?raw=true'); }
+    body.accessible #page-parcours  { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/parcours-light.png?raw=true'); }
+    body.accessible #page-projets   { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/projects-light.png?raw=true'); }
+    body.accessible #page-formation { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/formation-light.png?raw=true'); }
+    body.accessible #page-contact   { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/contact-light.png?raw=true'); }
+
+    /* Remove grain */
+    body.accessible .grain-texture { display: none; }
+
+    /* Vignettes → very light so text on light bg remains readable */
+    body.accessible .vignette-overlay {
+      background: radial-gradient(ellipse at center, rgba(253,249,242,0.10) 20%, rgba(44,31,20,0.18) 90%);
+    }
+    body.accessible #page-identity .vignette-overlay,
+    body.accessible #page-parcours .vignette-overlay,
+    body.accessible #page-contact .vignette-overlay {
+      background: radial-gradient(ellipse at center, rgba(253,249,242,0.08) 20%, rgba(44,31,20,0.22) 90%);
+    }
+
+    /* Global text colours */
+    body.accessible .identity-subtitle,
+    body.accessible .scroll-indicator,
+    body.accessible .parcours-badge,
+    body.accessible .parcours-highlight,
+    body.accessible .parcours-list strong,
+    body.accessible .testimonial-author,
+    body.accessible .project-category,
+    body.accessible .project-subtitle,
+    body.accessible .project-link,
+    body.accessible .project-features li::before,
+    body.accessible .formation-degree,
+    body.accessible .contact-tagline,
+    body.accessible .contact-cta-subtitle,
+    body.accessible .footer-separator { color: #7a5415; }
+
+    body.accessible .identity-tagline,
+    body.accessible .identity-description,
+    body.accessible .parcours-intro,
+    body.accessible .parcours-list li,
+    body.accessible .testimonial-text,
+    body.accessible .testimonial-role,
+    body.accessible .projets-intro,
+    body.accessible .project-description,
+    body.accessible .project-features li,
+    body.accessible .formation-intro,
+    body.accessible .formation-details,
+    body.accessible .formation-description,
+    body.accessible .contact-description,
+    body.accessible .contact-email,
+    body.accessible .footer-text { color: #3d2c1e; }
+
+    body.accessible .project-title,
+    body.accessible .formation-card-title { color: #1a120a; }
+
+    body.accessible .contact-email a { color: #7a5415; }
+
+    /* Remove text shadows (unnecessary on light bg) */
+    body.accessible [class*="identity-"],
+    body.accessible [class*="parcours-"],
+    body.accessible [class*="section-"],
+    body.accessible [class*="contact-"],
+    body.accessible .testimonial-text { text-shadow: none; }
+
+    /* Cards → light, warm white */
+    body.accessible .project-card {
+      background: rgba(253, 249, 242, 0.93);
+      border-color: rgba(122, 84, 21, 0.35);
+      box-shadow: 0 2px 16px rgba(44,31,20,0.10);
+    }
+    body.accessible .project-card:hover {
+      border-color: #7a5415;
+      box-shadow: 0 12px 32px rgba(44,31,20,0.18);
+    }
+    body.accessible .project-category {
+      background: rgba(122,84,21,0.12);
+      border-color: #7a5415;
+    }
+
+    body.accessible .testimonial-card {
+      background: rgba(253, 249, 242, 0.90);
+      border-color: rgba(122,84,21,0.2);
+      border-left-color: #7a5415;
+    }
+    body.accessible .quote-icon { color: #7a5415; }
+
+    body.accessible .formation-card {
+      background: rgba(253, 249, 242, 0.90);
+      border-color: rgba(122,84,21,0.25);
+    }
+    body.accessible .formation-card:hover { border-color: #7a5415; }
+    body.accessible .formation-icon {
+      background: rgba(122,84,21,0.12);
+      border-color: #7a5415;
+    }
+    body.accessible .formation-description {
+      border-top-color: rgba(122,84,21,0.2);
+    }
+
+    /* Parcours badge */
+    body.accessible .parcours-badge { border-color: #7a5415; }
+    body.accessible .parcours-list li::before { color: #7a5415; }
+
+    /* Contact CTA */
+    body.accessible .contact-cta-box {
+      background: rgba(253,249,242,0.92);
+      border-color: #7a5415;
+    }
+    body.accessible .contact-cta-box:hover {
+      border-color: #5c3d0a;
+      box-shadow: 0 0 40px rgba(122,84,21,0.25);
+    }
+
+    /* Footer */
+    body.accessible .page-footer {
+      background: rgba(253,249,242,0.92);
+      border-top-color: rgba(122,84,21,0.3);
+    }
+
+    /* Modal */
+    body.accessible .modal-overlay { background: rgba(253,249,242,0.97); }
+    body.accessible .modal-content {
+      background: linear-gradient(135deg, #fdf9f2 0%, #f7ede0 100%);
+      border-color: rgba(122,84,21,0.45);
+      color: #2c1f14;
+    }
+    body.accessible .modal-title { color: #7a5415; }
+    body.accessible .modal-subtitle { color: #3d2c1e; }
+    body.accessible .close-btn { color: #7a5415; }
+    body.accessible .close-btn:hover { color: #5c3d0a; }
+    body.accessible .form-label { color: #7a5415; }
+    body.accessible .form-input,
+    body.accessible .form-textarea {
+      background: rgba(255,255,255,0.8);
+      border-color: rgba(122,84,21,0.4);
+      color: #2c1f14;
+    }
+    body.accessible .form-input:focus,
+    body.accessible .form-textarea:focus {
+      border-color: #7a5415;
+      box-shadow: 0 0 15px rgba(122,84,21,0.20);
+      background: rgba(255,255,255,0.95);
+    }
+    body.accessible .btn-submit {
+      background: linear-gradient(135deg, #f7ede0 0%, #fdf9f2 100%);
+      border-color: #7a5415;
+      color: #7a5415;
+    }
+    body.accessible .btn-submit:hover:not(:disabled) {
+      border-color: #5c3d0a;
+      color: #5c3d0a;
+      box-shadow: 0 0 20px rgba(122,84,21,0.25);
+    }
+    body.accessible .form-note { color: #6b4c11; }
+
+    /* Lang-toggle accessible mode */
+    body.accessible #lang-toggle {
+      background: rgba(253,249,242,0.95);
+      border-color: #7a5415;
+    }
+    body.accessible #lang-toggle button { color: #7a5415; }
+    body.accessible #lang-toggle button.active {
+      background: #7a5415;
+      color: #fdf9f2;
+    }
+    body.accessible #lang-toggle button:hover:not(.active) {
+      color: #5c3d0a;
+      background: rgba(122,84,21,0.10);
+    }
+    body.accessible #lang-toggle .lang-sep { background: rgba(122,84,21,0.35); }
+
+    /* A11Y button always shows its state clearly */
+    #btn-a11y { min-width: 2rem; display: flex; align-items: center; justify-content: center; }
+    #btn-a11y svg { pointer-events: none; }
   </style>
 </head>
 <body>
 
   <!-- ─── LANGUAGE TOGGLE ─── -->
-  <div id="lang-toggle" role="group" aria-label="Language selector">
+  <div id="lang-toggle" role="group" aria-label="Language / Accessibility selector">
     <button id="btn-fr" class="font-title-bold active" onclick="setLang('fr')" aria-pressed="true">FR</button>
     <span class="lang-sep"></span>
     <button id="btn-en" class="font-title-bold" onclick="setLang('en')" aria-pressed="false">EN</button>
+    <span class="lang-sep"></span>
+    <button id="btn-a11y" onclick="toggleAccessible()" aria-pressed="false" aria-label="Mode accessible" title="Mode accessible – version lisibilité renforcée">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+        <circle cx="12" cy="4" r="2"/>
+        <path d="M19 9H5a1 1 0 0 0 0 2h5.5l-1.8 7.2A1 1 0 0 0 10.5 20h.1l1.4-5.6 1.4 5.6h.1a1 1 0 0 0 .8-1.8L12.5 11H19a1 1 0 0 0 0-2z"/>
+      </svg>
+    </button>
   </div>
 
   <div class="grain-texture"></div>
@@ -714,7 +907,23 @@
   }
 
   // Initialise French on load
-  document.addEventListener('DOMContentLoaded', () => setLang('fr'));
+  document.addEventListener('DOMContentLoaded', () => {
+    setLang('fr');
+    // Restore accessible mode preference
+    if (localStorage.getItem('portfolioA11y') === '1') {
+      document.body.classList.add('accessible');
+      document.getElementById('btn-a11y').classList.add('active');
+      document.getElementById('btn-a11y').setAttribute('aria-pressed', 'true');
+    }
+  });
+
+  function toggleAccessible() {
+    const isOn = document.body.classList.toggle('accessible');
+    const btn = document.getElementById('btn-a11y');
+    btn.classList.toggle('active', isOn);
+    btn.setAttribute('aria-pressed', isOn ? 'true' : 'false');
+    try { localStorage.setItem('portfolioA11y', isOn ? '1' : '0'); } catch(e) {}
+  }
 
   // ─── CONTACT FORM ───
   function openContactForm() {
