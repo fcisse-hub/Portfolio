@@ -637,18 +637,37 @@
       color: #1a1008;
       font-size: 118%;
     }
-    /* Global bold — force 700 on ALL text; Cormorant/EB Garamond need this */
-    body.accessible *,
+    /* ── ACCESSIBLE MODE TYPOGRAPHY ──────────────────────────────────────
+       Switch body text to Georgia: system font, designed for screen
+       readability, genuinely heavy at bold — unlike Cormorant Garamond
+       which stays visually thin even at weight 700.
+       Cinzel (headings) is kept: it holds up well at 700/900.
+    ────────────────────────────────────────────────────────────────── */
+    body.accessible .font-body,
+    body.accessible .font-elegant,
     body.accessible p,
     body.accessible li,
-    body.accessible span,
-    body.accessible a,
-    body.accessible label,
-    body.accessible .font-body,
-    body.accessible .font-elegant {
-      font-weight: 700 !important;
-      font-size: 108%;
+    body.accessible .section-text,
+    body.accessible .identity-tagline,
+    body.accessible .identity-desc,
+    body.accessible .testimonial-text,
+    body.accessible .testimonial-role,
+    body.accessible .project-desc,
+    body.accessible .project-features li,
+    body.accessible .formation-details,
+    body.accessible .formation-desc,
+    body.accessible .contact-desc,
+    body.accessible .contact-email,
+    body.accessible .footer-text,
+    body.accessible .modal-subtitle,
+    body.accessible .form-note,
+    body.accessible .form-input,
+    body.accessible .form-textarea {
+      font-family: Georgia, 'Times New Roman', serif !important;
+      font-weight: bold !important;
     }
+
+    /* Headings and labels: keep Cinzel, push to 900 */
     body.accessible h1,
     body.accessible h2,
     body.accessible h3,
@@ -656,22 +675,20 @@
     body.accessible .font-title-bold,
     body.accessible .section-title,
     body.accessible .identity-name,
+    body.accessible .identity-subtitle,
     body.accessible .project-title,
     body.accessible .formation-card-title,
+    body.accessible .formation-degree,
     body.accessible .contact-title,
-    body.accessible .modal-title {
+    body.accessible .contact-cta-text,
+    body.accessible .section-badge,
+    body.accessible .project-category,
+    body.accessible .project-link,
+    body.accessible .scroll-cta,
+    body.accessible .modal-title,
+    body.accessible .form-label,
+    body.accessible .btn-submit {
       font-weight: 900 !important;
-    }
-    /* Extra stroke weight for thin serif overlay text on photos */
-    body.accessible .section-title,
-    body.accessible .section-text,
-    body.accessible .identity-name,
-    body.accessible .identity-tagline,
-    body.accessible .identity-desc,
-    body.accessible .contact-title,
-    body.accessible .contact-desc,
-    body.accessible .parcours-list li {
-      -webkit-text-stroke: 0.25px currentColor;
     }
 
     /* Backgrounds → light mobile versions */
@@ -761,8 +778,18 @@
       border-color: #7a5415;
     }
     body.accessible .formation-card-title { color: #1a120a; }
-    body.accessible .formation-degree { color: #7a5415; }
-    body.accessible .formation-details { color: #6b4c11; }
+    /* Diploma/cert titles (BUT MMI, Adobe, Google, Creative writing…)
+       → very dark brown, clearly distinct from the details below */
+    body.accessible .formation-degree {
+      color: #1e0f04 !important;
+      font-weight: 900 !important;
+    }
+    /* Details text (descriptions, institutions)
+       → medium warm brown, visually subordinate to the title */
+    body.accessible .formation-details {
+      color: #7a6050 !important;
+      font-weight: 600 !important;
+    }
     body.accessible .formation-desc {
       color: #3d2c1e;
       border-top-color: rgba(122,84,21,0.20);
