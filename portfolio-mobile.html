@@ -667,18 +667,18 @@
       background: rgba(253,249,242,0.88);
       border-top-color: rgba(122,84,21,0.35);
     }
-    body.accessible .identity-name { color: #1a120a; text-shadow: none; }
-    body.accessible .identity-subtitle { color: #7a5415; text-shadow: none; }
-    body.accessible .identity-tagline { color: #3d2c1e; text-shadow: none; }
-    body.accessible .identity-desc { color: #2c1f14; text-shadow: none; }
+    body.accessible .identity-name { color: #1a120a; text-shadow: 0 1px 8px rgba(255,255,255,0.90), 0 2px 18px rgba(255,255,255,0.70); }
+    body.accessible .identity-subtitle { color: #7a5415; text-shadow: 0 1px 6px rgba(255,255,255,0.85); }
+    body.accessible .identity-tagline { color: #3d2c1e; text-shadow: 0 1px 6px rgba(255,255,255,0.85); }
+    body.accessible .identity-desc { color: #2c1f14; text-shadow: 0 1px 6px rgba(255,255,255,0.80); }
     body.accessible .scroll-cta { color: #7a5415; }
 
     /* Section elements */
     body.accessible .section-badge { border-color: #7a5415; color: #7a5415; }
-    body.accessible .section-title { color: #1a120a; text-shadow: none; }
-    body.accessible .section-text { color: #3d2c1e; text-shadow: none; }
+    body.accessible .section-title { color: #1a120a; text-shadow: 0 1px 8px rgba(255,255,255,0.90), 0 2px 16px rgba(255,255,255,0.65); }
+    body.accessible .section-text { color: #3d2c1e; text-shadow: 0 1px 6px rgba(255,255,255,0.80); }
     body.accessible .parcours-highlight { color: #7a5415; }
-    body.accessible .parcours-list li { color: #2c1f14; text-shadow: none; }
+    body.accessible .parcours-list li { color: #2c1f14; text-shadow: 0 1px 6px rgba(255,255,255,0.80); }
     body.accessible .parcours-list li::before { color: #7a5415; }
     body.accessible .parcours-list strong { color: #7a5415; }
 
@@ -732,9 +732,9 @@
     }
 
     /* Contact */
-    body.accessible .contact-title { color: #1a120a; text-shadow: none; }
-    body.accessible .contact-desc { color: #3d2c1e; text-shadow: none; }
-    body.accessible .contact-tagline { color: #7a5415; text-shadow: none; }
+    body.accessible .contact-title { color: #1a120a; text-shadow: 0 1px 8px rgba(255,255,255,0.90), 0 2px 18px rgba(255,255,255,0.70); }
+    body.accessible .contact-desc { color: #3d2c1e; text-shadow: 0 1px 6px rgba(255,255,255,0.80); }
+    body.accessible .contact-tagline { color: #7a5415; text-shadow: 0 1px 6px rgba(255,255,255,0.80); }
     body.accessible .contact-cta-box {
       background: rgba(253,249,242,0.92);
       border-color: #7a5415;
@@ -801,8 +801,7 @@
     }
     body.accessible #lang-toggle .lang-sep { background: rgba(122,84,21,0.35); }
 
-    #btn-a11y { min-width: 2.1rem; display: flex; align-items: center; justify-content: center; }
-    #btn-a11y svg { pointer-events: none; }
+    #btn-a11y { font-size: 0.8rem; letter-spacing: 0; padding: 0.5rem 0.65rem; }
   </style>
 </head>
 <body>
@@ -816,12 +815,7 @@
     <span class="lang-sep"></span>
     <button id="btn-en" class="font-title-bold" onclick="setLang('en')" aria-pressed="false">EN</button>
     <span class="lang-sep"></span>
-    <button id="btn-a11y" onclick="toggleAccessible()" aria-pressed="false" aria-label="Mode accessible" title="Mode accessible – lisibilité renforcée">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
-        <circle cx="12" cy="4" r="2"/>
-        <path d="M19 9H5a1 1 0 0 0 0 2h5.5l-1.8 7.2A1 1 0 0 0 10.5 20h.1l1.4-5.6 1.4 5.6h.1a1 1 0 0 0 .8-1.8L12.5 11H19a1 1 0 0 0 0-2z"/>
-      </svg>
-    </button>
+    <button id="btn-a11y" onclick="toggleAccessible()" aria-pressed="false" aria-label="Mode accessible" title="Mode accessible – lisibilité renforcée">♿</button>
   </div>
 
   <!-- NAV DOTS -->
