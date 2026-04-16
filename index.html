@@ -294,12 +294,33 @@
 
     body.accessible .contact-email a { color: #7a5415; }
 
-    /* Remove text shadows (unnecessary on light bg) */
-    body.accessible [class*="identity-"],
-    body.accessible [class*="parcours-"],
-    body.accessible [class*="section-"],
-    body.accessible [class*="contact-"],
-    body.accessible .testimonial-text { text-shadow: none; }
+    /* Text shadows on accessible mode: white halo for overlay text on light photos */
+    /* Direct overlay text (on background image) gets a light halo for readability */
+    body.accessible .identity-title,
+    body.accessible .identity-subtitle,
+    body.accessible .identity-tagline,
+    body.accessible .identity-description,
+    body.accessible .scroll-indicator,
+    body.accessible .parcours-title,
+    body.accessible .parcours-badge,
+    body.accessible .parcours-intro,
+    body.accessible .parcours-list li,
+    body.accessible .projets-title,
+    body.accessible .projets-intro,
+    body.accessible .formation-title,
+    body.accessible .formation-intro,
+    body.accessible .contact-title,
+    body.accessible .contact-description,
+    body.accessible .contact-tagline {
+      text-shadow: 0 1px 8px rgba(255,255,255,0.90), 0 2px 18px rgba(255,255,255,0.70);
+    }
+    /* Cards have solid bg — no shadow needed, but keep inner text crisp */
+    body.accessible .project-title,
+    body.accessible .project-description,
+    body.accessible .project-features li,
+    body.accessible .testimonial-text,
+    body.accessible .formation-card-title,
+    body.accessible .formation-description { text-shadow: none; }
 
     /* Cards → light, warm white */
     body.accessible .project-card {
@@ -409,8 +430,7 @@
     body.accessible #lang-toggle .lang-sep { background: rgba(122,84,21,0.35); }
 
     /* A11Y button always shows its state clearly */
-    #btn-a11y { min-width: 2rem; display: flex; align-items: center; justify-content: center; }
-    #btn-a11y svg { pointer-events: none; }
+    #btn-a11y { font-size: 0.85rem; letter-spacing: 0; padding: 0.55rem 0.75rem; }
   </style>
 </head>
 <body>
@@ -421,12 +441,7 @@
     <span class="lang-sep"></span>
     <button id="btn-en" class="font-title-bold" onclick="setLang('en')" aria-pressed="false">EN</button>
     <span class="lang-sep"></span>
-    <button id="btn-a11y" onclick="toggleAccessible()" aria-pressed="false" aria-label="Mode accessible" title="Mode accessible – version lisibilité renforcée">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
-        <circle cx="12" cy="4" r="2"/>
-        <path d="M19 9H5a1 1 0 0 0 0 2h5.5l-1.8 7.2A1 1 0 0 0 10.5 20h.1l1.4-5.6 1.4 5.6h.1a1 1 0 0 0 .8-1.8L12.5 11H19a1 1 0 0 0 0-2z"/>
-      </svg>
-    </button>
+    <button id="btn-a11y" onclick="toggleAccessible()" aria-pressed="false" aria-label="Mode accessible" title="Mode accessible – version lisibilité renforcée">♿</button>
   </div>
 
   <div class="grain-texture"></div>
