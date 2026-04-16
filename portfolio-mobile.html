@@ -702,7 +702,11 @@
     body.accessible #page-identity {
       height: 100svh;
       min-height: 0;
-      overflow: hidden;
+    }
+    /* Constrain the inner panel so the name is never cut off */
+    body.accessible .identity-inner {
+      max-height: 88svh;
+      overflow-y: auto;
     }
 
     /* Remove grain */
