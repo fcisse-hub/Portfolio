@@ -359,6 +359,20 @@
       font-weight: 600;
       margin-top: 0.75rem;
     }
+    .project-type-label.clickable {
+      cursor: pointer;
+      text-transform: none;
+      letter-spacing: 0.03em;
+      display: inline-block;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: color 0.25s ease, border-color 0.25s ease;
+      line-height: 1.6;
+    }
+    .project-type-label.clickable:active {
+      color: #d4af37;
+      border-bottom-color: rgba(212,175,55,0.5);
+    }
 
     /* ─────────────────────────────────────────
        FORMATION
@@ -1005,7 +1019,7 @@
           <li data-i18n="p3_f1"></li>
           <li data-i18n="p3_f3"></li>
         </ul>
-        <p class="font-body project-type-label" data-i18n="on_request"></p>
+        <p class="font-body project-type-label clickable" data-i18n="on_request" onclick="openContactForm()" role="button" tabindex="0"></p>
       </div>
 
       <!-- Project 4 -->
@@ -1018,7 +1032,7 @@
           <li data-i18n="p4_f1"></li>
           <li data-i18n="p4_f3"></li>
         </ul>
-        <p class="font-body project-type-label" data-i18n="on_request"></p>
+        <p class="font-body project-type-label clickable" data-i18n="on_request" onclick="openContactForm()" role="button" tabindex="0"></p>
       </div>
 
     </div>
@@ -1186,7 +1200,7 @@
       p4_desc: "Maquettes haute fidélité et design systems pour projets culturels et éditoriaux.",
       p4_f1: "Design systems complets (composants, tokens)",
       p4_f3: "Identités visuelles Dark Academia & éditoriales",
-      on_request: "Portfolio disponible sur demande",
+      on_request: "<strong>Uniquement par invitation pour la période actuelle :</strong> Carnet de commandes complet jusqu'à la rentrée 2026. Pour discuter d'un projet futur, écrivez-moi via le formulaire.",
       formation_title: "Une légitimité construite sur l'exigence",
       formation_intro: "Mon parcours académique reflète une quête constante : comprendre les mécanismes de la pensée, de la création et de la transmission.",
       fc1_title: "Formation Universitaire",
@@ -1271,7 +1285,7 @@
       p4_desc: "High-fidelity mockups and design systems for cultural and editorial projects.",
       p4_f1: "Complete design systems (components, tokens)",
       p4_f3: "Dark Academia & editorial visual identities",
-      on_request: "Portfolio available on request",
+      on_request: "<strong>By invitation only at this time:</strong> Booking closed for now — accepting select inquiries from Q3 2026.",
       formation_title: "Legitimacy built on rigour",
       formation_intro: "My academic background reflects a constant quest: to understand the mechanisms of thought, creation and transmission.",
       fc1_title: "University Education",
