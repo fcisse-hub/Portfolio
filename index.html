@@ -150,6 +150,8 @@
     .project-link { display: inline-block; color: #d4af37; text-decoration: none; font-size: 0.95rem; border-bottom: 1px solid transparent; transition: all 0.3s ease; position: relative; z-index: 1; letter-spacing: 0.05em; }
     .project-link:hover { border-bottom-color: #d4af37; color: #f4d03f; }
     .project-type-label { font-size: 0.85rem; color: #a88734; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 1rem; }
+    .project-type-label.clickable { cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease; border-bottom: 1px solid transparent; padding-bottom: 2px; display: inline-block; text-transform: none; }
+    .project-type-label.clickable:hover { color: #d4af37; border-bottom-color: rgba(212,175,55,0.5); }
 
     /* ─── FORMATION ─── */
     #page-formation { background-image: url('https://github.com/fcisse-hub/Portfolio/blob/main/formation.png?raw=true'); }
@@ -614,7 +616,7 @@
             <li data-i18n="p3_f3"></li>
             <li data-i18n="p3_f4"></li>
           </ul>
-          <p class="font-body project-type-label" data-i18n="on_request"></p>
+          <p class="font-body project-type-label clickable" data-i18n="on_request" onclick="openContactForm()" role="button" tabindex="0"></p>
         </div>
 
         <!-- Project 4 -->
@@ -629,7 +631,7 @@
             <li data-i18n="p4_f3"></li>
             <li data-i18n="p4_f4"></li>
           </ul>
-          <p class="font-body project-type-label" data-i18n="on_request"></p>
+          <p class="font-body project-type-label clickable" data-i18n="on_request" onclick="openContactForm()" role="button" tabindex="0"></p>
         </div>
 
       </div>
@@ -796,7 +798,7 @@
       p4_f2: "Maquettes haute fidélité multi-supports",
       p4_f3: "Identités visuelles Dark & Light Academia & éditoriales",
       p4_f4: "Prototypes interactifs haute fidélité",
-      on_request: "Portfolio disponible sur demande",
+      on_request: "<strong>Uniquement par invitation pour la période actuelle :</strong> Carnet de commandes complet jusqu'à la rentrée 2026. Pour discuter d'un projet futur, écrivez-moi via le formulaire.",
       formation_title: "Une légitimité construite sur l'exigence",
       formation_intro: "Mon parcours académique reflète une quête constante : comprendre les mécanismes de la pensée, de la création et de la transmission pour mieux les incarner.",
       fc1_title: "Formation Universitaire",
@@ -893,7 +895,7 @@
       p4_f2: "High-fidelity multi-platform mockups",
       p4_f3: "Dark & Light Academia & editorial visual identities",
       p4_f4: "Interactive high-fidelity prototypes",
-      on_request: "Portfolio available on request",
+      on_request: "<strong>By invitation only at this time:</strong> Booking closed for now — accepting select inquiries from Q3 2026.",
       formation_title: "Legitimacy built on rigour",
       formation_intro: "My academic background reflects a constant quest: to understand the mechanisms of thought, creation and transmission in order to embody them more fully.",
       fc1_title: "University Education",
