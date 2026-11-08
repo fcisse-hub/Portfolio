@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* Layout: one fixed full-screen stage; the scroll drives a camera through five rooms of a quiet, abandoned manor.
+/* Layout: one fixed full-screen stage; the scroll drives a camera through five rooms of a dark academia home.
    Text lives in HTML in each room's empty side and fades out while the camera travels. */
 :root {
   --ink: #0d0b09;
@@ -285,9 +285,9 @@ body.is-static .items { grid-template-columns: repeat(auto-fit, minmax(13rem, 1f
 
 <main id="stage">
   <!-- I. Vestibule -->
-  <section class="chapter" id="ch1" data-side="split" data-side-dark="split" data-side-light="split" data-focus-dark="57% 40%" data-focus-light="52% 30%" data-mfocus="50% 45%">
+  <section class="chapter" id="ch1" data-side="left" data-side-dark="left" data-side-light="split" data-focus-dark="84% 40%" data-focus-light="52% 30%" data-mfocus="50% 40%">
     <div class="scene"><div class="layer">
-      <picture data-name="ch1"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch1-m.jpg"><img src="img/ch1.jpg" alt="Buste de marbre de Sabine F. Cissé sous un rai de lumière dorée, une plume et un parchemin à ses pieds" fetchpriority="high"></picture>
+      <picture data-name="ch1"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch1-m.jpg"><img src="img/ch1.jpg" alt="Le vestibule : sol d'obsidienne, escalier au tapis rouge, portraits dorés ; à droite, le buste de marbre de Sabine F. Cissé dans un rai de lumière" fetchpriority="high"></picture>
     </div></div>
     <div class="panel-wrap"><div class="scrim"></div>
       <div class="panel">
@@ -304,9 +304,9 @@ body.is-static .items { grid-template-columns: repeat(auto-fit, minmax(13rem, 1f
   </section>
 
   <!-- II. Cabinet d'écriture -->
-  <section class="chapter" id="ch2" data-side="right" data-side-dark="right" data-side-light="left" data-focus-dark="24% 34%" data-focus-light="66% 25%" data-mfocus="50% 35%">
+  <section class="chapter" id="ch2" data-side="right" data-side-dark="right" data-side-light="left" data-focus-dark="18% 50%" data-focus-light="66% 25%" data-mfocus="50% 55%">
     <div class="scene"><div class="layer">
-      <picture data-name="ch2"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch2-m.jpg"><img src="img/ch2.jpg" alt="Le buste posé sur un bureau de bois, près d'une plume et d'un manuscrit" loading="lazy"></picture>
+      <picture data-name="ch2"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch2-m.jpg"><img src="img/ch2.jpg" alt="Le cabinet d'écriture : le buste sur un bureau de chêne, près d'une plume, de manuscrits et d'une lampe verte" loading="lazy"></picture>
     </div></div>
     <div class="panel-wrap"><div class="scrim"></div>
       <div class="panel">
@@ -323,9 +323,9 @@ body.is-static .items { grid-template-columns: repeat(auto-fit, minmax(13rem, 1f
   </section>
 
   <!-- III. Bibliothèque silencieuse -->
-  <section class="chapter" id="ch3" data-side="left" data-side-dark="left" data-side-light="left" data-focus-dark="76% 32%" data-focus-light="64% 30%" data-mfocus="50% 40%">
+  <section class="chapter" id="ch3" data-side="left" data-side-dark="left" data-side-light="left" data-focus-dark="80% 42%" data-focus-light="64% 30%" data-mfocus="50% 45%">
     <div class="scene"><div class="layer">
-      <picture data-name="ch3"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch3-m.jpg"><img src="img/ch3.jpg" alt="Le buste fendu en deux, un cerveau de marbre et des éclats de pierre au sol" loading="lazy"></picture>
+      <picture data-name="ch3"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch3-m.jpg"><img src="img/ch3.jpg" alt="La bibliothèque sur deux étages : le buste fendu en deux sur un socle, un cerveau de marbre à côté, dans un rai de lumière" loading="lazy"></picture>
     </div></div>
     <div class="panel-wrap"><div class="scrim"></div>
       <div class="panel">
@@ -344,9 +344,9 @@ body.is-static .items { grid-template-columns: repeat(auto-fit, minmax(13rem, 1f
   </section>
 
   <!-- IV. Rotonde -->
-  <section class="chapter" id="ch4" data-side="split" data-side-dark="split" data-side-light="split" data-focus-dark="45% 26%" data-focus-light="45% 35%" data-mfocus="50% 30%">
+  <section class="chapter" id="ch4" data-side="split" data-side-dark="split" data-side-light="split" data-focus-dark="50% 45%" data-focus-light="45% 35%" data-mfocus="50% 45%">
     <div class="scene"><div class="layer">
-      <picture data-name="ch4"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch4-m.jpg"><img src="img/ch4.jpg" alt="Le buste couronné de lauriers dorés sur un piédestal" loading="lazy"></picture>
+      <picture data-name="ch4"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch4-m.jpg"><img src="img/ch4.jpg" alt="La rotonde sous une verrière : le buste couronné de lauriers dorés, au centre, dans un rai de lune" loading="lazy"></picture>
     </div></div>
     <div class="panel-wrap"><div class="scrim"></div>
       <div class="panel">
@@ -365,9 +365,9 @@ body.is-static .items { grid-template-columns: repeat(auto-fit, minmax(13rem, 1f
   </section>
 
   <!-- V. Terrasse à l'aube -->
-  <section class="chapter" id="ch5" data-side="left" data-side-dark="left" data-side-light="left" data-focus-dark="50% 50%" data-focus-light="70% 55%" data-mfocus="50% 50%">
+  <section class="chapter" id="ch5" data-side="left" data-side-dark="left" data-side-light="left" data-focus-dark="77% 62%" data-focus-light="70% 55%" data-mfocus="50% 62%">
     <div class="scene"><div class="layer">
-      <picture data-name="ch5"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch5-m.jpg"><img src="img/ch5.jpg" alt="La tête du buste tombée au sol près d'un parchemin, dans la lumière du matin" loading="lazy"></picture>
+      <picture data-name="ch5"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch5-m.jpg"><img src="img/ch5.jpg" alt="La terrasse à l'aube : le buste couché sur un banc de pierre, près d'un parchemin, face au soleil levant" loading="lazy"></picture>
     </div></div>
     <div class="panel-wrap"><div class="scrim"></div>
       <div class="panel">
