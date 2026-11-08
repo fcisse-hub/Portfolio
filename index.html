@@ -201,6 +201,26 @@ h2 { font-size: clamp(1.7rem, 3vw, 2.6rem); }
   .mail-addr { font-size: .8rem; }
 }
 
+/* ---------- Short screens (phone held sideways, small laptop windows) ---------- */
+@media (max-height: 620px) and (min-width: 761px) and (min-aspect-ratio: 4/5) {
+  .panel-wrap, .chapter[data-side="right"] .panel-wrap, .chapter[data-side="split"] .panel-wrap { padding-block: 3.6rem 1rem; gap: .8rem; }
+  .panel { gap: .5rem; }
+  h1 { font-size: clamp(1.8rem, 7vh, 2.8rem); }
+  h2 { font-size: clamp(1.25rem, 5vh, 1.8rem); }
+  .roles { font-size: .85rem; }
+  .tagline { font-size: 1.05rem; }
+  .lede.long, .groups dd .extra, .item-sub, .note, .hint { display: none; }
+  .groups { gap: .4rem; }
+  .groups dd { font-size: .9rem; }
+  .items { gap: .4rem 1rem; }
+  .items li { padding-top: .3rem; }
+  .seal { width: 2.4rem; height: 2.4rem; }
+  .kicker { font-size: .7rem; }
+  .card { width: 1.5rem; height: 2.4rem; }
+  .chapnav { gap: .35rem; }
+  .topbar { padding-top: calc(env(safe-area-inset-top, 0px) + .5rem); padding-bottom: .5rem; }
+}
+
 /* ---------- Reading mode without animation ---------- */
 body.is-static #track, body.is-static .chapnav, body.is-static .progress,
 body.is-static .fog, body.is-static .veil, body.is-static #dust, body.is-static .grain, body.is-static .scrim, body.is-static .hint, body.is-static .stamp { display: none !important; }
