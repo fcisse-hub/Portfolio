@@ -252,6 +252,17 @@ body.is-static .panel + .panel { margin-top: 1.4rem; }
 body.is-static .panel::before { display: none; }
 body.is-static .lede.long, body.is-static .groups dd .extra, body.is-static .item-sub, body.is-static .note { display: revert; }
 body.is-static .items { grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+body.is-static .topbar { background: rgba(var(--scrim), .97); border-bottom: 1px solid rgba(201, 154, 75, .25); }
+/* Reading mode on phones: a taller picture, no lift, framed on the bust */
+@media (max-width: 760px), (max-aspect-ratio: 4/5) {
+  body.is-static .scene { height: auto; aspect-ratio: 3 / 4; }
+  body.is-static .layer picture { transform: none !important; }
+  body.is-static .layer img { object-position: 50% var(--spos, 50%) !important; }
+  body.is-static #ch1 { --spos: 60%; } body.is-static #ch2 { --spos: 58%; } body.is-static #ch3 { --spos: 88%; }
+  body.is-static #ch4 { --spos: 45%; } body.is-static #ch5 { --spos: 65%; }
+  html.is-light body.is-static #ch1 { --spos: 50%; } html.is-light body.is-static #ch2 { --spos: 55%; } html.is-light body.is-static #ch3 { --spos: 60%; }
+  html.is-light body.is-static #ch4 { --spos: 45%; } html.is-light body.is-static #ch5 { --spos: 60%; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .fog-a, .fog-b, .grain, .hint::before { animation: none; }
