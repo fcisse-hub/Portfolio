@@ -1,1048 +1,847 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Redirection mobile -->
-<script>
-  (function() {
-    var isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
-      || (navigator.maxTouchPoints > 1 && window.innerWidth < 1024);
-    if (isMobile) {
-      window.location.replace("https://sabinefcisse.com/portfolio-mobile.html");
-    }
-  })();
-</script>
-  <title>Sabine F. Cissé - Portfolio</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { overflow-x: hidden; background-color: #000; color: #fff; scroll-behavior: smooth; }
-    body { overflow-y: auto; height: auto; }
-    .font-title { font-family: 'Cinzel', serif; font-weight: 400; }
-    .font-title-bold { font-family: 'Cinzel', serif; }
-    .font-body { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.7; }
-    .font-elegant { font-family: 'EB Garamond', serif; line-height: 1.7; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sabine F. Cissé · Portfolio</title>
+<meta name="description" content="Sabine F. Cissé, autrice et technologue créative. Un voyage au défilement à travers un manoir Dark Academia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: one fixed full-screen stage; the scroll drives a camera through five rooms of a ruined manor.
+   Text lives in HTML in each room's empty side and fades out while the camera travels. */
+:root {
+  --ink: #0d0b09;
+  --ink-soft: #1a1510;
+  --cream: #ebe4d6;
+  --cream-dim: #d9d0bf;
+  --card-paper: #15110c;
+  --card-ink: #d9ccb4;
+  --gold: #c99a4b;
+  --gold-deep: #a87230;
+  --teal: #2e5c5a;
+  --scrim: 13, 11, 9;
+  --fog: 120, 104, 86;
+  --display: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --body: 'EB Garamond', Garamond, 'Times New Roman', serif;
+  --mono: 'Courier Prime', 'Courier New', Courier, monospace;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: dark;
+}
+/* Light Academia: same journey, daylight version of the rooms */
+html.is-light {
+  --ink: #f8f1e4;
+  --ink-soft: #efe5d2;
+  --cream: #2b2117;
+  --cream-dim: #33271a;
+  --card-paper: #f4ecdc;
+  --card-ink: #3a2c1d;
+  --gold: #6a4510;
+  --gold-deep: #8a5f1c;
+  --scrim: 250, 244, 232;
+  color-scheme: light;
+}
+html.is-light .fog { mix-blend-mode: normal; }
+html.is-light .grain { opacity: .05; mix-blend-mode: multiply; }
+html { background: var(--ink); }
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: 19px;
+  line-height: 1.6;
+  padding-left: var(--gutter-l);
+  padding-right: var(--gutter-r);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: var(--gold); text-underline-offset: 3px; }
+a:hover { color: var(--cream); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 
-    /* ─── LANGUAGE TOGGLE ─── */
-    #lang-toggle {
-      position: fixed;
-      top: 1.5rem;
-      right: 1.5rem;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      gap: 0;
-      background: rgba(10, 8, 5, 0.88);
-      border: 1.5px solid #d4af37;
-      overflow: hidden;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
+/* ---------- Stage ---------- */
+#track { width: 1px; }
+#stage { position: fixed; inset: 0; overflow: hidden; background: var(--ink); }
+.chapter { position: absolute; inset: 0; }
+.scene { position: absolute; inset: 0; will-change: transform, opacity; }
+.layer { position: absolute; inset: -3%; will-change: transform; }
+.layer picture, .layer img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
 
-    #lang-toggle button {
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      padding: 0.55rem 1rem;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      transition: background 0.25s, color 0.25s;
-      color: #a88734;
-    }
+.veil { position: absolute; inset: 0; background: var(--ink); opacity: 0; pointer-events: none; }
+.fog { position: absolute; inset: -20%; opacity: 0; pointer-events: none; background-size: 70% 100%; background-repeat: repeat-x; mix-blend-mode: screen; }
+.fog-a { animation: drift 38s linear infinite; }
+.fog-b { animation: drift 54s linear infinite reverse; background-size: 90% 120%; }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-23%); } }
+#dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.vignette { position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 85% 75% at 50% 45%, transparent 55%, rgba(var(--scrim), .75) 100%); }
+.grain { position: absolute; inset: -50%; pointer-events: none; opacity: .07; mix-blend-mode: overlay; animation: grain 1s steps(6) infinite; }
+@keyframes grain { 0%{transform:translate(0,0)} 20%{transform:translate(-3%,2%)} 40%{transform:translate(2%,-3%)} 60%{transform:translate(-2%,-1%)} 80%{transform:translate(3%,3%)} 100%{transform:translate(0,0)} }
 
-    #lang-toggle button.active {
-      background: #d4af37;
-      color: #0a0805;
-    }
+/* ---------- Text panels ---------- */
+.panel-wrap {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 1.4rem;
+  padding-block: 5.5rem 3.5rem;
+  padding-left: calc(var(--gutter-l) + 4vw);
+  padding-right: calc(var(--gutter-r) + 6.5rem);
+}
+.chapter[data-side="right"] .panel-wrap { align-items: flex-end; padding-right: calc(var(--gutter-r) + 7vw); }
+.chapter[data-side="split"] .panel-wrap { flex-direction: row; justify-content: space-between; align-items: center; padding-right: calc(var(--gutter-r) + 5.5rem); }
+.scrim { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(var(--scrim), .94) 0%, rgba(var(--scrim), .8) 34%, rgba(var(--scrim), 0) 64%); }
+.chapter[data-side="right"] .scrim { background: linear-gradient(270deg, rgba(var(--scrim), .94) 0%, rgba(var(--scrim), .8) 34%, rgba(var(--scrim), 0) 64%); }
+.chapter[data-side="split"] .scrim { background: linear-gradient(90deg, rgba(var(--scrim), .94) 0%, rgba(var(--scrim), .78) 24%, rgba(var(--scrim), 0) 42%, rgba(var(--scrim), 0) 58%, rgba(var(--scrim), .78) 76%, rgba(var(--scrim), .94) 100%); }
+.panel { position: relative; isolation: isolate; width: min(32rem, 38vw); min-width: 0; display: flex; flex-direction: column; gap: 1rem; text-shadow: 0 0 2px rgba(var(--scrim), .9), 0 1px 16px rgba(var(--scrim), .95); }
+.chapter[data-side="split"] .panel { width: min(27rem, 29vw); }
+/* Soft backing so the text stays readable over bright parts of the painting */
+.panel::before { content: ""; position: absolute; inset: -2.2rem -2.6rem; z-index: -1; pointer-events: none; filter: blur(10px);
+  background: radial-gradient(closest-side, rgba(var(--scrim), .82), rgba(var(--scrim), .6) 62%, rgba(var(--scrim), 0)); }
 
-    #lang-toggle .lang-sep {
-      width: 1px;
-      height: 1.6rem;
-      background: rgba(212, 175, 55, 0.35);
-      flex-shrink: 0;
-    }
+.kicker { font-family: var(--mono); font-size: .8rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
+.seal { display: inline-block; width: 3.4rem; height: 3.4rem; color: var(--gold); flex: none; }
+.seal svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 6px rgba(var(--scrim), .9)); }
+.seal .s-line { fill: none; stroke: currentColor; }
+.seal .s-fill { fill: currentColor; }
+.seal ellipse, .seal path { stroke-width: 1; }
+.seal .s-num { font-family: var(--display); font-weight: 600; fill: currentColor; text-anchor: middle; dominant-baseline: central; letter-spacing: 0; }
+h1, h2 { font-family: var(--display); font-weight: 400; line-height: 1.12; text-wrap: balance; color: var(--cream); margin: 0; }
+h1 { font-size: clamp(2.6rem, 5.4vw, 4.6rem); letter-spacing: .01em; }
+h2 { font-size: clamp(1.7rem, 3vw, 2.6rem); }
+.roles { font-family: var(--display); font-weight: 600; font-size: clamp(.98rem, 1.35vw, 1.2rem); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); line-height: 1.7; margin: 0; }
+.tagline { font-style: italic; font-weight: 500; font-size: clamp(1.25rem, 1.9vw, 1.6rem); color: var(--cream); margin: 0; line-height: 1.4; }
+.lede { margin: 0; color: var(--cream-dim); max-width: 34em; font-weight: 500; font-size: 1.14rem; line-height: 1.55; }
+.hint { font-family: var(--mono); font-weight: 700; font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cream); display: flex; align-items: center; gap: .8rem; margin-top: .6rem; }
+.hint::before { content: ""; width: 1px; height: 2.4rem; background: linear-gradient(var(--gold), transparent); animation: fall 2.2s ease-in-out infinite; transform-origin: top; }
+@keyframes fall { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
 
-    #lang-toggle button:hover:not(.active) {
-      color: #f4d03f;
-      background: rgba(212, 175, 55, 0.1);
-    }
+.groups { display: grid; gap: .9rem; margin: .2rem 0 0; }
+.groups > div { display: grid; gap: .15rem; padding-left: .9rem; border-left: 1px solid rgba(201, 154, 75, .45); min-width: 0; }
+.groups dt, .item-cat { font-family: var(--mono); font-weight: 700; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+.groups dd { margin: 0; font-size: 1.06rem; font-weight: 500; line-height: 1.45; color: var(--cream-dim); }
+.groups dd strong { color: var(--cream); font-weight: 500; }
 
-    /* ─── GRAIN ─── */
-    .grain-texture {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
-      pointer-events: none; opacity: 0.6; z-index: 1; mix-blend-mode: overlay;
-    }
+.items { list-style: none; padding: 0; margin: .2rem 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.4rem; }
+.items li { display: grid; gap: .15rem; align-content: start; min-width: 0; padding-top: .6rem; border-top: 1px solid rgba(201, 154, 75, .35); }
+.item-name { font-family: var(--display); font-weight: 500; font-size: 1.12rem; color: var(--cream); line-height: 1.25; }
+.item-sub { font-size: 1.04rem; font-style: italic; font-weight: 500; color: var(--cream-dim); line-height: 1.35; }
+.items a { font-size: 1rem; font-weight: 500; }
+.note { font-size: 1rem; font-weight: 500; color: var(--cream-dim); margin: 0; font-style: italic; }
 
-    .page-section {
-      min-height: 100vh; width: 100%; position: relative;
-      background-size: cover; background-position: center;
-      background-repeat: no-repeat; background-attachment: fixed;
-      display: flex; align-items: center; justify-content: center;
-      padding: 4rem 2rem;
-    }
+.mailbox { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; padding: .9rem 1.1rem; border: 1px solid rgba(201, 154, 75, .5); background: rgba(var(--scrim), .55); }
+.mail-addr { font-family: var(--mono); font-size: .95rem; color: var(--cream); user-select: all; overflow-wrap: anywhere; min-width: 0; }
+.mail-actions { display: flex; gap: .6rem; }
+.btn { font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; padding: .55rem .9rem; border: 1px solid var(--gold-deep); color: var(--gold); text-decoration: none; background: transparent; }
+.btn:hover { background: var(--gold-deep); color: var(--ink); }
+.foot { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; color: var(--cream-dim); opacity: .8; margin: .4rem 0 0; }
 
-    .vignette-overlay { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.6) 80%); z-index: 1; }
-    #page-identity .vignette-overlay, #page-parcours .vignette-overlay, #page-contact .vignette-overlay {
-      background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.75) 80%);
-    }
+/* ---------- Chrome ---------- */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+  display: flex; align-items: center; gap: 1rem;
+  padding-top: calc(env(safe-area-inset-top, 0px) + .9rem); padding-bottom: .9rem;
+  padding-left: calc(var(--gutter-l) + 1.2vw); padding-right: calc(var(--gutter-r) + 1.2vw);
+  background: linear-gradient(rgba(var(--scrim), .85), rgba(var(--scrim), 0));
+}
+.brand { font-family: var(--display); font-size: .92rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cream); white-space: nowrap; }
+.where { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-right: auto; padding-left: 1rem; border-left: 1px solid rgba(201, 154, 75, .4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.tools { display: flex; gap: .4rem; align-items: center; }
+.tools button { font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; padding: .35rem .55rem; color: var(--cream-dim); border: 1px solid transparent; }
+.tools button[aria-pressed="true"] { color: var(--gold); border-color: rgba(201, 154, 75, .6); }
+.lbl-short { display: none; }
+.progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 21; background: var(--gold); transform-origin: left; transform: scaleX(0); }
 
-    .content-overlay { position: relative; z-index: 2; width: 100%; max-width: 1400px; margin: 0 auto; }
+.chapnav { position: fixed; z-index: 20; right: calc(env(safe-area-inset-right, 0px) + 1.3rem); top: 50%; transform: translateY(-50%); display: grid; gap: .6rem; justify-items: end; }
+.chapnav button { display: flex; align-items: center; gap: .7rem; padding: .15rem 0; }
+/* Tarot cards: one engraved plaque per room, the current one turns gold */
+.card { --cb: var(--card-paper); --cl: var(--card-ink); display: block; width: 2.35rem; height: 3.76rem; overflow: visible; transition: transform .35s ease, filter .35s ease; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .35)); }
+.card .c-bg { fill: var(--cb); stroke: var(--cl); stroke-width: 1.6; transition: fill .35s; }
+.card .c-in { fill: none; stroke: var(--cl); stroke-width: .7; opacity: .85; }
+.card .c-icon { fill: none; stroke: var(--cl); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.card .c-dot { fill: var(--cl); }
+.card .c-num { font-family: var(--display); font-weight: 600; font-size: 11px; fill: var(--cl); text-anchor: middle; }
+.chapnav button:hover .card, .chapnav button:focus-visible .card { transform: translateX(-3px) rotate(-2deg); }
+.chapnav .lbl { font-family: var(--mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cream); opacity: 0; transform: translateX(6px); transition: opacity .25s, transform .25s; white-space: nowrap; text-shadow: 0 1px 8px rgba(var(--scrim), 1); }
+.chapnav button:hover .lbl, .chapnav button:focus-visible .lbl { opacity: 1; transform: none; }
+.chapnav button[aria-current="true"] .card { --cb: var(--gold-deep); --cl: var(--ink); transform: translateX(-6px) scale(1.1); filter: drop-shadow(0 0 12px rgba(201, 154, 75, .55)); }
+.stamp { position: fixed; z-index: 20; left: calc(var(--gutter-l) + 1.2vw); bottom: calc(env(safe-area-inset-bottom, 0px) + .9rem); font-family: var(--mono); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cream-dim); opacity: .55; }
 
-    /* ─── IDENTITY ─── */
-    #page-identity { background-image: url('identity.png'); }
-    .identity-content { text-align: center; max-width: 1200px; margin: 0 auto; }
-    .identity-title { font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 2rem; letter-spacing: 0.02em; line-height: 1.2; text-shadow: 0 2px 12px rgba(0,0,0,0.9); }
-    .identity-subtitle { font-size: clamp(1rem, 2vw, 1.5rem); color: #d4af37; margin-bottom: 3rem; letter-spacing: 0.15em; text-transform: uppercase; text-shadow: 0 2px 12px rgba(0,0,0,0.9); }
-    .identity-tagline { font-size: clamp(1.25rem, 2.5vw, 2rem); font-style: italic; color: #e8d5b7; margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; text-shadow: 0 2px 12px rgba(0,0,0,0.9); }
-    .identity-description { font-size: clamp(1.1rem, 1.8vw, 1.4rem); color: #dbc09a; max-width: 850px; margin: 0 auto 4rem; line-height: 1.8; text-shadow: 0 2px 12px rgba(0,0,0,0.9); }
+/* ---------- Phones and portrait screens ---------- */
+@media (max-width: 760px), (max-aspect-ratio: 4/5) {
+  body { font-size: 16px; }
+  .panel-wrap, .chapter[data-side="right"] .panel-wrap, .chapter[data-side="split"] .panel-wrap {
+    flex-direction: column; justify-content: flex-end; align-items: stretch; gap: .9rem;
+    padding-block: 4.5rem calc(env(safe-area-inset-bottom, 0px) + 2.6rem);
+    padding-left: var(--gutter-l); padding-right: calc(var(--gutter-r) + 2.6rem);
+  }
+  .scrim, .chapter[data-side="right"] .scrim, .chapter[data-side="split"] .scrim { background: linear-gradient(0deg, rgba(var(--scrim), .96) 0%, rgba(var(--scrim), .86) 40%, rgba(var(--scrim), 0) 66%); }
+  .panel, .chapter[data-side="split"] .panel { width: 100%; gap: .7rem; }
+  .panel::before { display: none; }
+  h1 { font-size: clamp(2.1rem, 10vw, 3rem); }
+  .roles { font-size: .9rem; letter-spacing: .05em; }
+  .hint { font-size: .78rem; }
+  h2 { font-size: clamp(1.35rem, 6.2vw, 1.8rem); }
+  .lede.long, .groups dd .extra, .item-sub, .note { display: none; }
+  .items { grid-template-columns: 1fr 1fr; gap: .6rem .9rem; }
+  .item-name { font-size: .92rem; }
+  .groups { gap: .55rem; }
+  .groups dd { font-size: .95rem; }
+  .where { display: none; }
+  .lbl-long { display: none; }
+  .lbl-short { display: inline; }
+  .topbar { justify-content: space-between; }
+  .brand { font-size: .78rem; letter-spacing: .12em; }
+  .chapnav { right: calc(env(safe-area-inset-right, 0px) + .5rem); gap: .4rem; }
+  .card { width: 1.6rem; height: 2.56rem; }
+  .seal { width: 2.8rem; height: 2.8rem; }
+  .chapnav .lbl { display: none; }
+  .stamp { display: none; }
+  .mail-addr { font-size: .8rem; }
+}
 
-    .scroll-indicator { display: inline-flex; flex-direction: column; align-items: center; gap: 0.5rem; color: #d4af37; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; animation: bounce 2s infinite; cursor: pointer; }
-    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-    .scroll-indicator svg { width: 24px; height: 24px; }
+/* ---------- Reading mode without animation ---------- */
+body.is-static #track, body.is-static .chapnav, body.is-static .progress,
+body.is-static .fog, body.is-static .veil, body.is-static #dust, body.is-static .grain, body.is-static .scrim, body.is-static .hint, body.is-static .stamp { display: none !important; }
+body.is-static #stage { position: relative; inset: auto; overflow: visible; padding-top: 4.5rem; }
+body.is-static .vignette { display: none; }
+body.is-static .chapter { position: relative; inset: auto; display: grid; gap: 0; margin-bottom: 3.5rem; }
+body.is-static .scene { position: relative; inset: auto; height: min(62vh, 56vw); opacity: 1 !important; transform: none !important; filter: none !important; overflow: hidden; }
+body.is-static .layer { inset: 0; transform: none !important; }
+body.is-static .panel-wrap, body.is-static .chapter[data-side="right"] .panel-wrap { position: relative; inset: auto; display: block; padding: 2rem 0 0; opacity: 1 !important; visibility: visible !important; }
+body.is-static .panel, body.is-static .chapter[data-side="split"] .panel { width: auto; max-width: 44rem; margin: 0 auto; transform: none !important; opacity: 1 !important; text-shadow: none; }
+body.is-static .panel + .panel { margin-top: 1.4rem; }
+body.is-static .panel::before { display: none; }
+body.is-static .lede.long, body.is-static .groups dd .extra, body.is-static .item-sub, body.is-static .note { display: revert; }
+body.is-static .items { grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
 
-    /* ─── PARCOURS ─── */
-    #page-parcours { background-image: url('parcours.png'); }
-    .parcours-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-    .parcours-left { max-width: 650px; }
-    .parcours-badge { display: inline-block; padding: 0.5rem 1.5rem; border: 2px solid #d4af37; border-radius: 30px; font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
-    .parcours-title { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2rem; line-height: 1.2; text-shadow: 0 2px 12px rgba(0,0,0,0.9); }
-    .parcours-intro { font-size: clamp(1.1rem, 1.6vw, 1.3rem); color: #dbc09a; margin-bottom: 2rem; line-height: 1.8; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
-    .parcours-highlight { color: #d4af37; }
-    .parcours-list { list-style: none; margin-top: 2rem; }
-    .parcours-list li { margin-bottom: 1.5rem; padding-left: 1.5rem; position: relative; font-size: clamp(1rem, 1.4vw, 1.2rem); color: #e8d5b7; line-height: 1.7; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
-    .parcours-list li::before { content: "•"; position: absolute; left: 0; color: #d4af37; font-size: 1.5rem; }
-    .parcours-list strong { color: #d4af37; }
-    .parcours-right { display: flex; flex-direction: column; gap: 2rem; }
-
-    .testimonial-card { background: rgba(0,0,0,0.7); border: 1px solid rgba(212,175,55,0.3); border-left: 3px solid #d4af37; padding: 2rem; position: relative; }
-    .quote-icon { font-size: 4rem; color: #d4af37; opacity: 0.3; line-height: 0; margin-bottom: 1rem; font-family: Georgia, serif; }
-    .testimonial-text { font-size: clamp(1rem, 1.4vw, 1.2rem); font-style: italic; color: #dbc09a; margin-bottom: 1rem; line-height: 1.7; }
-    .testimonial-author { font-size: 0.95rem; color: #d4af37; }
-    .testimonial-role { font-size: 0.85rem; color: #a88734; }
-
-    /* ─── PROJETS ─── */
-    #page-projets { background-image: url('projets.png'); background-position: center right; }
-    .projets-header { text-align: center; margin-bottom: 4rem; }
-    .projets-title { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 2rem; line-height: 1.2; }
-    .projets-intro { font-size: clamp(1.1rem, 1.6vw, 1.3rem); color: #dbc09a; max-width: 800px; margin: 0 auto; line-height: 1.8; }
-    .projets-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; margin-top: 3rem; }
-
-    .project-card { background: rgba(0,0,0,0.8); border: 2px solid rgba(212,175,55,0.3); padding: 2.5rem; transition: all 0.4s ease; position: relative; overflow: hidden; }
-    .project-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212,175,55,0.1), transparent); transition: left 0.6s ease; }
-    .project-card:hover::before { left: 100%; }
-    .project-card:hover { border-color: #d4af37; transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
-
-    .project-category { display: inline-block; background: rgba(212,175,55,0.2); border: 1px solid #d4af37; padding: 0.4rem 1rem; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.5rem; color: #d4af37; }
-    .project-title { font-size: 1.8rem; margin-bottom: 1rem; color: #fff; line-height: 1.3; position: relative; z-index: 1; }
-    .project-subtitle { font-size: 1.1rem; color: #d4af37; font-style: italic; margin-bottom: 1rem; position: relative; z-index: 1; }
-    .project-description { font-size: 1.05rem; color: #dbc09a; line-height: 1.7; margin-bottom: 1.5rem; position: relative; z-index: 1; }
-    .project-features { list-style: none; margin-bottom: 1.5rem; position: relative; z-index: 1; }
-    .project-features li { font-size: 0.95rem; color: #e8d5b7; padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
-    .project-features li::before { content: "→"; position: absolute; left: 0; color: #d4af37; }
-    .project-link { display: inline-block; color: #d4af37; text-decoration: none; font-size: 0.95rem; border-bottom: 1px solid transparent; transition: all 0.3s ease; position: relative; z-index: 1; letter-spacing: 0.05em; }
-    .project-link:hover { border-bottom-color: #d4af37; color: #f4d03f; }
-    .project-type-label { font-size: 0.85rem; color: #a88734; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 1rem; }
-    .project-type-label.clickable { cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease; border-bottom: 1px solid transparent; padding-bottom: 2px; display: inline-block; text-transform: none; }
-    .project-type-label.clickable:hover { color: #d4af37; border-bottom-color: rgba(212,175,55,0.5); }
-
-    /* ─── FORMATION ─── */
-    #page-formation { background-image: url('formation.png'); }
-    .formation-header { text-align: center; margin-bottom: 4rem; }
-    .formation-title { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2rem; line-height: 1.2; }
-    .formation-intro { font-size: clamp(1.1rem, 1.6vw, 1.3rem); color: #dbc09a; max-width: 900px; margin: 0 auto; line-height: 1.8; }
-    .formation-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
-    .formation-card { background: rgba(0,0,0,0.75); border: 1px solid rgba(212,175,55,0.3); padding: 2.5rem; display: flex; flex-direction: column; transition: all 0.3s ease; }
-    .formation-card:hover { border-color: #d4af37; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .formation-icon { width: 60px; height: 60px; background: rgba(212,175,55,0.2); border: 2px solid #d4af37; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; font-size: 1.5rem; }
-    .formation-card-title { font-size: 1.4rem; margin-bottom: 1rem; color: #fff; line-height: 1.3; }
-    .formation-degree { color: #d4af37; font-size: 1.1rem; margin-bottom: 0.5rem; }
-    .formation-details { font-size: 0.95rem; color: #a88734; margin-bottom: 1rem; }
-    .formation-description { font-size: 1rem; color: #dbc09a; line-height: 1.6; margin-top: auto; }
-
-    /* ─── CONTACT ─── */
-    #page-contact { background-image: url('contact.png'); }
-    .contact-content { text-align: center; max-width: 1100px; margin: 0 auto; padding-bottom: 5rem; }
-    .contact-title { font-size: clamp(3rem, 7vw, 5rem); margin-bottom: 2rem; line-height: 1.2; text-shadow: 0 2px 12px rgba(0,0,0,0.9); }
-    .contact-description { font-size: clamp(1.1rem, 1.8vw, 1.4rem); color: #dbc09a; margin-bottom: 3rem; line-height: 1.8; max-width: 900px; margin-left: auto; margin-right: auto; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
-    .contact-tagline { font-size: clamp(1rem, 1.5vw, 1.2rem); font-style: italic; color: #d4af37; margin-bottom: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
-    .contact-cta-box { background: rgba(61,40,23,0.85); border: 2px solid #d4af37; padding: 3rem 4rem; display: inline-block; cursor: pointer; transition: all 0.4s ease; position: relative; overflow: hidden; }
-    .contact-cta-box::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent); transition: left 0.6s ease; }
-    .contact-cta-box:hover::before { left: 100%; }
-    .contact-cta-box:hover { border-color: #f4d03f; box-shadow: 0 0 40px rgba(212,175,55,0.4); transform: translateY(-5px); }
-    .contact-cta-text { font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 0.5rem; position: relative; z-index: 1; }
-    .contact-cta-subtitle { font-size: clamp(0.9rem, 1.2vw, 1rem); color: #d4af37; letter-spacing: 0.15em; text-transform: uppercase; position: relative; z-index: 1; }
-    .contact-email { margin-top: 2.5rem; font-size: clamp(1rem, 1.3vw, 1.1rem); color: #a88734; }
-    .contact-email a { color: #d4af37; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s ease; }
-    .contact-email a:hover { border-bottom-color: #d4af37; }
-
-    .page-footer { position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; text-align: center; padding: 1.5rem 2rem; background: rgba(0,0,0,0.8); border-top: 1px solid rgba(212,175,55,0.3); }
-    .footer-text { font-size: 0.9rem; color: #a88734; letter-spacing: 0.05em; }
-    .footer-separator { color: #d4af37; margin: 0 0.5rem; }
-
-    /* ─── MODAL ─── */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; display: none; align-items: center; justify-content: center; animation: fadeIn 0.4s ease; padding: 2rem; }
-    .modal-overlay.active { display: flex; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .modal-content { background: linear-gradient(135deg, rgba(26,20,16,0.98) 0%, rgba(61,40,23,0.98) 100%); border: 2px solid rgba(212,175,55,0.5); padding: 3rem; max-width: 650px; width: 100%; position: relative; animation: slideUp 0.5s ease; max-height: 90vh; overflow-y: auto; }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-    .close-btn { position: absolute; top: 1.5rem; right: 1.5rem; background: transparent; border: none; color: #d4af37; cursor: pointer; font-size: 2rem; line-height: 1; padding: 0.5rem; transition: all 0.3s ease; }
-    .close-btn:hover { color: #f4d03f; transform: rotate(90deg); }
-    .modal-title { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; color: #d4af37; }
-    .modal-subtitle { text-align: center; font-size: 1.1rem; color: #dbc09a; margin-bottom: 2.5rem; font-style: italic; }
-    .form-group { margin-bottom: 1.5rem; }
-    .form-label { display: block; font-size: 0.9rem; color: #d4af37; margin-bottom: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; }
-    .form-input, .form-textarea { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.4); color: #e8d5b7; padding: 1rem; font-family: 'EB Garamond', serif; font-size: 1.1rem; transition: all 0.3s ease; }
-    .form-input:focus, .form-textarea:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 20px rgba(212,175,55,0.3); background: rgba(0,0,0,0.7); }
-    .form-textarea { resize: vertical; min-height: 150px; line-height: 1.6; }
-    .btn-submit { width: 100%; background: linear-gradient(135deg, #3d2817 0%, #1a1410 100%); border: 2px solid #d4af37; color: #d4af37; padding: 1.2rem 3rem; font-family: 'Cinzel', serif; letter-spacing: 0.15em; font-size: 1rem; cursor: pointer; transition: all 0.4s ease; margin-top: 1.5rem; text-transform: uppercase; }
-    .btn-submit:hover:not(:disabled) { border-color: #f4d03f; color: #f4d03f; box-shadow: 0 0 30px rgba(212,175,55,0.5); transform: translateY(-2px); }
-    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-    .form-note { text-align: center; font-size: 0.9rem; color: #a88734; margin-top: 1rem; font-style: italic; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 1024px) {
-      .parcours-container { grid-template-columns: 1fr; gap: 3rem; }
-      .formation-grid { grid-template-columns: 1fr; }
-      .projets-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 768px) {
-      .page-section { padding: 3rem 1.5rem; }
-      #lang-toggle { top: 1rem; right: 1rem; }
-    }
-    #page-identity, #page-parcours, #page-projets, #page-formation, #page-contact {
-      background-attachment: scroll;
-      background-size: cover;
-      background-position: center;
-    }
-    @supports (-webkit-overflow-scrolling: touch) {
-      #page-identity, #page-parcours, #page-projets, #page-formation, #page-contact {
-        background-attachment: scroll !important;
-      }
-    }
-
-    /* ═══════════════════════════════════════════
-       ACCESSIBLE MODE  (body.accessible)
-       Palette: warm off-white · dark brown text
-       WCAG AA contrast ratios throughout
-    ═══════════════════════════════════════════ */
-    body.accessible {
-      background-color: #fdf9f2;
-      color: #1a1008;
-      font-size: 110%;
-    }
-    /* Global bold — every text element in accessible mode */
-    body.accessible *,
-    body.accessible p,
-    body.accessible li,
-    body.accessible span,
-    body.accessible a,
-    body.accessible label {
-      font-weight: 600;
-    }
-    body.accessible h1,
-    body.accessible h2,
-    body.accessible h3,
-    body.accessible .font-title,
-    body.accessible .font-title-bold,
-    body.accessible .identity-title,
-    body.accessible .projets-title,
-    body.accessible .formation-title,
-    body.accessible .contact-title,
-    body.accessible .parcours-title,
-    body.accessible .modal-title {
-      font-weight: 700;
-    }
-
-    /* Backgrounds → light versions */
-    body.accessible #page-identity  { background-image: url('identity-light.png'); }
-    body.accessible #page-parcours  { background-image: url('parcours-light.png'); }
-    body.accessible #page-projets   { background-image: url('projects-light.png'); }
-    body.accessible #page-formation { background-image: url('formation-light.png'); }
-    body.accessible #page-contact   { background-image: url('contact-light.png'); }
-
-    /* Lock identity section to exact viewport height — prevents image rescaling on lang toggle */
-    body.accessible #page-identity {
-      height: 100vh;
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    /* Remove grain */
-    body.accessible .grain-texture { display: none; }
-
-    /* Vignettes → cream wash to mute photo and contrast dark text */
-    body.accessible .vignette-overlay,
-    body.accessible #page-identity .vignette-overlay,
-    body.accessible #page-parcours .vignette-overlay,
-    body.accessible #page-contact .vignette-overlay {
-      background: rgba(253,249,242,0.54);
-    }
-
-    /* Global text colours — near-black for maximum contrast on cream wash */
-    body.accessible .identity-subtitle,
-    body.accessible .scroll-indicator,
-    body.accessible .parcours-badge,
-    body.accessible .parcours-highlight,
-    body.accessible .parcours-list strong,
-    body.accessible .testimonial-author,
-    body.accessible .project-category,
-    body.accessible .project-subtitle,
-    body.accessible .project-link,
-    body.accessible .project-features li::before,
-    body.accessible .formation-degree,
-    body.accessible .contact-tagline,
-    body.accessible .contact-cta-subtitle,
-    body.accessible .footer-separator { color: #5c3d0a; }
-
-    body.accessible .identity-tagline,
-    body.accessible .identity-description,
-    body.accessible .parcours-intro,
-    body.accessible .parcours-list li,
-    body.accessible .testimonial-text,
-    body.accessible .testimonial-role,
-    body.accessible .projets-intro,
-    body.accessible .project-description,
-    body.accessible .project-features li,
-    body.accessible .formation-intro,
-    body.accessible .formation-details,
-    body.accessible .formation-description,
-    body.accessible .contact-description,
-    body.accessible .contact-email,
-    body.accessible .footer-text { color: #1a1008; }
-
-    body.accessible .project-title,
-    body.accessible .formation-card-title { color: #0a0805; }
-
-    body.accessible .contact-email a { color: #5c3d0a; }
-
-    /* Bold all overlay text for maximum legibility on photo backgrounds */
-    body.accessible .identity-title,
-    body.accessible .identity-subtitle,
-    body.accessible .identity-tagline,
-    body.accessible .identity-description,
-    body.accessible .parcours-title,
-    body.accessible .parcours-intro,
-    body.accessible .parcours-list li,
-    body.accessible .projets-title,
-    body.accessible .projets-intro,
-    body.accessible .formation-title,
-    body.accessible .formation-intro,
-    body.accessible .contact-title,
-    body.accessible .contact-description,
-    body.accessible .contact-tagline { }
-
-    /* Text shadows: cream wash vignette handles contrast; subtle shadow for extra legibility */
-    body.accessible .identity-title,
-    body.accessible .identity-subtitle,
-    body.accessible .identity-tagline,
-    body.accessible .identity-description,
-    body.accessible .scroll-indicator,
-    body.accessible .parcours-title,
-    body.accessible .parcours-badge,
-    body.accessible .parcours-intro,
-    body.accessible .parcours-list li,
-    body.accessible .projets-title,
-    body.accessible .projets-intro,
-    body.accessible .formation-title,
-    body.accessible .formation-intro,
-    body.accessible .contact-title,
-    body.accessible .contact-description,
-    body.accessible .contact-tagline {
-      text-shadow: 0 1px 4px rgba(253,249,242,0.95), 0 2px 10px rgba(253,249,242,0.80);
-    }
-    body.accessible .project-title,
-    body.accessible .project-description,
-    body.accessible .project-features li,
-    body.accessible .testimonial-text,
-    body.accessible .formation-card-title,
-    body.accessible .formation-description { text-shadow: none; }
-
-    /* Cards → light, warm white */
-    body.accessible .project-card {
-      background: rgba(253, 249, 242, 0.93);
-      border-color: rgba(122, 84, 21, 0.35);
-      box-shadow: 0 2px 16px rgba(44,31,20,0.10);
-    }
-    body.accessible .project-card:hover {
-      border-color: #7a5415;
-      box-shadow: 0 12px 32px rgba(44,31,20,0.18);
-    }
-    body.accessible .project-category {
-      background: rgba(122,84,21,0.12);
-      border-color: #7a5415;
-    }
-
-    body.accessible .testimonial-card {
-      background: rgba(253, 249, 242, 0.90);
-      border-color: rgba(122,84,21,0.2);
-      border-left-color: #7a5415;
-    }
-    body.accessible .quote-icon { color: #7a5415; }
-
-    body.accessible .formation-card {
-      background: rgba(253, 249, 242, 0.90);
-      border-color: rgba(122,84,21,0.25);
-    }
-    body.accessible .formation-card:hover { border-color: #7a5415; }
-    body.accessible .formation-icon {
-      background: rgba(122,84,21,0.12);
-      border-color: #7a5415;
-    }
-    body.accessible .formation-description {
-      border-top-color: rgba(122,84,21,0.2);
-    }
-
-    /* Formation description sentences — distinct amber colour matching Dark Academia distinction */
-    body.accessible .formation-description {
-      color: #5c3d0a !important;
-      font-style: italic !important;
-      font-weight: 700 !important;
-    }
-
-    /* "Portfolio available on request" — bold + accent */
-    body.accessible .project-type-label {
-      color: #5c3d0a !important;
-      font-weight: 700 !important;
-      font-size: 0.9rem !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.1em !important;
-    }
-
-    /* Parcours badge */
-    body.accessible .parcours-badge { border-color: #7a5415; }
-    body.accessible .parcours-list li::before { color: #7a5415; }
-
-    /* Contact CTA */
-    body.accessible .contact-cta-box {
-      background: rgba(253,249,242,0.92);
-      border-color: #7a5415;
-    }
-    body.accessible .contact-cta-box:hover {
-      border-color: #5c3d0a;
-      box-shadow: 0 0 40px rgba(122,84,21,0.25);
-    }
-
-    /* Footer */
-    body.accessible .page-footer {
-      background: rgba(253,249,242,0.92);
-      border-top-color: rgba(122,84,21,0.3);
-    }
-
-    /* Modal */
-    body.accessible .modal-overlay { background: rgba(253,249,242,0.97); }
-    body.accessible .modal-content {
-      background: linear-gradient(135deg, #fdf9f2 0%, #f7ede0 100%);
-      border-color: rgba(122,84,21,0.45);
-      color: #2c1f14;
-    }
-    body.accessible .modal-title { color: #7a5415; }
-    body.accessible .modal-subtitle { color: #3d2c1e; }
-    body.accessible .close-btn { color: #7a5415; }
-    body.accessible .close-btn:hover { color: #5c3d0a; }
-    body.accessible .form-label { color: #7a5415; }
-    body.accessible .form-input,
-    body.accessible .form-textarea {
-      background: rgba(255,255,255,0.8);
-      border-color: rgba(122,84,21,0.4);
-      color: #2c1f14;
-    }
-    body.accessible .form-input:focus,
-    body.accessible .form-textarea:focus {
-      border-color: #7a5415;
-      box-shadow: 0 0 15px rgba(122,84,21,0.20);
-      background: rgba(255,255,255,0.95);
-    }
-    body.accessible .btn-submit {
-      background: linear-gradient(135deg, #f7ede0 0%, #fdf9f2 100%);
-      border-color: #7a5415;
-      color: #7a5415;
-    }
-    body.accessible .btn-submit:hover:not(:disabled) {
-      border-color: #5c3d0a;
-      color: #5c3d0a;
-      box-shadow: 0 0 20px rgba(122,84,21,0.25);
-    }
-    body.accessible .form-note { color: #6b4c11; }
-
-    /* Lang-toggle accessible mode */
-    body.accessible #lang-toggle {
-      background: rgba(253,249,242,0.95);
-      border-color: #7a5415;
-    }
-    body.accessible #lang-toggle button { color: #7a5415; }
-    body.accessible #lang-toggle button.active {
-      background: #7a5415;
-      color: #fdf9f2;
-    }
-    body.accessible #lang-toggle button:hover:not(.active) {
-      color: #5c3d0a;
-      background: rgba(122,84,21,0.10);
-    }
-    body.accessible #lang-toggle .lang-sep { background: rgba(122,84,21,0.35); }
-
-    /* A11Y button always shows its state clearly */
-    #btn-a11y { font-size: 0.85rem; letter-spacing: 0; padding: 0.55rem 0.75rem; }
-  </style>
+@media (prefers-reduced-motion: reduce) {
+  .fog-a, .fog-b, .grain, .hint::before { animation: none; }
+}
+/* ---------- Contact letter (form) ---------- */
+.letter { width: min(34rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); overflow: auto; padding: 2.2rem clamp(1.2rem, 4vw, 2.6rem) 1.8rem;
+  background: var(--ink); color: var(--cream); font-family: var(--body); border: 1px solid var(--gold-deep);
+  outline: 1px solid rgba(201, 154, 75, .35); outline-offset: -9px; box-shadow: 0 30px 80px rgba(0, 0, 0, .55); }
+.letter::backdrop { background: rgba(var(--scrim), .8); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.letter[open] { display: flex; flex-direction: column; gap: .7rem; animation: letterIn .45s ease; }
+@keyframes letterIn { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+.letter-seal { align-self: center; }
+.letter h2 { text-align: center; font-size: clamp(1.5rem, 3vw, 2rem); }
+.letter-sub { text-align: center; font-style: italic; font-weight: 500; font-size: 1.1rem; color: var(--cream-dim); margin: 0; }
+.letter-form { display: grid; gap: .35rem; margin-top: .3rem; }
+.letter label { font-family: var(--mono); font-weight: 700; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-top: .7rem; }
+.letter input, .letter textarea { font: inherit; font-size: 1.08rem; font-weight: 500; color: var(--cream); background: transparent; border: 0; border-bottom: 1px solid rgba(201, 154, 75, .6); border-radius: 0; padding: .45rem .1rem; min-width: 0; }
+.letter textarea { resize: vertical; min-height: 7.5rem; border: 1px solid rgba(201, 154, 75, .5); padding: .6rem .7rem; }
+.letter input:focus, .letter textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 1px 0 var(--gold); }
+.letter ::placeholder { color: var(--cream-dim); opacity: .6; }
+.btn-send { margin-top: 1.2rem; justify-self: center; font-size: .82rem; font-weight: 700; padding: .85rem 1.7rem; cursor: pointer; }
+.btn-send:disabled { opacity: .6; cursor: progress; }
+.letter-status { min-height: 1.4em; text-align: center; margin: .3rem 0 0; font-weight: 500; }
+.letter-note { text-align: center; font-size: .95rem; font-style: italic; color: var(--cream-dim); margin: 0; }
+.letter-close { position: absolute; top: .5rem; right: .8rem; font-size: 2rem; line-height: 1; color: var(--gold); padding: .2rem .45rem; }
+</style>
 </head>
 <body>
 
-  <!-- ─── LANGUAGE TOGGLE ─── -->
-  <div id="lang-toggle" role="group" aria-label="Language / Accessibility selector">
-    <button id="btn-fr" class="font-title-bold active" onclick="setLang('fr')" aria-pressed="true">FR</button>
-    <span class="lang-sep"></span>
-    <button id="btn-en" class="font-title-bold" onclick="setLang('en')" aria-pressed="false">EN</button>
-    <span class="lang-sep"></span>
-    <button id="btn-a11y" onclick="toggleAccessible()" aria-pressed="false" aria-label="Mode accessible" title="Mode accessible – version lisibilité renforcée">♿</button>
+<div class="progress" id="progress"></div>
+
+<header class="topbar">
+  <span class="brand">Sabine F. Cissé</span>
+  <span class="where" id="where" aria-live="polite"></span>
+  <div class="tools">
+    <button type="button" id="btn-fr" aria-pressed="true">FR</button>
+    <button type="button" id="btn-en" aria-pressed="false">EN</button>
+    <button type="button" id="btn-theme" aria-pressed="false" data-i18n="theme_btn">Light Academia</button>
+    <button type="button" id="btn-static" aria-pressed="false" data-i18n="static_btn">Lire sans animation</button>
   </div>
+</header>
 
-  <div class="grain-texture"></div>
+<nav class="chapnav" id="chapnav" aria-label="Chapitres"></nav>
 
-  <!-- ─── PAGE IDENTITÉ ─── -->
-  <section id="page-identity" class="page-section">
-    <div class="vignette-overlay"></div>
-    <div class="content-overlay">
-      <div class="identity-content">
-        <h1 class="font-title identity-title">Sabine F. Cissé</h1>
-        <p class="font-title-bold identity-subtitle" data-i18n="subtitle"></p>
-        <p class="font-elegant identity-tagline" data-i18n="tagline"></p>
-        <p class="font-body identity-description" data-i18n="identity_desc"></p>
-        <div class="scroll-indicator" onclick="document.getElementById('page-parcours').scrollIntoView({behavior:'smooth'})">
-          <span class="font-title-bold" data-i18n="discover"></span>
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
-        </div>
+<main id="stage">
+  <!-- I. Vestibule -->
+  <section class="chapter" id="ch1" data-side="left" data-side-dark="left" data-side-light="split" data-focus-dark="57% 40%" data-focus-light="52% 30%" data-mfocus="50% 45%">
+    <div class="scene"><div class="layer">
+      <picture data-name="ch1"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch1-m.jpg"><img src="img/ch1.jpg" alt="Buste de marbre de Sabine F. Cissé sous un rai de lumière dorée, une plume et un parchemin à ses pieds" fetchpriority="high"></picture>
+    </div></div>
+    <div class="panel-wrap"><div class="scrim"></div>
+      <div class="panel">
+        <p class="kicker"><span class="seal">I</span><span data-i18n="room_1"></span></p>
+        <h1>Sabine F. Cissé</h1>
+        <p class="roles" data-i18n="roles"></p>
+        <p class="tagline" data-i18n="tagline"></p>
+      </div>
+      <div class="panel">
+        <p class="lede long" data-i18n="intro"></p>
+        <p class="hint" data-i18n="hint"></p>
       </div>
     </div>
   </section>
 
-  <!-- ─── PAGE PARCOURS ─── -->
-  <section id="page-parcours" class="page-section">
-    <div class="vignette-overlay"></div>
-    <div class="content-overlay">
-      <div class="parcours-container">
-        <div class="parcours-left">
-          <div class="font-title-bold parcours-badge" data-i18n="parcours_badge"></div>
-          <h2 class="font-title parcours-title" data-i18n="parcours_title"></h2>
-          <p class="font-body parcours-intro" data-i18n="parcours_intro1"></p>
-          <p class="font-body parcours-intro" data-i18n="parcours_intro2"></p>
-          <ul class="font-body parcours-list">
-            <li data-i18n="parcours_li1"></li>
-            <li data-i18n="parcours_li2"></li>
-            <li data-i18n="parcours_li3"></li>
-          </ul>
-        </div>
-        <div class="parcours-right">
-          <div class="testimonial-card">
-            <p class="font-title-bold testimonial-author" data-i18n="tools_1_title"></p>
-            <p class="font-elegant testimonial-text" data-i18n="tools_1_list"></p>
-          </div>
-          <div class="testimonial-card">
-            <p class="font-title-bold testimonial-author" data-i18n="tools_2_title"></p>
-            <p class="font-elegant testimonial-text" data-i18n="tools_2_list"></p>
-          </div>
-          <div class="testimonial-card">
-            <p class="font-title-bold testimonial-author" data-i18n="tools_3_title"></p>
-            <p class="font-elegant testimonial-text" data-i18n="tools_3_list"></p>
-          </div>
-        </div>
+  <!-- II. Cabinet d'écriture -->
+  <section class="chapter" id="ch2" data-side="right" data-side-dark="right" data-side-light="left" data-focus-dark="24% 34%" data-focus-light="66% 25%" data-mfocus="50% 35%">
+    <div class="scene"><div class="layer">
+      <picture data-name="ch2"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch2-m.jpg"><img src="img/ch2.jpg" alt="Le buste posé sur un bureau de bois, près d'une plume et d'un manuscrit" loading="lazy"></picture>
+    </div></div>
+    <div class="panel-wrap"><div class="scrim"></div>
+      <div class="panel">
+        <p class="kicker"><span class="seal">II</span><span data-i18n="room_2"></span></p>
+        <h2 data-i18n="parcours_title"></h2>
+        <p class="lede long" data-i18n="parcours_text"></p>
+        <dl class="groups">
+          <div><dt data-i18n="tools_1_title"></dt><dd data-i18n="tools_1_list"></dd></div>
+          <div><dt data-i18n="tools_2_title"></dt><dd data-i18n="tools_2_list"></dd></div>
+          <div><dt data-i18n="tools_3_title"></dt><dd data-i18n="tools_3_list"></dd></div>
+        </dl>
       </div>
     </div>
   </section>
 
-  <!-- ─── PAGE PROJETS ─── -->
-  <section id="page-projets" class="page-section">
-    <div class="vignette-overlay"></div>
-    <div class="content-overlay">
-      <div class="projets-header">
-        <h2 class="font-title projets-title" data-i18n="projets_title"></h2>
-        <p class="font-body projets-intro" data-i18n="projets_intro"></p>
-      </div>
-      <div class="projets-grid">
-
-        <!-- Project 1 -->
-        <div class="project-card">
-          <span class="font-title-bold project-category" data-i18n="proj_personal"></span>
-          <h3 class="font-title project-title">JGC Blog</h3>
-          <p class="font-elegant project-subtitle" data-i18n="p1_sub"></p>
-          <p class="font-body project-description" data-i18n="p1_desc"></p>
-          <ul class="font-body project-features">
-            <li data-i18n="p1_f1"></li>
-            <li data-i18n="p1_f2"></li>
-            <li data-i18n="p1_f3"></li>
-            <li data-i18n="p1_f4"></li>
-          </ul>
-          <a href="https://journalistgeocultures.com/" target="_blank" rel="noopener noreferrer" class="font-title-bold project-link" data-i18n="p1_link"></a>
-        </div>
-
-        <!-- Project 2 -->
-        <div class="project-card">
-          <span class="font-title-bold project-category" data-i18n="proj_personal"></span>
-          <h3 class="font-title project-title">JGC Studio</h3>
-          <p class="font-elegant project-subtitle" data-i18n="p2_sub"></p>
-          <p class="font-body project-description" data-i18n="p2_desc"></p>
-          <ul class="font-body project-features">
-            <li data-i18n="p2_f1"></li>
-            <li data-i18n="p2_f2"></li>
-            <li data-i18n="p2_f3"></li>
-            <li data-i18n="p2_f4"></li>
-          </ul>
-          <a href="https://jgc-studio.com/" target="_blank" rel="noopener noreferrer" class="font-title-bold project-link" data-i18n="p2_link"></a>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="project-card">
-          <span class="font-title-bold project-category" data-i18n="proj_client"></span>
-          <h3 class="font-title project-title" data-i18n="p3_title"></h3>
-          <p class="font-elegant project-subtitle" data-i18n="p3_sub"></p>
-          <p class="font-body project-description" data-i18n="p3_desc"></p>
-          <ul class="font-body project-features">
-            <li data-i18n="p3_f1"></li>
-            <li data-i18n="p3_f2"></li>
-            <li data-i18n="p3_f3"></li>
-            <li data-i18n="p3_f4"></li>
-          </ul>
-          <p class="font-body project-type-label clickable" data-i18n="on_request" onclick="openContactForm()" role="button" tabindex="0"></p>
-        </div>
-
-        <!-- Project 4 -->
-        <div class="project-card">
-          <span class="font-title-bold project-category" data-i18n="proj_client"></span>
-          <h3 class="font-title project-title" data-i18n="p4_title"></h3>
-          <p class="font-elegant project-subtitle" data-i18n="p4_sub"></p>
-          <p class="font-body project-description" data-i18n="p4_desc"></p>
-          <ul class="font-body project-features">
-            <li data-i18n="p4_f1"></li>
-            <li data-i18n="p4_f2"></li>
-            <li data-i18n="p4_f3"></li>
-            <li data-i18n="p4_f4"></li>
-          </ul>
-          <p class="font-body project-type-label clickable" data-i18n="on_request" onclick="openContactForm()" role="button" tabindex="0"></p>
-        </div>
-
+  <!-- III. Bibliothèque effondrée -->
+  <section class="chapter" id="ch3" data-side="left" data-side-dark="left" data-side-light="left" data-focus-dark="76% 32%" data-focus-light="64% 30%" data-mfocus="50% 40%">
+    <div class="scene"><div class="layer">
+      <picture data-name="ch3"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch3-m.jpg"><img src="img/ch3.jpg" alt="Le buste fendu en deux, un cerveau de marbre et des éclats de pierre au sol" loading="lazy"></picture>
+    </div></div>
+    <div class="panel-wrap"><div class="scrim"></div>
+      <div class="panel">
+        <p class="kicker"><span class="seal">III</span><span data-i18n="room_3"></span></p>
+        <h2 data-i18n="projets_title"></h2>
+        <p class="lede long" data-i18n="projets_intro"></p>
+        <ul class="items">
+          <li><span class="item-cat" data-i18n="proj_personal"></span><span class="item-name">JGC Blog</span><span class="item-sub" data-i18n="p1_sub"></span><a href="https://journalistgeocultures.com/" target="_blank" rel="noopener noreferrer" data-i18n="p1_link"></a></li>
+          <li><span class="item-cat" data-i18n="proj_personal"></span><span class="item-name">JGC Studio</span><span class="item-sub" data-i18n="p2_sub"></span><a href="https://jgc-studio.com/" target="_blank" rel="noopener noreferrer" data-i18n="p2_link"></a></li>
+          <li><span class="item-cat" data-i18n="proj_client"></span><span class="item-name" data-i18n="p3_title"></span><span class="item-sub" data-i18n="p3_sub"></span></li>
+          <li><span class="item-cat" data-i18n="proj_client"></span><span class="item-name" data-i18n="p4_title"></span><span class="item-sub" data-i18n="p4_sub"></span></li>
+        </ul>
+        <p class="note" data-i18n="on_request"></p>
       </div>
     </div>
   </section>
 
-  <!-- ─── PAGE FORMATION ─── -->
-  <section id="page-formation" class="page-section">
-    <div class="vignette-overlay"></div>
-    <div class="content-overlay">
-      <div class="formation-header">
-        <h2 class="font-title formation-title" data-i18n="formation_title"></h2>
-        <p class="font-body formation-intro" data-i18n="formation_intro"></p>
+  <!-- IV. Rotonde -->
+  <section class="chapter" id="ch4" data-side="split" data-side-dark="split" data-side-light="split" data-focus-dark="45% 26%" data-focus-light="45% 35%" data-mfocus="50% 30%">
+    <div class="scene"><div class="layer">
+      <picture data-name="ch4"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch4-m.jpg"><img src="img/ch4.jpg" alt="Le buste couronné de lauriers dorés sur un piédestal" loading="lazy"></picture>
+    </div></div>
+    <div class="panel-wrap"><div class="scrim"></div>
+      <div class="panel">
+        <p class="kicker"><span class="seal">IV</span><span data-i18n="room_4"></span></p>
+        <h2 data-i18n="formation_title"></h2>
+        <p class="lede long" data-i18n="formation_intro"></p>
       </div>
-      <div class="formation-grid">
-
-        <!-- Card 1 -->
-        <div class="formation-card">
-          <div class="formation-icon">🎓</div>
-          <h3 class="font-title-bold formation-card-title" data-i18n="fc1_title"></h3>
-          <p class="font-title-bold formation-degree" data-i18n="fc1_d2"></p>
-          <p class="font-body formation-details" style="margin-bottom:1rem;" data-i18n="fc1_d2_detail"></p>
-          <p class="font-title-bold formation-degree" data-i18n="fc1_d3"></p>
-          <p class="font-body formation-details" style="margin-bottom:1rem;" data-i18n="fc1_d3_detail"></p>
-          <p class="font-title-bold formation-degree" data-i18n="fc1_d4"></p>
-          <p class="font-body formation-details" style="margin-bottom:1rem;" data-i18n="fc1_d4_detail"></p>
-          <p class="font-body formation-description" data-i18n="fc1_desc"></p>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="formation-card">
-          <div class="formation-icon">🏅</div>
-          <h3 class="font-title-bold formation-card-title" data-i18n="fc2_title"></h3>
-          <p class="font-title-bold formation-degree">Adobe</p>
-          <p class="font-body formation-details" style="margin-bottom:0.8rem;" data-i18n="fc2_adobe"></p>
-          <p class="font-title-bold formation-degree">Google</p>
-          <p class="font-body formation-details" style="margin-bottom:0.8rem;" data-i18n="fc2_google"></p>
-          <p class="font-title-bold formation-degree">HubSpot Academy</p>
-          <p class="font-body formation-details" style="margin-bottom:0.8rem;" data-i18n="fc2_hubspot"></p>
-          <p class="font-title-bold formation-degree">OpenClassrooms</p>
-          <p class="font-body formation-details" style="margin-bottom:1rem;" data-i18n="fc2_oc"></p>
-          <p class="font-body formation-description" data-i18n="fc2_desc"></p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="formation-card">
-          <div class="formation-icon">📖</div>
-          <h3 class="font-title-bold formation-card-title" data-i18n="fc3_title"></h3>
-          <p class="font-title-bold formation-degree" data-i18n="fc3_d1"></p>
-          <p class="font-body formation-details" style="margin-bottom:0.8rem;" data-i18n="fc3_d1_detail"></p>
-          <p class="font-title-bold formation-degree" data-i18n="fc3_d2"></p>
-          <p class="font-body formation-details" style="margin-bottom:0.8rem;" data-i18n="fc3_d2_detail"></p>
-          <p class="font-title-bold formation-degree" data-i18n="fc3_d3"></p>
-          <p class="font-body formation-details" style="margin-bottom:0.8rem;" data-i18n="fc3_d3_detail"></p>
-          <p class="font-title-bold formation-degree" data-i18n="fc3_d4"></p>
-          <p class="font-body formation-details" style="margin-bottom:1rem;" data-i18n="fc3_d4_detail"></p>
-          <p class="font-body formation-description" data-i18n="fc3_desc"></p>
-        </div>
-
+      <div class="panel">
+        <dl class="groups">
+          <div><dt data-i18n="fc1_title"></dt><dd data-i18n="fc1_list"></dd></div>
+          <div><dt data-i18n="fc2_title"></dt><dd data-i18n="fc2_list"></dd></div>
+          <div><dt data-i18n="fc3_title"></dt><dd data-i18n="fc3_list"></dd></div>
+        </dl>
       </div>
     </div>
   </section>
 
-  <!-- ─── PAGE CONTACT ─── -->
-  <section id="page-contact" class="page-section">
-    <div class="vignette-overlay"></div>
-    <div class="content-overlay">
-      <div class="contact-content">
-        <h2 class="font-title contact-title" data-i18n="contact_title"></h2>
-        <p class="font-body contact-description" data-i18n="contact_desc"></p>
-        <p class="font-elegant contact-tagline" data-i18n="contact_tagline"></p>
-        <div class="contact-cta-box" onclick="openContactForm()">
-          <h3 class="font-title contact-cta-text" data-i18n="cta_text"></h3>
-          <p class="font-title-bold contact-cta-subtitle" data-i18n="cta_sub"></p>
+  <!-- V. Terrasse à l'aube -->
+  <section class="chapter" id="ch5" data-side="left" data-side-dark="left" data-side-light="left" data-focus-dark="50% 50%" data-focus-light="70% 55%" data-mfocus="50% 50%">
+    <div class="scene"><div class="layer">
+      <picture data-name="ch5"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch5-m.jpg"><img src="img/ch5.jpg" alt="La tête du buste tombée au sol près d'un parchemin, dans la lumière du matin" loading="lazy"></picture>
+    </div></div>
+    <div class="panel-wrap"><div class="scrim"></div>
+      <div class="panel">
+        <p class="kicker"><span class="seal">V</span><span data-i18n="room_5"></span></p>
+        <h2 data-i18n="contact_title"></h2>
+        <p class="lede long" data-i18n="contact_desc"></p>
+        <p class="tagline" data-i18n="contact_tagline"></p>
+        <div class="mailbox">
+          <span class="mail-addr" id="mail-addr">contact@journalistgeocultures.com</span>
+          <span class="mail-actions">
+            <button type="button" class="btn" id="btn-copy" data-i18n="copy"></button>
+            <button type="button" class="btn" id="btn-write" data-i18n="write"></button>
+          </span>
         </div>
-        <p class="font-body contact-email" data-i18n="contact_email_label">
-          <a href="mailto:contact@journalistgeocultures.com">contact@journalistgeocultures.com</a>
-        </p>
+        <p class="foot" data-i18n="footer"></p>
       </div>
-    </div>
-    <div class="page-footer">
-      <p class="font-body footer-text" data-i18n="footer"></p>
     </div>
   </section>
 
-  <!-- ─── MODAL CONTACT ─── -->
-  <div id="contactModal" class="modal-overlay">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeContactForm()">&times;</button>
-      <h3 class="font-title modal-title" data-i18n="modal_title"></h3>
-      <p class="font-elegant modal-subtitle" data-i18n="modal_sub"></p>
-      <form id="contactForm" action="https://formspree.io/f/xvzdoklv" method="POST" onsubmit="handleSubmit(event)">
-        <div class="form-group">
-          <label class="form-label font-title-bold" data-i18n="form_name"></label>
-          <input type="text" name="name" class="form-input" required data-i18n-placeholder="form_name_ph" />
-        </div>
-        <div class="form-group">
-          <label class="form-label font-title-bold" data-i18n="form_email"></label>
-          <input type="email" name="email" class="form-input" required placeholder="votre@email.com" />
-        </div>
-        <div class="form-group">
-          <label class="form-label font-title-bold" data-i18n="form_message"></label>
-          <textarea name="message" class="form-textarea" required data-i18n-placeholder="form_message_ph"></textarea>
-        </div>
-        <button type="submit" class="btn-submit" id="submitBtn" data-i18n="form_send"></button>
-        <p class="form-note font-body" data-i18n="form_note"></p>
-      </form>
-    </div>
-  </div>
+  <div class="veil" id="veil"></div>
+  <div class="fog fog-a" id="fogA"></div>
+  <div class="fog fog-b" id="fogB"></div>
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <div class="vignette"></div>
+  <div class="grain" id="grain"></div>
+</main>
 
-  <!-- ─── TRANSLATIONS ─── -->
-  <script>
-  const i18n = {
+<div id="track" aria-hidden="true"></div>
+<dialog id="letter" class="letter" aria-labelledby="letter-title">
+  <button type="button" class="letter-close" id="letter-close" data-i18n-label="close" aria-label="Fermer">×</button>
+  <span class="seal letter-seal">V</span>
+  <h2 id="letter-title" data-i18n="modal_title"></h2>
+  <p class="letter-sub" data-i18n="modal_sub"></p>
+  <form id="contact-form" class="letter-form" action="https://formspree.io/f/xvzdoklv" method="POST">
+    <label for="f-name" data-i18n="form_name"></label>
+    <input id="f-name" name="name" type="text" required autocomplete="name" data-i18n-ph="form_name_ph">
+    <label for="f-email" data-i18n="form_email"></label>
+    <input id="f-email" name="email" type="email" required autocomplete="email" data-i18n-ph="form_email_ph">
+    <label for="f-message" data-i18n="form_message"></label>
+    <textarea id="f-message" name="message" rows="5" required data-i18n-ph="form_message_ph"></textarea>
+    <button type="submit" class="btn btn-send" id="f-send" data-i18n="form_send"></button>
+    <p class="letter-status" id="f-status" role="status" aria-live="polite"></p>
+    <p class="letter-note" data-i18n="form_note"></p>
+  </form>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  const T = {
     fr: {
-      subtitle: "Autrice · Technologue créative · Directrice Éditoriale · Stratège de Contenu Digital",
+      static_btn: "Lire sans animation", static_btn_on: "Voyage immersif", static_short: "Texte", static_short_on: "Voyage",
+      theme_btn: "Light Academia", theme_btn_on: "Dark Academia", theme_short: "Clair", theme_short_on: "Sombre",
+      nav: "Chapitres",
+      room_1: "Le vestibule", room_2: "Le cabinet d'écriture · Parcours", room_3: "La bibliothèque effondrée · Projets", room_4: "La rotonde · Formation", room_5: "La terrasse à l'aube · Contact",
+      nav_1: "Le vestibule", nav_2: "Le cabinet d'écriture", nav_3: "La bibliothèque", nav_4: "La rotonde", nav_5: "La terrasse",
+      roles: "Autrice · Technologue créative · Directrice éditoriale · Stratège de contenu digital",
       tagline: "« J'édite, je crée, je raconte : en texte, en image, en mouvement. »",
-      identity_desc: "Pendant dix ans chez Business Wire, j'ai édité des contenus pour Thales, Idemia, Vivendi, Kering et des dizaines d'entreprises du CAC40. Mon rôle ? Garantir que chaque communiqué, chaque vidéo, chaque visuel respecte les standards de l'information financière tout en captant l'attention. Aujourd'hui, je transpose cette rigueur éditoriale dans la création de contenus culturels et narratifs à travers JGC Studio : du blog au podcast, de l'infographie au motion design. Ma marque de qualité ? Le meilleur contenu allie précision du message et beauté de l'exécution.",
-      discover: "Découvrir",
-      parcours_badge: "Parcours Professionnel",
+      intro: "Pendant dix ans chez Business Wire, j'ai édité les contenus de Thales, Idemia, Vivendi, Kering et de dizaines d'entreprises du CAC 40. Aujourd'hui, je mets cette rigueur éditoriale au service de la création culturelle et narrative avec JGC Studio : du blog au podcast, de l'infographie au motion design.",
+      hint: "Faites défiler pour entrer dans le manoir",
       parcours_title: "Dix ans à orchestrer contenus et stratégies pour des clients internationaux",
-      parcours_intro1: "Chez Business Wire pendant une décennie, j'ai coordonné la production éditoriale multimédia pour des entreprises du CAC40 et du Forbes 50 — Thales, Idemia, et bien d'autres. Mon rôle ? Garantir que chaque communiqué, chaque vidéo, chaque visuel respecte les standards de l'information financière tout en captant l'attention. <span class='parcours-highlight'>De la rédaction SEO à la distribution internationale (AFP, ANSA, VWD), j'ai appris à jongler entre rigueur technique et impact visuel.</span>",
-      parcours_intro2: "Aujourd'hui, je transpose cette expertise dans la création de contenus culturels et narratifs. Je conçois des stratégies éditoriales, je produis des contenus multimédias (blog, podcast, motion design) et j'accompagne des projets qui cherchent à allier substance intellectuelle et qualité esthétique. J'apprends vite les nouveaux outils, IA comprise, et je les mets au service de la création : motion design piloté par le code, vidéo, sites web.",
-      parcours_li1: "<strong>Édition &amp; Publication :</strong> Direction éditoriale, réécriture, mise en forme de contenus académiques et culturels",
-      parcours_li2: "<strong>Stratégie de Contenu :</strong> Conception narrative, planification éditoriale, optimisation pour publics exigeants : entreprises du CAC 40 et Forbes 50",
-      parcours_li3: "<strong>Médiation Culturelle :</strong> Transmission des savoirs, vulgarisation intelligente, création d'expériences intellectuelles",
-      tools_1_title: "Image et mouvement",
-      tools_1_list: "DaVinci Resolve · Premiere Pro · After Effects · Remotion · Jitter",
-      tools_2_title: "Création par le code et l'IA",
-      tools_2_list: "After Effects piloté par code · HyperFrames · p5.brush · Whisper · ffmpeg · Runway · Adobe Firefly",
-      tools_3_title: "Web et design",
-      tools_3_list: "HTML · CSS · WordPress · Figma · Canva · GitHub Pages",
+      parcours_text: "Chez Business Wire, j'ai coordonné la production éditoriale multimédia d'entreprises du CAC 40 et du Forbes 50, de la rédaction SEO à la distribution internationale (AFP, ANSA, VWD). J'apprends vite les nouveaux outils, IA comprise, et je les mets au service de la création.",
+      tools_1_title: "Image et mouvement", tools_1_list: "DaVinci Resolve · Premiere Pro · After Effects · Remotion · Jitter",
+      tools_2_title: "Création par le code et l'IA", tools_2_list: "After Effects piloté par code · HyperFrames · p5.brush · Whisper · ffmpeg · Runway · Adobe Firefly",
+      tools_3_title: "Web et design", tools_3_list: "HTML · CSS · WordPress · Figma · Canva · GitHub Pages",
       projets_title: "JGC : Blog, Studio, Design",
-      projets_intro: "Quatre projets qui montrent ce que je sais faire : éditer du contenu exigeant, concevoir des interfaces utilisables, produire des formats audio et vidéo. De la stratégie à l'exécution.",
-      proj_personal: "Projet Personnel",
-      proj_client: "Travaux Clients",
-      p1_sub: "Un espace de réflexion littéraire et culturelle",
-      p1_desc: "Blog éditorial explorant l'intersection entre littérature, culture digitale et humanités. Un lieu de pensée où s'articulent analyse critique, découvertes culturelles et réflexions sur la création contemporaine.",
-      p1_f1: "Articles de fond sur la littérature et la culture",
-      p1_f2: "Critiques littéraires et analyses culturelles",
-      p1_f3: "Réflexions sur l'édition et le numérique",
-      p1_f4: "Interface Dark Academia and Light Academia sur mesure",
-      p1_link: "Visiter le blog →",
-      p2_sub: "Hub créatif multimédia",
-      p2_desc: "Plateforme centralisée regroupant mes créations audio et vidéo : podcast littéraire, analyses vidéo, entretiens avec des créateurs. Un studio digital où se rencontrent voix, images et idées.",
-      p2_f1: "Podcast \"L'Encrier de Sabine\" (épisodes à venir)",
-      p2_f2:"Podcast \"Les Chroniques d'Evana\" (épisodes à venir)",
-      p2_f3: "Vidéos d'analyse culturelle et littéraire",
-      p2_f4: "Entretiens avec auteurs et créateurs",
-      p2_f5: "Architecture de contenu transmedia",
-      p2_link: "Découvrir le studio →",
-      p3_title: "Wireframes & Prototypes",
-      p3_sub: "Conception UX pour projets éditoriaux",
-      p3_desc: "Conception de wireframes et maquettes basse fidélité pour des clients fictifs : maisons d'édition, institutions culturelles, plateformes éducatives. Architectures d'information pensées pour l'expérience utilisateur.",
-      p3_f1: "Wireframes responsive (mobile, tablette, desktop)",
-      p3_f2: "Flows utilisateurs et parcours narratifs",
-      p3_f3: "Hiérarchie de l'information éditoriale",
-      p3_f4: "Prototypes interactifs low-fidelity",
-      p4_title: "Design Systems & Interfaces",
-      p4_sub: "Identités visuelles complètes",
-      p4_desc: "Création de maquettes haute fidélité et design systems pour projets culturels et éditoriaux. De la charte graphique à l'interface finale, en passant par la typographie et les systèmes de couleurs.",
-      p4_f1: "Design systems complets (composants, tokens)",
-      p4_f2: "Maquettes haute fidélité multi-supports",
-      p4_f3: "Identités visuelles Dark & Light Academia & éditoriales",
-      p4_f4: "Prototypes interactifs haute fidélité",
-      on_request: "<strong>Uniquement par invitation pour la période actuelle :</strong> Carnet de commandes complet jusqu'en janvier 2027. Pour discuter d'un projet futur, écrivez-moi via le formulaire.",
+      projets_intro: "Quatre projets qui montrent ce que je sais faire : éditer du contenu exigeant, concevoir des interfaces utilisables, produire des formats audio et vidéo.",
+      proj_personal: "Projet personnel", proj_client: "Travaux clients",
+      p1_sub: "Un espace de réflexion littéraire et culturelle", p1_link: "Visiter le blog",
+      p2_sub: "Hub créatif multimédia", p2_link: "Découvrir le studio",
+      p3_title: "Wireframes et prototypes", p3_sub: "Conception UX pour projets éditoriaux",
+      p4_title: "Design systems et interfaces", p4_sub: "Identités visuelles complètes",
+      on_request: "Sur invitation uniquement : carnet de commandes complet jusqu'en janvier 2027.",
       formation_title: "Une légitimité construite sur l'exigence",
-      formation_intro: "Mon parcours académique reflète une quête constante : comprendre les mécanismes de la pensée, de la création et de la transmission pour mieux les incarner.",
-      fc1_title: "Formation Universitaire",
-      fc1_d2: "BUT MMI*",
-      fc1_d2_detail: "Métiers du Multimédia et de l'Internet\nParcours Création Numérique\nUniversité Cergy Paris",
-      fc1_d3: "Double Licence Histoire-Science Politique",
-      fc1_d3_detail: "Université Paris I - Sorbonne",
-      fc1_d4: "Baccalauréat Littéraire",
-      fc1_d4_detail: "Avec mention\nLycée Harteloire - Brest, France",
-      fc1_desc: "Un parcours qui m'a permis d'affûter mon regard critique, ma capacité d'analyse et ma compréhension des enjeux culturels contemporains.",
-      fc2_title: "Certifications Professionnelles",
-      fc2_adobe: "Principes de conception avec l'IA",
-      fc2_google: "Foundations: Data, Data, Everywhere\nPrincipes de conception de l'expérience utilisateur (UX)",
-      fc2_hubspot: "Le Marketing de Contenu",
-      fc2_oc: "Créez votre site web avec HTML5 et CSS3\nComprendre le Web",
-      fc2_desc: "Des compétences techniques au service d'une vision créative et stratégique.",
-      fc3_title: "Formation Continue",
-      fc3_d1: "Veille intellectuelle active",
-      fc3_d1_detail: "Littérature, philosophie, culture digitale et langues",
-      fc3_d2: "Participations sociales",
-      fc3_d2_detail: "Association \"Witch's Society\"\nAssociation \"Job In Real Life\"\nAmbassadrice pour Aileen XU \"Lavandaire\"",
-      fc3_d3: "Ateliers d'écriture créative",
-      fc3_d3_detail: "CU Pratiques de l'écriture créative\nUniversité de Cergy Paris",
-      fc3_d4: "Perfectionnement stylistique",
-      fc3_d4_detail: "Diplôme \"Il était une fois la littérature jeunesse\"\nUniversité de Liège",
-      fc3_desc: "La curiosité comme moteur, l'excellence comme horizon.",
+      formation_intro: "Mon parcours académique reflète une quête constante : comprendre les mécanismes de la pensée, de la création et de la transmission.",
+      fc1_title: "Formation universitaire",
+      fc1_list: "<strong>BUT MMI*</strong>, parcours Création numérique, CY Cergy Paris Université<span class='extra'><br><strong>Double licence Histoire et Science politique</strong>, Université Paris I Sorbonne<br><strong>Baccalauréat littéraire</strong> avec mention, Brest</span>",
+      fc2_title: "Certifications professionnelles",
+      fc2_list: "<strong>Adobe</strong> · Principes de conception avec l'IA<span class='extra'><br><strong>Google</strong> · Foundations: Data, Data, Everywhere ; principes de l'UX<br><strong>HubSpot Academy</strong> · Le marketing de contenu</span><br><strong>OpenClassrooms</strong> · HTML5 et CSS3, Comprendre le Web",
+      fc3_title: "Formation continue",
+      fc3_list: "<strong>Écriture créative</strong>, CY Cergy Paris Université<span class='extra'><br><strong>« Il était une fois la littérature jeunesse »</strong>, Université de Liège</span>",
       contact_title: "Créons ensemble quelque chose d'exceptionnel",
       contact_desc: "Vous avez un projet éditorial, culturel ou stratégique qui mérite attention et excellence ? Vous cherchez une plume capable de donner corps à votre vision ?",
       contact_tagline: "Je serais honorée d'en discuter avec vous.",
-      cta_text: "Contactez moi",
-      cta_sub: "Cliquez sur le parchemin",
-      contact_email_label: "Ou écrivez-moi directement à contact@journalistgeocultures.com",
-      footer: "© 2024–2026 JGC Studio - Sabine F. Cissé | Tous droits réservés",
-      modal_title: "Commençons l'échange",
-      modal_sub: "Partagez votre vision, je vous répondrai avec attention",
-      form_name: "Votre nom",
-      form_name_ph: "Prénom Nom",
-      form_email: "Votre email",
-      form_message: "Votre message",
-      form_message_ph: "Parlez-moi de votre projet, de vos ambitions, de ce qui vous anime...",
-      form_send: "Envoyer le message",
-      form_note: "Réponse garantie sous 48 heures"
+      copy: "Copier", copied: "Copié", write: "Écrire un message",
+      modal_title: "Commençons l'échange", modal_sub: "Partagez votre vision, je vous répondrai avec attention.",
+      form_name: "Votre nom", form_name_ph: "Prénom Nom", form_email: "Votre e-mail", form_email_ph: "vous@exemple.com",
+      form_message: "Votre message", form_message_ph: "Parlez-moi de votre projet, de vos ambitions, de ce qui vous anime…",
+      form_send: "Envoyer le message", form_sending: "Envoi en cours…",
+      form_ok: "Merci, votre message est bien parti.",
+      form_err: "L'envoi n'a pas abouti. Réessayez, ou écrivez-moi à contact@journalistgeocultures.com.",
+      form_note: "Réponse garantie sous 48 heures", close: "Fermer",
+      footer: "© 2026 JGC Studio · Sabine F. Cissé",
+      stamp: "Prototype · images provisoires"
     },
     en: {
-      subtitle: "Author · Creative Technologist · Editorial Director · Digital Content Strategist",
+      static_btn: "Read without animation", static_btn_on: "Immersive journey", static_short: "Text", static_short_on: "Journey",
+      theme_btn: "Light Academia", theme_btn_on: "Dark Academia", theme_short: "Light", theme_short_on: "Dark",
+      nav: "Chapters",
+      room_1: "The hall", room_2: "The writing study · Background", room_3: "The fallen library · Projects", room_4: "The rotunda · Education", room_5: "The terrace at dawn · Contact",
+      nav_1: "The hall", nav_2: "The writing study", nav_3: "The library", nav_4: "The rotunda", nav_5: "The terrace",
+      roles: "Author · Creative Technologist · Editorial Director · Digital Content Strategist",
       tagline: "« I edit, I create, I tell stories: in text, in image, in motion. »",
-      identity_desc: "For ten years at Business Wire, I edited content for Thales, Idemia, Vivendi, Kering and dozens of CAC40 companies. My role? Ensuring that every press release, every video, every visual met the standards of financial information while commanding attention. Today, I channel that editorial rigour into cultural and narrative content creation through JGC Studio — from blog to podcast, from infographic to motion design. My hallmark? The best content unites precision of message with beauty of execution.",
-      discover: "Discover",
-      parcours_badge: "Professional Background",
+      intro: "For ten years at Business Wire, I edited content for Thales, Idemia, Vivendi, Kering and dozens of CAC 40 companies. Today I bring that editorial rigour to cultural and narrative work through JGC Studio: from blog to podcast, from infographic to motion design.",
+      hint: "Scroll to enter the manor",
       parcours_title: "Ten years orchestrating content and strategies for international clients",
-      parcours_intro1: "At Business Wire for a decade, I coordinated multimedia editorial production for CAC40 and Forbes 50 companies — Thales, Idemia, and many more. My role? Ensuring that every press release, every video, every visual met the standards of financial information while commanding attention. <span class='parcours-highlight'>From SEO writing to international distribution (AFP, ANSA, VWD), I learned to balance technical rigour with visual impact.</span>",
-      parcours_intro2: "Today, I channel that expertise into cultural and narrative content creation. I design editorial strategies, produce multimedia content (blog, podcast, motion design) and support projects seeking to combine intellectual substance with aesthetic quality. I learn new tools fast, AI included, and put them to work for creation: code-driven motion design, video, websites.",
-      parcours_li1: "<strong>Editing &amp; Publishing:</strong> Editorial direction, rewriting, formatting of academic and cultural content",
-      parcours_li2: "<strong>Content Strategy:</strong> Narrative design, editorial planning, optimisation for demanding audiences: CAC 40 and Forbes 50 companies",
-      parcours_li3: "<strong>Cultural Mediation:</strong> Knowledge transmission, intelligent popularisation, creation of intellectual experiences",
-      tools_1_title: "Image and motion",
-      tools_1_list: "DaVinci Resolve · Premiere Pro · After Effects · Remotion · Jitter",
-      tools_2_title: "Code and AI driven creation",
-      tools_2_list: "Code-automated After Effects · HyperFrames · p5.brush · Whisper · ffmpeg · Runway · Adobe Firefly",
-      tools_3_title: "Web and design",
-      tools_3_list: "HTML · CSS · WordPress · Figma · Canva · GitHub Pages",
+      parcours_text: "At Business Wire, I coordinated multimedia editorial production for CAC 40 and Forbes 50 companies, from SEO writing to international distribution (AFP, ANSA, VWD). I learn new tools fast, AI included, and put them to work for creation.",
+      tools_1_title: "Image and motion", tools_1_list: "DaVinci Resolve · Premiere Pro · After Effects · Remotion · Jitter",
+      tools_2_title: "Code and AI driven creation", tools_2_list: "Code-automated After Effects · HyperFrames · p5.brush · Whisper · ffmpeg · Runway · Adobe Firefly",
+      tools_3_title: "Web and design", tools_3_list: "HTML · CSS · WordPress · Figma · Canva · GitHub Pages",
       projets_title: "JGC: Blog, Studio, Design",
-      projets_intro: "Four projects that demonstrate what I do: editing demanding content, designing usable interfaces, producing audio and video formats. From strategy to execution.",
-      proj_personal: "Personal Project",
-      proj_client: "Client Work",
-      p1_sub: "A space for literary and cultural reflection",
-      p1_desc: "Editorial blog exploring the intersection of literature, digital culture and the humanities. A space for thought where critical analysis, cultural discoveries and reflections on contemporary creation converge.",
-      p1_f1: "In-depth articles on literature and culture",
-      p1_f2: "Literary reviews and cultural analyses",
-      p1_f3: "Reflections on publishing and the digital world",
-      p1_f4: "Custom Dark Academia & Light Academia interface",
-      p1_link: "Visit the blog →",
-      p2_sub: "Multimedia creative hub",
-      p2_desc: "Centralised platform bringing together my audio and video creations: literary podcast, video analyses, interviews with creators. A digital studio where voice, image and ideas meet.",
-      p2_f1: "Podcast \"L'Encrier de Sabine\" (Coming soon)",
-      p2_f2: "Podcast \"The Chronicle of Evana\" (Coming soon)",
-      p2_f3: "Cultural and literary analysis videos",
-      p2_f4: "Interviews with authors and creators",
-      p2_f5: "Transmedia content architecture",
-      p2_link: "Discover the studio →",
-      p3_title: "Wireframes & Prototypes",
-      p3_sub: "UX design for editorial projects",
-      p3_desc: "Design of wireframes and low-fidelity mockups for fictional clients: publishing houses, cultural institutions, educational platforms. Information architectures conceived for user experience.",
-      p3_f1: "Responsive wireframes (mobile, tablet, desktop)",
-      p3_f2: "User flows and narrative journeys",
-      p3_f3: "Editorial information hierarchy",
-      p3_f4: "Interactive low-fidelity prototypes",
-      p4_title: "Design Systems & Interfaces",
-      p4_sub: "Complete visual identities",
-      p4_desc: "Creation of high-fidelity mockups and design systems for cultural and editorial projects. From brand guidelines to final interface, covering typography and colour systems.",
-      p4_f1: "Complete design systems (components, tokens)",
-      p4_f2: "High-fidelity multi-platform mockups",
-      p4_f3: "Dark & Light Academia & editorial visual identities",
-      p4_f4: "Interactive high-fidelity prototypes",
-      on_request: "<strong>By invitation only at this time:</strong> Booking closed until January 2027. To discuss a future project, write to me via the form.",
+      projets_intro: "Four projects that show what I do: editing demanding content, designing usable interfaces, producing audio and video formats.",
+      proj_personal: "Personal project", proj_client: "Client work",
+      p1_sub: "A space for literary and cultural reflection", p1_link: "Visit the blog",
+      p2_sub: "Multimedia creative hub", p2_link: "Discover the studio",
+      p3_title: "Wireframes and prototypes", p3_sub: "UX design for editorial projects",
+      p4_title: "Design systems and interfaces", p4_sub: "Complete visual identities",
+      on_request: "By invitation only: booking closed until January 2027.",
       formation_title: "Legitimacy built on rigour",
-      formation_intro: "My academic background reflects a constant quest: to understand the mechanisms of thought, creation and transmission in order to embody them more fully.",
-      fc1_title: "University Education",
-      fc1_d2: "BUT MMI*",
-      fc1_d2_detail: "Multimedia and Internet Professions\nDigital Creation Track\nCergy Paris University",
-      fc1_d3: "Double Degree: History & Political Science",
-      fc1_d3_detail: "Université Paris I – Sorbonne",
-      fc1_d4: "Literary Baccalaureate",
-      fc1_d4_detail: "With honours\nLycée Harteloire - Brest, France",
-      fc1_desc: "A path that honed my critical eye, my capacity for analysis and my understanding of contemporary cultural issues.",
-      fc2_title: "Professional Certifications",
-      fc2_adobe: "Design Principles with AI",
-      fc2_google: "Foundations: Data, Data, Everywhere\nGoogle UX Design Principles",
-      fc2_hubspot: "Content Marketing",
-      fc2_oc: "Build Your Website with HTML5 & CSS3\nUnderstanding the Web",
-      fc2_desc: "Technical skills in service of a creative and strategic vision.",
-      fc3_title: "Continuing Education",
-      fc3_d1: "Active intellectual monitoring",
-      fc3_d1_detail: "Literature, philosophy, digital culture and languages",
-      fc3_d2: "Community involvement",
-      fc3_d2_detail: "\"Witch's Society\" Association\n\"Job In Real Life\" Association\nBrand Ambassador for Aileen XU \"Lavandaire\"",
-      fc3_d3: "Creative writing workshops",
-      fc3_d3_detail: "CU Creative Writing Practices\nCergy Paris University",
-      fc3_d4: "Stylistic refinement",
-      fc3_d4_detail: "Certificate: \"Once Upon a Time in Children's Literature\"\nUniversity of Liège",
-      fc3_desc: "Curiosity as the engine, excellence as the horizon.",
+      formation_intro: "My academic path reflects a constant quest: understanding how thought, creation and transmission work.",
+      fc1_title: "University education",
+      fc1_list: "<strong>BUT MMI*</strong>, Digital Creation track, CY Cergy Paris University<span class='extra'><br><strong>Double degree in History and Political Science</strong>, Université Paris I Sorbonne<br><strong>Literary Baccalaureate</strong> with honours, Brest</span>",
+      fc2_title: "Professional certifications",
+      fc2_list: "<strong>Adobe</strong> · Design principles with AI<span class='extra'><br><strong>Google</strong> · Foundations: Data, Data, Everywhere; UX design principles<br><strong>HubSpot Academy</strong> · Content marketing</span><br><strong>OpenClassrooms</strong> · HTML5 and CSS3, Understanding the Web",
+      fc3_title: "Continuing education",
+      fc3_list: "<strong>Creative writing</strong>, CY Cergy Paris University<span class='extra'><br><strong>“Once Upon a Time in Children's Literature”</strong>, University of Liège</span>",
       contact_title: "Let's create something exceptional together",
-      contact_desc: "Do you have an editorial, cultural or strategic project that deserves attention and excellence? Are you looking for a voice capable of giving shape to your vision?",
+      contact_desc: "Do you have an editorial, cultural or strategic project that deserves attention and excellence? Are you looking for a voice that can give shape to your vision?",
       contact_tagline: "I would be honoured to discuss it with you.",
-      cta_text: "Get in touch",
-      cta_sub: "Click on the parchment",
-      contact_email_label: "Or write to me directly at contact@journalistgeocultures.com",
-      footer: "© 2024–2026 JGC Studio - Sabine F. Cissé | All rights reserved",
-      modal_title: "Let's start the conversation",
-      modal_sub: "Share your vision, I will respond with care",
-      form_name: "Your name",
-      form_name_ph: "First Last",
-      form_email: "Your email",
-      form_message: "Your message",
-      form_message_ph: "Tell me about your project, your ambitions, what drives you...",
-      form_send: "Send message",
-      form_note: "Response guaranteed within 48 hours"
+      copy: "Copy", copied: "Copied", write: "Write a message",
+      modal_title: "Let's start the conversation", modal_sub: "Share your vision, I will respond with care.",
+      form_name: "Your name", form_name_ph: "First Last", form_email: "Your email", form_email_ph: "you@example.com",
+      form_message: "Your message", form_message_ph: "Tell me about your project, your ambitions, what drives you…",
+      form_send: "Send message", form_sending: "Sending…",
+      form_ok: "Thank you, your message is on its way.",
+      form_err: "The message could not be sent. Please try again, or write to contact@journalistgeocultures.com.",
+      form_note: "Response guaranteed within 48 hours", close: "Close",
+      footer: "© 2026 JGC Studio · Sabine F. Cissé",
+      stamp: "Prototype · placeholder images"
     }
   };
+  const ROMAN = ["I", "II", "III", "IV", "V"];
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
 
-  let currentLang = 'fr';
+  let lang = store.get("manoir-lang") === "en" ? "en" : "fr";
+  let isStatic = store.get("manoir-static") === "1";
+  let isLight = store.get("manoir-theme") === "light";
+  let active = 0;
 
-  function setLang(lang) {
-    currentLang = lang;
-    document.documentElement.lang = lang;
+  const chapters = Array.from(document.querySelectorAll(".chapter"));
+  const N = chapters.length;
+  const nav = document.getElementById("chapnav");
+  const where = document.getElementById("where");
+  const progress = document.getElementById("progress");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const narrow = () => window.matchMedia("(max-width: 760px), (max-aspect-ratio: 4/5)").matches;
 
-    // Toggle button states
-    document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
-    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-    document.getElementById('btn-fr').setAttribute('aria-pressed', lang === 'fr');
-    document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en');
-
-    const t = i18n[lang];
-
-    // Text content
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (t[key] !== undefined) {
-        // Use innerHTML for entries that may contain HTML tags
-        el.innerHTML = t[key];
+  // ---------- Engraved emblems ----------
+  const pt = (cx, cy, r, deg) => [cx + r * Math.cos(deg * Math.PI / 180), cy + r * Math.sin(deg * Math.PI / 180)];
+  const f = n => n.toFixed(2);
+  // A laurel branch along a circle arc: a stem and alternating leaves
+  function laurel(cx, cy, r, from, to, n, leaf, cls) {
+    const [x1, y1] = pt(cx, cy, r, from), [x2, y2] = pt(cx, cy, r, to);
+    let out = `<path class="${cls}" d="M${f(x1)} ${f(y1)} A${r} ${r} 0 0 ${to > from ? 1 : 0} ${f(x2)} ${f(y2)}"/>`;
+    for (let k = 0; k < n; k++) {
+      const a = from + (to - from) * (k + .5) / n;
+      for (const side of [-1, 1]) {
+        const [x, y] = pt(cx, cy, r + side * leaf * .55, a);
+        const rot = a + 90 + side * (to > from ? 38 : -38);
+        out += `<ellipse class="${cls}" cx="${f(x)}" cy="${f(y)}" rx="${f(leaf)}" ry="${f(leaf * .42)}" transform="rotate(${f(rot)} ${f(x)} ${f(y)})"/>`;
       }
-    });
-
-    // Placeholders
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const key = el.getAttribute('data-i18n-placeholder');
-      if (t[key] !== undefined) {
-        el.placeholder = t[key];
-      }
-    });
-
-    // Update page title
-    document.title = lang === 'fr'
-      ? 'Sabine F. Cissé – Portfolio'
-      : 'Sabine F. Cissé – Portfolio';
-  }
-
-  // Initialise French on load
-  document.addEventListener('DOMContentLoaded', () => {
-    setLang('fr');
-    // Restore accessible mode preference
-    if (localStorage.getItem('portfolioA11y') === '1') {
-      document.body.classList.add('accessible');
-      document.getElementById('btn-a11y').classList.add('active');
-      document.getElementById('btn-a11y').setAttribute('aria-pressed', 'true');
     }
+    return out;
+  }
+  // Round seal: double rings, four dots, laurel branches, the room numeral
+  function seal(num) {
+    const dots = [0, 90, 180, 270].map(a => { const [x, y] = pt(50, 50, 44, a); return `<circle class="s-fill" cx="${f(x)}" cy="${f(y)}" r="1.9"/>`; }).join("");
+    const size = num.length > 2 ? 17 : num.length > 1 ? 20 : 23;
+    return `<svg viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="s-line" cx="50" cy="50" r="47" stroke-width="1.4"/>
+      <circle class="s-line" cx="50" cy="50" r="41" stroke-width=".7"/>
+      ${dots}
+      ${laurel(50, 50, 35.5, 128, 232, 6, 3.6, "s-line")}
+      ${laurel(50, 50, 35.5, 52, -52, 6, 3.6, "s-line")}
+      <circle class="s-line" cx="50" cy="50" r="27" stroke-width="1.2"/>
+      <circle class="s-line" cx="50" cy="50" r="24" stroke-width=".5"/>
+      <text class="s-num" x="50" y="51" font-size="${size}">${num}</text>
+    </svg>`;
+  }
+  // Tarot card for each room: moon and stars like an engraved pendant, and the room's emblem
+  const ICONS = [
+    '<path d="M21 70V48a9 9 0 0 1 18 0v22"/><path d="M16 70h28"/><circle cx="30" cy="57" r="2.2"/><path d="M30 59.5v4"/>',
+    '<path d="M41 34C32 41 26 53 22 71"/><path d="M41 34c4 10-2 22-13 27 1-11 6-20 13-27z"/><path d="M34 45l-5-2M32 51l-5-1M30 56l-4 0"/>',
+    '<rect x="17" y="63" width="26" height="6" rx="1"/><rect x="20" y="56" width="22" height="6" rx="1"/><rect x="16" y="49" width="24" height="6" rx="1"/><path d="M21 49v6M25 56v6M21 63v6"/><path d="M38 37v11"/><path d="M38 37l5 3-5 3"/>',
+    null,
+    '<path d="M14 66h32"/><path d="M21 66a9 9 0 0 1 18 0"/><path d="M30 51v-6M19.5 55.5l-3.5-3.5M40.5 55.5l3.5-3.5M15 61h-3M45 61h3"/><path d="M19 71h22M24 75h12"/>'
+  ];
+  function tarot(i) {
+    const icon = ICONS[i] || (laurel(30, 55, 13, 108, 250, 5, 3.2, "") + laurel(30, 55, 13, 72, -70, 5, 3.2, ""));
+    return `<svg class="card" viewBox="0 0 60 96" aria-hidden="true">
+      <rect class="c-bg" x="1.5" y="1.5" width="57" height="93" rx="7"/>
+      <rect class="c-in" x="5.5" y="5.5" width="49" height="85" rx="4"/>
+      <text class="c-num" x="30" y="19">${ROMAN[i]}</text>
+      <path class="c-in" d="M10 25h40M10 79h40"/>
+      <path class="c-dot" d="M15.5 30.5a5.2 5.2 0 1 0 6.4 7.6 4.3 4.3 0 1 1-6.4-7.6z"/>
+      <circle class="c-dot" cx="44" cy="31" r=".9"/><circle class="c-dot" cx="48" cy="38" r=".8"/><circle class="c-dot" cx="40" cy="38" r=".7"/><circle class="c-dot" cx="12" cy="46" r=".7"/><circle class="c-dot" cx="48" cy="48" r=".8"/>
+      <g class="c-icon">${icon}</g>
+      <circle class="c-dot" cx="24" cy="85" r=".9"/><circle class="c-dot" cx="30" cy="85" r="1.2"/><circle class="c-dot" cx="36" cy="85" r=".9"/>
+    </svg>`;
+  }
+  document.querySelectorAll(".seal").forEach(el => { el.innerHTML = seal(el.textContent.trim()); });
+
+  // Chapter nav buttons
+  chapters.forEach((ch, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.innerHTML = `<span class="lbl" data-i18n="nav_${i + 1}"></span>${tarot(i)}`;
+    b.addEventListener("click", () => goTo(i));
+    nav.appendChild(b);
   });
 
-  function toggleAccessible() {
-    const isOn = document.body.classList.toggle('accessible');
-    const btn = document.getElementById('btn-a11y');
-    btn.classList.toggle('active', isOn);
-    btn.setAttribute('aria-pressed', isOn ? 'true' : 'false');
-    try { localStorage.setItem('portfolioA11y', isOn ? '1' : '0'); } catch(e) {}
-  }
-
-  // ─── CONTACT FORM ───
-  function openContactForm() {
-    document.getElementById('contactModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeContactForm() {
-    document.getElementById('contactModal').classList.remove('active');
-    document.body.style.overflow = 'auto';
-  }
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && document.getElementById('contactModal').classList.contains('active')) closeContactForm();
-  });
-  document.getElementById('contactModal').addEventListener('click', e => {
-    if (e.target.id === 'contactModal') closeContactForm();
-  });
- function handleSubmit(event) {
-    event.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    const form = event.target;
-    btn.disabled = true;
-    btn.textContent = currentLang === 'fr' ? 'ENVOI EN COURS...' : 'SENDING...';
-    fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    })
-    .then(response => {
-      if (response.ok) {
-        btn.textContent = currentLang === 'fr' ? '✓ MESSAGE ENVOYÉ' : '✓ MESSAGE SENT';
-        form.reset();
-        setTimeout(() => {
-          closeContactForm();
-          btn.disabled = false;
-          btn.textContent = i18n[currentLang].form_send;
-        }, 2000);
-      } else {
-        throw new Error('Erreur réseau');
+  function applyLang() {
+    document.documentElement.lang = lang;
+    const d = T[lang];
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const k = el.getAttribute("data-i18n");
+      if (k === "static_btn") {
+        el.innerHTML = `<span class="lbl-long">${isStatic ? d.static_btn_on : d.static_btn}</span><span class="lbl-short">${isStatic ? d.static_short_on : d.static_short}</span>`;
+        return;
       }
-    })
-    .catch(() => {
-      btn.disabled = false;
-      btn.textContent = currentLang === 'fr' ? '✗ ERREUR — RÉESSAYER' : '✗ ERROR — RETRY';
-      setTimeout(() => {
-        btn.textContent = i18n[currentLang].form_send;
-      }, 3000);
+      if (k === "theme_btn") {
+        el.innerHTML = `<span class="lbl-long">${isLight ? d.theme_btn_on : d.theme_btn}</span><span class="lbl-short">${isLight ? d.theme_short_on : d.theme_short}</span>`;
+        return;
+      }
+      if (d[k] != null) el.innerHTML = d[k];
     });
+    document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = d[el.getAttribute("data-i18n-ph")]; });
+    document.querySelectorAll("[data-i18n-label]").forEach(el => { el.setAttribute("aria-label", d[el.getAttribute("data-i18n-label")]); });
+    nav.setAttribute("aria-label", d.nav);
+    document.getElementById("btn-fr").setAttribute("aria-pressed", lang === "fr");
+    document.getElementById("btn-en").setAttribute("aria-pressed", lang === "en");
+    setActive(active, true);
   }
 
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', e => {
-      e.preventDefault();
-      const t = document.querySelector(anchor.getAttribute('href'));
-      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function setActive(i, force) {
+    if (i === active && !force) return;
+    active = i;
+    nav.querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-current", j === i ? "true" : "false"));
+    where.textContent = `${ROMAN[i]} · ${T[lang]["nav_" + (i + 1)]}`;
+  }
+
+  // ---------- Procedural textures: fog and grain ----------
+  function fogTexture(rgb, alpha) {
+    const c = document.createElement("canvas"); c.width = 512; c.height = 256;
+    const g = c.getContext("2d");
+    for (let k = 0; k < 140; k++) {
+      const x = Math.random() * 512, y = 40 + Math.random() * 190, r = 30 + Math.random() * 90;
+      const grd = g.createRadialGradient(x, y, 0, x, y, r);
+      grd.addColorStop(0, `rgba(${rgb},${alpha})`);
+      grd.addColorStop(1, `rgba(${rgb},0)`);
+      g.fillStyle = grd;
+      // draw wrapped so the tile repeats seamlessly
+      for (const dx of [-512, 0, 512]) { g.beginPath(); g.arc(x + dx, y, r, 0, Math.PI * 2); g.fill(); }
+    }
+    return c.toDataURL();
+  }
+  function grainTexture() {
+    const c = document.createElement("canvas"); c.width = c.height = 160;
+    const g = c.getContext("2d"), img = g.createImageData(160, 160);
+    for (let p = 0; p < img.data.length; p += 4) { const v = Math.random() * 255; img.data[p] = img.data[p + 1] = img.data[p + 2] = v; img.data[p + 3] = 255; }
+    g.putImageData(img, 0, 0);
+    return c.toDataURL();
+  }
+  const FOG = { dark: `url(${fogTexture("150,132,108", .16)})`, light: `url(${fogTexture("255,250,240", .3)})` };
+  let dustRGB = "232, 200, 140";
+
+  // Swap images, text sides and atmosphere between Dark and Light Academia
+  function applyTheme() {
+    const theme = isLight ? "light" : "dark";
+    document.documentElement.classList.toggle("is-light", isLight);
+    chapters.forEach(c => {
+      c.dataset.side = c.dataset["side" + (isLight ? "Light" : "Dark")];
+      c.dataset.focus = c.dataset["focus" + (isLight ? "Light" : "Dark")];
+      const pic = c.querySelector("picture"), name = pic.dataset.name, suffix = isLight ? "-l" : "";
+      pic.querySelector("source").srcset = `img/${name}${suffix}-m.jpg`;
+      pic.querySelector("img").src = `img/${name}${suffix}.jpg`;
     });
+    document.getElementById("fogA").style.backgroundImage = FOG[theme];
+    document.getElementById("fogB").style.backgroundImage = FOG[theme];
+    dustRGB = isLight ? "150, 108, 45" : "232, 200, 140";
+    document.getElementById("btn-theme").setAttribute("aria-pressed", isLight);
+  }
+  const grainEl = document.getElementById("grain");
+  grainEl.style.backgroundImage = `url(${grainTexture()})`;
+
+  // ---------- Dust in the light: drifts, and streams past the camera when travelling ----------
+  const dust = document.getElementById("dust");
+  const dctx = dust.getContext("2d");
+  let motes = [], W = 0, H = 0, speed = 0, rafId = 0;
+  function sizeDust() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = dust.clientWidth; H = dust.clientHeight;
+    dust.width = W * dpr; dust.height = H * dpr;
+    dctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = narrow() ? 45 : 85;
+    motes = Array.from({ length: count }, () => ({ x: Math.random() * W, y: Math.random() * H, r: .4 + Math.random() * 1.6, vx: (Math.random() - .5) * .12, vy: -.05 - Math.random() * .15, a: .15 + Math.random() * .5, t: Math.random() * 6 }));
+  }
+  function drawDust() {
+    dctx.clearRect(0, 0, W, H);
+    const cx = W / 2, cy = H * .45;
+    speed *= .92;
+    for (const m of motes) {
+      m.t += .02;
+      const push = speed * .018;
+      m.x += m.vx + (m.x - cx) * push;
+      m.y += m.vy + (m.y - cy) * push;
+      if (m.x < -10 || m.x > W + 10 || m.y < -10 || m.y > H + 10) {
+        m.x = cx + (Math.random() - .5) * W * .5; m.y = cy + (Math.random() - .5) * H * .5;
+      }
+      const alpha = m.a * (.6 + .4 * Math.sin(m.t));
+      const grow = 1 + Math.min(speed, 3) * .5;
+      dctx.fillStyle = `rgba(${dustRGB}, ${alpha})`;
+      dctx.beginPath(); dctx.arc(m.x, m.y, m.r * grow, 0, Math.PI * 2); dctx.fill();
+    }
+    rafId = requestAnimationFrame(drawDust);
+  }
+
+  // ---------- Scroll-driven camera ----------
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+  const HOLD = 1.1, TRANS = 1.0, STEP = HOLD + TRANS;
+  const TOTAL = N * HOLD + (N - 1) * TRANS;
+  let tl = null;
+
+  function build() {
+    const track = document.getElementById("track");
+    track.style.height = `${TOTAL * 100}vh`;
+    const isNarrow = narrow();
+    const useBlur = !isNarrow && !reduce;
+    const scenes = chapters.map(c => c.querySelector(".scene"));
+    const layers = chapters.map(c => c.querySelector(".layer"));
+    const panels = chapters.map(c => c.querySelector(".panel-wrap"));
+    const inners = chapters.map(c => Array.from(c.querySelectorAll(".panel")));
+
+    chapters.forEach((c, i) => {
+      gsap.set(scenes[i], { transformOrigin: isNarrow ? c.dataset.mfocus : c.dataset.focus, opacity: i === 0 ? 1 : 0, scale: 1, filter: useBlur ? "blur(0px)" : "none" });
+      gsap.set(layers[i], { scale: 1, xPercent: 0, yPercent: 0 });
+      gsap.set(panels[i], { autoAlpha: i === 0 ? 1 : 0 });
+      gsap.set(inners[i], { y: 0 });
+    });
+    gsap.set(["#fogA", "#fogB", "#veil"], { opacity: 0 });
+
+    tl = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: track, start: "top top", end: "bottom bottom", scrub: reduce ? true : 0.9,
+        onUpdate(self) {
+          progress.style.transform = `scaleX(${self.progress})`;
+          const t = self.progress * TOTAL;
+          setActive(Math.min(N - 1, Math.floor((t + TRANS * .5) / STEP)));
+          speed = Math.min(4, Math.abs(self.getVelocity()) / 900);
+        }
+      }
+    });
+
+    for (let i = 0; i < N; i++) {
+      const t0 = i * STEP;
+      const side = chapters[i].dataset.side;
+      const dir = side === "left" ? 1 : side === "right" ? -1 : 0;
+      // Hold: the camera settles and drifts gently toward the bust
+      tl.to(layers[i], { scale: reduce ? 1 : 1.07, xPercent: reduce ? 0 : -dir * 1.2, yPercent: reduce ? 0 : -.6, duration: HOLD + (i < N - 1 ? TRANS : 0) }, t0);
+      if (i === N - 1) break;
+      const tt = t0 + HOLD;
+      const next = i + 1;
+      // Text leaves first
+      tl.to(inners[i], { y: -24, duration: TRANS * .3 }, tt)
+        .to(panels[i], { autoAlpha: 0, duration: TRANS * .3 }, tt);
+      if (reduce) {
+        tl.to(scenes[i], { opacity: 0, duration: TRANS * .5 }, tt + TRANS * .3)
+          .to(scenes[next], { opacity: 1, duration: TRANS * .5 }, tt + TRANS * .3);
+      } else {
+        // Camera pushes into the room, through dust and dark, and the next room emerges
+        tl.to(scenes[i], { scale: 1.7, duration: TRANS * .55, ease: "power1.in" }, tt)
+          .to(scenes[i], { opacity: 0, duration: TRANS * .22 }, tt + TRANS * .3);
+        if (useBlur) tl.to(scenes[i], { filter: "blur(7px)", duration: TRANS * .3 }, tt + TRANS * .2);
+        tl.to("#veil", { opacity: isLight ? .4 : .85, duration: TRANS * .25 }, tt + TRANS * .22)
+          .to("#veil", { opacity: 0, duration: TRANS * .35 }, tt + TRANS * .55)
+          .to(["#fogA", "#fogB"], { opacity: isLight ? .75 : 1, duration: TRANS * .3 }, tt + TRANS * .12)
+          .to(["#fogA", "#fogB"], { opacity: 0, duration: TRANS * .4 }, tt + TRANS * .56)
+          .fromTo(scenes[next], { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: TRANS * .5, ease: "power2.out", immediateRender: false }, tt + TRANS * .48);
+        if (useBlur) tl.fromTo(scenes[next], { filter: "blur(8px)" }, { filter: "blur(0px)", duration: TRANS * .42, immediateRender: false }, tt + TRANS * .5);
+      }
+      // Text of the next room arrives once the camera has settled
+      tl.fromTo(panels[next], { autoAlpha: 0 }, { autoAlpha: 1, duration: TRANS * .25, immediateRender: false }, tt + TRANS * .75)
+        .fromTo(inners[next], { y: 24 }, { y: 0, duration: TRANS * .25, immediateRender: false }, tt + TRANS * .75);
+    }
+  }
+
+  function teardown() {
+    if (tl) { tl.scrollTrigger && tl.scrollTrigger.kill(); tl.kill(); tl = null; }
+    gsap.set(".scene, .layer, .panel-wrap, .panel, #fogA, #fogB, #veil", { clearProps: "all" });
+  }
+
+  function goTo(i) {
+    if (isStatic || !tl) { chapters[i].scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); return; }
+    const st = tl.scrollTrigger;
+    const t = i * STEP + HOLD * .15;
+    const y = st.start + (st.end - st.start) * (t / TOTAL);
+    window.scrollTo({ top: y, behavior: Math.abs(i - active) > 1 || reduce ? "auto" : "smooth" });
+  }
+
+  function setMode(staticOn) {
+    isStatic = staticOn;
+    store.set("manoir-static", staticOn ? "1" : "0");
+    document.body.classList.toggle("is-static", staticOn);
+    document.getElementById("btn-static").setAttribute("aria-pressed", staticOn);
+    teardown();
+    cancelAnimationFrame(rafId);
+    window.scrollTo(0, 0);
+    if (!staticOn) {
+      build();
+      if (!reduce) { sizeDust(); drawDust(); }
+      ScrollTrigger.refresh();
+    } else {
+      chapters.forEach(c => c.querySelectorAll("img").forEach(im => im.loading = "eager"));
+    }
+    applyLang();
+  }
+
+  // ---------- Controls ----------
+  document.getElementById("btn-fr").addEventListener("click", () => { lang = "fr"; store.set("manoir-lang", "fr"); applyLang(); });
+  document.getElementById("btn-en").addEventListener("click", () => { lang = "en"; store.set("manoir-lang", "en"); applyLang(); });
+  document.getElementById("btn-static").addEventListener("click", () => setMode(!isStatic));
+  document.getElementById("btn-theme").addEventListener("click", () => {
+    isLight = !isLight;
+    store.set("manoir-theme", isLight ? "light" : "dark");
+    const p = tl ? tl.scrollTrigger.progress : 0;
+    applyTheme();
+    if (!isStatic) {
+      teardown(); build(); ScrollTrigger.refresh();
+      const st = tl.scrollTrigger; window.scrollTo(0, st.start + (st.end - st.start) * p);
+    }
+    applyLang();
   });
-  </script>
+  document.getElementById("btn-copy").addEventListener("click", e => {
+    const btn = e.currentTarget, addr = document.getElementById("mail-addr").textContent.trim();
+    const done = () => { btn.textContent = T[lang].copied; setTimeout(() => { btn.textContent = T[lang].copy; }, 1800); };
+    const select = () => { const r = document.createRange(); r.selectNodeContents(document.getElementById("mail-addr")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(addr).then(done, select); else select();
+  });
+  document.addEventListener("keydown", e => {
+    if (isStatic || letter.open || e.target.closest("input, textarea")) return;
+    if (e.key === "PageDown" || e.key === "ArrowRight") { e.preventDefault(); goTo(Math.min(N - 1, active + 1)); }
+    if (e.key === "PageUp" || e.key === "ArrowLeft") { e.preventDefault(); goTo(Math.max(0, active - 1)); }
+  });
+  let lastNarrow = narrow();
+  window.addEventListener("resize", () => {
+    if (isStatic) return;
+    sizeDust();
+    if (narrow() !== lastNarrow) { lastNarrow = narrow(); const p = tl ? tl.scrollTrigger.progress : 0; teardown(); build(); ScrollTrigger.refresh(); const st = tl.scrollTrigger; window.scrollTo(0, st.start + (st.end - st.start) * p); }
+  });
+  // Preload the other rooms once the first one is shown
+  window.addEventListener("load", () => { chapters.forEach(c => c.querySelectorAll("img").forEach(im => { im.loading = "eager"; })); });
+
+
+  // ---------- Contact letter: sends through Formspree, same inbox as before ----------
+  const letter = document.getElementById("letter");
+  const cform = document.getElementById("contact-form");
+  const sendBtn = document.getElementById("f-send"), fstatus = document.getElementById("f-status");
+  document.getElementById("btn-write").addEventListener("click", () => { fstatus.textContent = ""; letter.showModal(); });
+  document.getElementById("letter-close").addEventListener("click", () => letter.close());
+  letter.addEventListener("click", e => {
+    if (e.target !== letter) return;
+    const r = letter.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) letter.close();
+  });
+  cform.addEventListener("submit", e => {
+    e.preventDefault();
+    const d = T[lang];
+    sendBtn.disabled = true; sendBtn.textContent = d.form_sending; fstatus.textContent = "";
+    fetch(cform.action, { method: "POST", body: new FormData(cform), headers: { Accept: "application/json" } })
+      .then(r => {
+        if (!r.ok) throw new Error("send failed");
+        cform.reset();
+        fstatus.textContent = d.form_ok;
+        setTimeout(() => { if (letter.open) letter.close(); }, 2600);
+      })
+      .catch(() => { fstatus.textContent = d.form_err; })
+      .finally(() => { sendBtn.disabled = false; sendBtn.textContent = T[lang].form_send; });
+  });
+
+  applyTheme();
+  setMode(isStatic);
+})();
+</script>
 </body>
 </html>
