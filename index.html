@@ -96,6 +96,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .chapter[data-side="split"] .scrim { background: linear-gradient(90deg, rgba(var(--scrim), .94) 0%, rgba(var(--scrim), .78) 24%, rgba(var(--scrim), 0) 42%, rgba(var(--scrim), 0) 58%, rgba(var(--scrim), .78) 76%, rgba(var(--scrim), .94) 100%); }
 .panel { position: relative; isolation: isolate; width: min(32rem, 38vw); min-width: 0; display: flex; flex-direction: column; gap: 1rem; text-shadow: 0 0 2px rgba(var(--scrim), .9), 0 1px 16px rgba(var(--scrim), .95); }
 .chapter[data-side="split"] .panel { width: min(27rem, 29vw); }
+@media (min-width: 761px) and (min-aspect-ratio: 4/5) {
+  #ch1[data-side="split"] .panel-wrap { padding-right: calc(var(--gutter-r) + 4.8rem); }
+  #ch1[data-side="split"] .panel + .panel { width: min(25rem, 24vw); }
+}
 /* Soft backing so the text stays readable over bright parts of the painting */
 .panel::before { content: ""; position: absolute; inset: -2.2rem -2.6rem; z-index: -1; pointer-events: none; filter: blur(10px);
   background: radial-gradient(closest-side, rgba(var(--scrim), .82), rgba(var(--scrim), .6) 62%, rgba(var(--scrim), 0)); }
@@ -281,7 +285,7 @@ body.is-static .items { grid-template-columns: repeat(auto-fit, minmax(13rem, 1f
 
 <main id="stage">
   <!-- I. Vestibule -->
-  <section class="chapter" id="ch1" data-side="left" data-side-dark="left" data-side-light="split" data-focus-dark="57% 40%" data-focus-light="52% 30%" data-mfocus="50% 45%">
+  <section class="chapter" id="ch1" data-side="split" data-side-dark="split" data-side-light="split" data-focus-dark="57% 40%" data-focus-light="52% 30%" data-mfocus="50% 45%">
     <div class="scene"><div class="layer">
       <picture data-name="ch1"><source media="(max-width: 760px), (max-aspect-ratio: 4/5)" srcset="img/ch1-m.jpg"><img src="img/ch1.jpg" alt="Buste de marbre de Sabine F. Cissé sous un rai de lumière dorée, une plume et un parchemin à ses pieds" fetchpriority="high"></picture>
     </div></div>
