@@ -100,6 +100,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (min-width: 761px) and (min-aspect-ratio: 4/5) {
   #ch1[data-side="split"] .panel-wrap { padding-right: calc(var(--gutter-r) + 4.8rem); }
   #ch1[data-side="split"] .panel + .panel { width: min(25rem, 24vw); }
+  /* Cabinet d'écriture : le texte le plus long du site, panneau plus large et plus aéré pour qu'il tienne dans l'écran */
+  #ch2 .panel { width: min(38rem, 41vw); gap: .8rem; }
+  #ch2 h2 { font-size: clamp(1.55rem, 2.3vw, 2.15rem); }
+  #ch2 .lede { font-size: 1.06rem; line-height: 1.5; max-width: none; }
+  #ch2 .groups { gap: .55rem; }
+  #ch2 .groups dd { font-size: .98rem; line-height: 1.4; }
 }
 /* Soft backing so the text stays readable over bright parts of the painting */
 .panel::before { content: ""; position: absolute; inset: -2.2rem -2.6rem; z-index: -1; pointer-events: none; filter: blur(10px);
