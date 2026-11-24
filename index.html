@@ -5,10 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sabine F. Cissé · Portfolio</title>
 <meta name="description" content="Sabine F. Cissé, autrice et technologue créative. Un voyage au défilement à travers un manoir Dark Academia.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/eb-garamond-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/cinzel-500.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* Polices hébergées sur le site (licence OFL, voir fonts/) : aucune donnée envoyée à Google */
+@font-face { font-family: "Cinzel"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/cinzel-400.woff2) format("woff2"); }
+@font-face { font-family: "Cinzel"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/cinzel-500.woff2) format("woff2"); }
+@font-face { font-family: "Cinzel"; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/cinzel-600.woff2) format("woff2"); }
+@font-face { font-family: "EB Garamond"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/eb-garamond-400.woff2) format("woff2"); }
+@font-face { font-family: "EB Garamond"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/eb-garamond-500.woff2) format("woff2"); }
+@font-face { font-family: "EB Garamond"; font-style: italic; font-weight: 400; font-display: swap; src: url(fonts/eb-garamond-400-italic.woff2) format("woff2"); }
+@font-face { font-family: "EB Garamond"; font-style: italic; font-weight: 500; font-display: swap; src: url(fonts/eb-garamond-500-italic.woff2) format("woff2"); }
+@font-face { font-family: "Courier Prime"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/courier-prime-400.woff2) format("woff2"); }
+@font-face { font-family: "Courier Prime"; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/courier-prime-700.woff2) format("woff2"); }
 /* Layout: one fixed full-screen stage; the scroll drives a camera through five rooms of a dark academia home.
    Text lives in HTML in each room's empty side and fades out while the camera travels. */
 :root {
@@ -295,6 +304,15 @@ body.is-static .topbar { background: rgba(var(--scrim), .97); border-bottom: 1px
 .letter-status { min-height: 1.4em; text-align: center; margin: .3rem 0 0; font-weight: 500; }
 .letter-note { text-align: center; font-size: .95rem; font-style: italic; color: var(--cream-dim); margin: 0; }
 .letter-close { position: absolute; top: .5rem; right: .8rem; font-size: 2rem; line-height: 1; color: var(--gold); padding: .2rem .45rem; }
+/* ---------- Copyright et mentions légales ---------- */
+.foot .legal-link { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; border-bottom: 1px solid rgba(201, 154, 75, .6); padding: 0; cursor: pointer; }
+.foot .legal-link:hover, .foot .legal-link:focus-visible { color: var(--gold); }
+.legal-dlg { width: min(40rem, calc(100vw - 2rem)); }
+.legal-dlg[open] { gap: .2rem; }
+.legal-dlg h3 { font-family: var(--mono); font-weight: 700; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 1.1rem 0 .1rem; }
+.legal-dlg p { font-size: 1.02rem; font-weight: 500; line-height: 1.55; color: var(--cream-dim); margin: .2rem 0; }
+.legal-dlg a { color: var(--gold); }
+.legal-dlg .legal-sign { font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; text-align: center; margin-top: 1.2rem; }
 </style>
 </head>
 <body>
@@ -445,6 +463,11 @@ body.is-static .topbar { background: rgba(var(--scrim), .97); border-bottom: 1px
   </form>
 </dialog>
 
+<dialog id="legal" class="letter legal-dlg" aria-labelledby="legal-title">
+  <button type="button" class="letter-close" id="legal-close" data-i18n-label="close" aria-label="Fermer">×</button>
+  <div id="legal-body"></div>
+</dialog>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -492,7 +515,7 @@ body.is-static .topbar { background: rgba(var(--scrim), .97); border-bottom: 1px
       form_ok: "Merci, votre message est bien parti.",
       form_err: "L'envoi n'a pas abouti. Réessayez, ou écrivez-moi à contact@journalistgeocultures.com.",
       form_note: "Réponse garantie sous 48 heures", close: "Fermer",
-      footer: "© 2026 JGC Studio · Sabine F. Cissé",
+      footer: '© 2026 JGC Studio · Sabine F. Cissé · <button type="button" class="legal-link">Mentions légales</button>',
       stamp: "Prototype · images provisoires"
     },
     en: {
@@ -537,7 +560,7 @@ body.is-static .topbar { background: rgba(var(--scrim), .97); border-bottom: 1px
       form_ok: "Thank you, your message is on its way.",
       form_err: "The message could not be sent. Please try again, or write to contact@journalistgeocultures.com.",
       form_note: "Response guaranteed within 48 hours", close: "Close",
-      footer: "© 2026 JGC Studio · Sabine F. Cissé",
+      footer: '© 2026 JGC Studio · Sabine F. Cissé · <button type="button" class="legal-link">Legal notice</button>',
       stamp: "Prototype · placeholder images"
     }
   };
@@ -874,6 +897,48 @@ body.is-static .topbar { background: rgba(var(--scrim), .97); border-bottom: 1px
   const sendBtn = document.getElementById("f-send"), fstatus = document.getElementById("f-status");
   document.getElementById("btn-write").addEventListener("click", () => { fstatus.textContent = ""; letter.showModal(); });
   document.getElementById("letter-close").addEventListener("click", () => letter.close());
+
+  // ---------- Mentions légales : le nom légal (Sabine Fantacé Cissé) n'apparaît qu'ici ----------
+  const MAIL = '<a href="mailto:contact@journalistgeocultures.com">contact@journalistgeocultures.com</a>';
+  const CNIL = '<a href="https://www.cnil.fr/" target="_blank" rel="noopener">cnil.fr</a>';
+  const LEGAL = {
+    fr: `<h2 id="legal-title">Mentions légales</h2>
+      <h3>Éditrice du site</h3>
+      <p>Le site sabinefcisse.com est édité par Sabine Fantacé Cissé, entrepreneur individuel (EI), autrice sous le nom de Sabine F. Cissé. JGC Studio est le nom de son atelier de création.<br>Siège : c/o Hellodom, 114 rue Marceau, 93100 Montreuil, France.<br>SIREN 131 682 304, SIRET 131 682 304 00020, inscrite au Registre national des entreprises.<br>Contact : ${MAIL}<br>Directrice de la publication : Sabine Fantacé Cissé.</p>
+      <h3>Hébergement</h3>
+      <p>GitHub Pages, un service de GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. Téléphone : +1 877 448 4820.</p>
+      <h3>Propriété intellectuelle</h3>
+      <p>Les textes, les images et la conception de ce site appartiennent à Sabine F. Cissé, sauf mention contraire. Toute reproduction, totale ou partielle, sans son autorisation écrite est interdite. Les images sont créées avec Adobe Firefly, sous sa direction artistique. Les polices Cinzel, EB Garamond et Courier Prime sont publiées sous licence SIL Open Font License.</p>
+      <h3>Données personnelles</h3>
+      <p>Le formulaire de contact recueille votre nom, votre adresse e-mail et votre message, dans le seul but de vous répondre. Formspree (Formspree, Inc., États-Unis) achemine le formulaire jusqu'à la messagerie de l'éditrice. Vos données sont conservées trois ans au plus après notre dernier échange. Elles ne sont ni vendues, ni cédées, ni utilisées à d'autres fins.</p>
+      <p>Vous pouvez y accéder, les faire corriger ou supprimer en écrivant à ${MAIL}. Vous pouvez aussi adresser une réclamation à la CNIL (${CNIL}).</p>
+      <p>Ce site n'utilise ni cookie ni outil de mesure d'audience. Il enregistre seulement dans votre navigateur votre langue, votre thème (sombre ou clair) et votre mode de lecture, pour les retrouver à votre prochaine visite.</p>
+      <p class="legal-sign">© 2026 JGC Studio · Sabine F. Cissé</p>`,
+    en: `<h2 id="legal-title">Legal notice</h2>
+      <h3>Publisher</h3>
+      <p>sabinefcisse.com is published by Sabine Fantacé Cissé, sole trader registered in France (entrepreneur individuel, EI), author under the name Sabine F. Cissé. JGC Studio is the name of her creative studio.<br>Registered address: c/o Hellodom, 114 rue Marceau, 93100 Montreuil, France.<br>SIREN 131 682 304, SIRET 131 682 304 00020, French National Business Register (RNE).<br>Contact: ${MAIL}<br>Publication director: Sabine Fantacé Cissé.</p>
+      <h3>Hosting</h3>
+      <p>GitHub Pages, a service of GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States. Phone: +1 877 448 4820.</p>
+      <h3>Intellectual property</h3>
+      <p>The texts, images and design of this site belong to Sabine F. Cissé unless otherwise stated. Any reproduction, in whole or in part, without her written permission is prohibited. The images are created with Adobe Firefly under her art direction. The Cinzel, EB Garamond and Courier Prime typefaces are released under the SIL Open Font License.</p>
+      <h3>Personal data</h3>
+      <p>The contact form collects your name, your email address and your message, only to reply to you. Formspree (Formspree, Inc., United States) delivers the form to the publisher's mailbox. Your data is kept for no more than three years after our last exchange. It is never sold, shared or used for any other purpose.</p>
+      <p>You can access, correct or delete it by writing to ${MAIL}. You can also lodge a complaint with the CNIL, the French data protection authority (${CNIL}).</p>
+      <p>This site uses no cookies and no audience measurement. It only stores your language, your theme (dark or light) and your reading mode in your browser, to remember them on your next visit.</p>
+      <p class="legal-sign">© 2026 JGC Studio · Sabine F. Cissé</p>`
+  };
+  const legal = document.getElementById("legal");
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".legal-link")) return;
+    document.getElementById("legal-body").innerHTML = LEGAL[lang];
+    legal.showModal(); legal.scrollTop = 0;
+  });
+  document.getElementById("legal-close").addEventListener("click", () => legal.close());
+  legal.addEventListener("click", e => {
+    if (e.target !== legal) return;
+    const r = legal.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) legal.close();
+  });
   letter.addEventListener("click", e => {
     if (e.target !== letter) return;
     const r = letter.getBoundingClientRect();
